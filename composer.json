@@ -1,0 +1,25 @@
+{
+    "name": "gabrielmourao/swoole-fw",
+    "require": {
+        "vlucas/phpdotenv": "^3.3@dev",
+        "guzzlehttp/guzzle": "^6.3@dev",
+        "symfony/yaml": "^4.3@dev",
+        "doctrine/orm": "^2.6@dev",
+        "phpunit/phpunit": "^8.2@dev"
+    },
+    "authors": [
+        {
+            "name": "Gabriel Melo",
+            "email": "gabrielmouraodemelo@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "GabrielMourao\\SwooleFW\\": "src/",
+            "App\\": "application/",
+            "database\\" : "database/",
+            "tests\\" : "tests/"
+        }
+    }
+}

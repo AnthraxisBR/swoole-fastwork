@@ -1,0 +1,7 @@
+
+databases:
+  default:
+    driver: 'pdo_mysql'
+    user: 'swoole'
+    password: 'Swoole123!@#'
+    dbname: 'swoole'
