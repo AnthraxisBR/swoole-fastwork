@@ -1,33 +1,39 @@
 <?php
 
-namespace App\Entity;
+namespace database\entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use GabrielMourao\SwooleFW\database\Entitites;
 
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity
  */
-class Users
+class Users extends Entitites
 {
-    /** @Id @Column(type="integer") @GeneratedValue */
-    private $id;
+    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
+    public $id;
 
-    /** @Column(type="varchar",length=250) */
-    private $user;
+    /** @ORM\Column(type="string",length=250) */
+    public $name;
 
-    /** @Column(type="varchar",length=250) */
-    private $password;
+    /** @ORM\Column(type="string",length=250) */
+    public $password;
 
-    /** @Column(type="varcher", length=250) */
-    private $email;
+    /** @ORM\Column(type="string", length=250) */
+    public $email;
 
     public function __construct()
     {
     }
 
-    public function getUser() { return $this->user; }
+    public function getName() { return $this->name; }
     public function getPassword() { return $this->password; }
     public function getEmail() { return $this->email; }
+
+    public function __toString()
+    {
+        return json_encode($this);
+    }
 }

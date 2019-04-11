@@ -1,0 +1,6 @@
+
+routes:
+  prefix: 'api'
+  api:
+    users:
+      action: Users

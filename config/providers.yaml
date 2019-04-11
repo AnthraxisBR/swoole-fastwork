@@ -1,0 +1,3 @@
+
+providers:
+  entities: 'GabrielMourao\SwooleFW\providers\EntitiesProvider'

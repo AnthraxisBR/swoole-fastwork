@@ -1,7 +1,16 @@
 <?php
 
+namespace tests\src\routes;
 
-class UsersTest
+use App\actions\Users;
+use tests\TestCase;
+
+class UsersTest extends TestCase
 {
+    public function testSetPrefixes()
+    {
+        $users = new Users();
+        $users->index();
 
+    }
 }

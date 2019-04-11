@@ -1,7 +1,9 @@
 <?php
 
+use \GuzzleHttp\Psr7\Request;
 
-class Http
+class Http extends Request
 {
+
 
 }

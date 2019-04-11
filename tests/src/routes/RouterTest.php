@@ -5,9 +5,9 @@ namespace tests\src\routes;
 use GabrielMourao\SwooleFW\routing\RoutesYamlReader;
 use tests\TestCase;
 
-class RoutesYamlReaderTest extends TestCase
+class RouterTest extends TestCase
 {
-    public function testSetPrefixes()
+    public function testImplementsRoutes()
     {
         $RoutesYamlReader = new RoutesYamlReader();
 
