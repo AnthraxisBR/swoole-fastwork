@@ -10,4 +10,3 @@ use GabrielMourao\SwooleFW\database\Entitites;
 use database\entity\Users;
 
 
-var_dump($records);

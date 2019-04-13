@@ -1,7 +1,8 @@
 
 databases:
   default:
+    host: 'swoole-fastwork_db_1'
     driver: 'pdo_mysql'
     user: 'swoole'
-    password: 'Swoole123!@#'
+    password: 'swoole'
     dbname: 'swoole'

@@ -1,0 +1,6 @@
+
+routes:
+  users:
+    object: Users
+    fields: ['SearchUsers']
+

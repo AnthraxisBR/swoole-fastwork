@@ -5,6 +5,7 @@ namespace GabrielMourao\SwooleFW\routing;
 
 use GabrielMourao\SwooleFW\database\Entitites;
 use GabrielMourao\SwooleFW\providers\Providers;
+use GabrielMourao\SwooleFW\graphql\GraphQLYamlReader;
 use Illuminate\Support\Str;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -33,6 +34,8 @@ class Router
 
     private $attr_setted = [];
 
+    private $graphql_routes = [];
+
     public function __construct($request)
     {
         $this->response = new \stdClass();
@@ -47,11 +50,14 @@ class Router
         $this->remote_addr = $this->request->server['remote_addr'];
         $this->protocol = $this->request->server['server_protocol'];
 
+        $this->setProviders();
+
 
         $RoutesYaml = new RoutesYamlReader();
         $this->routes = $RoutesYaml->getRoutes();
 
-        $this->setProviders();
+        $GraphQLRoutesYaml = new GraphQLYamlReader();
+        $this->graphql_routes = $GraphQLRoutesYaml->getRoutes();
 
         $this->call();
     }
@@ -78,6 +84,8 @@ class Router
 
     private function call() : void
     {
+        var_dump($this->request->get);
+        var_dump('asdasdsa');
         if(isset($this->routes[$this->uri])) {
             $function = 'index';
             $namespace = '\App\actions\\';

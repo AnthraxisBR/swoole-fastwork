@@ -5,7 +5,8 @@
         "guzzlehttp/guzzle": "^6.3@dev",
         "symfony/yaml": "^4.3@dev",
         "doctrine/orm": "^2.6@dev",
-        "phpunit/phpunit": "^8.2@dev"
+        "phpunit/phpunit": "^8.2@dev",
+        "webonyx/graphql-php": "dev-master"
     },
     "authors": [
         {
