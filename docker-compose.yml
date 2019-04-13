@@ -1,0 +1,30 @@
+version: "3"
+services:
+  swoole:
+    build: .
+    command: php /app/start.php
+    ports:
+      - "8101:8101"
+    volumes:
+      - .:/app
+    links:
+      - "db:database"
+    networks:
+      - swoole_network
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: swoole
+      MYSQL_DATABASE: swoole
+      MYSQL_USER: swoole
+      MYSQL_PASSWORD: swoole
+    ports:
+      - "9906:3306"
+    networks:
+      - swoole_network
+
+
+networks:
+  swoole_network:
+    driver: bridge
+

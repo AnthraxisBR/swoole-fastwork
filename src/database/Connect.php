@@ -32,6 +32,10 @@ class Connect
 
     public $config;
 
+    public $pdo_conn;
+
+    public $host;
+
     public function __construct()
     {
         $config = getenv('root_folder') . 'config/database.yaml';
@@ -47,6 +51,13 @@ class Connect
         return $this->entity_manager;
     }
 
+    public static function getConnectPDO($config)
+    {
+        $pdo = new \PDO("mysql:host={$config['host']};dbname={$config['database']}", $config['username'], $config['password']);
+        $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
+        return $pdo;
+    }
+
     private function connect() : void
     {
 
@@ -59,6 +70,7 @@ class Connect
         $this->entity_manager = EntityManager::create([
             'driver'   => $this->driver,
             'user'     => $this->user,
+            'host'     => $this->host,
             'password' => $this->password,
             'dbname'   => $this->dbname
         ], $this->config);
@@ -72,6 +84,7 @@ class Connect
             $this->setUser($this->default['user']);
             $this->setPassword($this->default['password']);
             $this->setDatabase($this->default['dbname']);
+            $this->setHost($this->default['host']);
         }
     }
 
@@ -88,6 +101,11 @@ class Connect
     private function setDriver(string $driver) : void
     {
         $this->driver = $driver;
+    }
+
+    private function setHost(string $host) : void
+    {
+        $this->host = $host;
     }
 
     private function setUser(string $user) : void
