@@ -4,6 +4,7 @@ namespace GabrielMourao\SwooleFW\routing;
 
 
 use GabrielMourao\SwooleFW\database\Entitites;
+use GabrielMourao\SwooleFW\http\Request;
 use GabrielMourao\SwooleFW\providers\Providers;
 use GabrielMourao\SwooleFW\graphql\GraphQLYamlReader;
 use Illuminate\Support\Str;
@@ -91,40 +92,45 @@ class Router
             $namespace = '\App\actions\\';
 
             $uri = explode('/',$this->uri);
+            $original_uri = $uri;
+
             $id = $uri[count($uri) - 1];
             unset($uri[count($uri) - 1]);
+            /*var_dump($this->routes);
+            var_dump($uri);
+            var_dump(implode('/',$uri));
+            var_dump($this->routes[implode('/',$uri)]);
+            exit();*/
 
-            if(isset($this->routes[implode('/',$uri)])){
-                $route = $this->routes[implode('/',$uri)];
-                if(isset($route['subroutes']) && count($route['subroutes']) > 0){
-                    $is_index = is_numeric($id);
-                    $subroute = str_replace('<',',',str_replace('<',',', key($route['subroutes'])));
-                    $type_index = explode(':',$subroute)[0];
-                    $name_index = explode(':',$subroute)[1];
+            if(isset($this->routes[implode('/', $original_uri)])){
+                $route = $this->routes[implode('/',$original_uri)];
+                $methods = $route['methods'];
+                $function = $methods[$this->method];
+            }else {
+                if(isset($this->routes[implode('/', $uri)])){
+                    $route = $this->routes[implode('/',$uri)];
+                    if(isset($route['subroutes']) && count($route['subroutes']) > 0) {
+                        $is_index = is_numeric($id);
+                        $subroute = str_replace('<', '', str_replace('>', '', key($route['subroutes'])));
+                        $type_index = explode(':', $subroute)[0];
+                        $name_index = explode(':', $subroute)[1];
 
-                    if($type_index == 'int'){
-                        if($is_index){
-                            $args = [$name_index => $id];
-                            //TODO verificar o método post ou get e bater no método correto
-                            $function = 'get_';
+                        if ($type_index == 'int') {
+                            if ($is_index) {
+                                $args = [$name_index => $id];
+                                $arg = str_replace($name_index,$id, $name_index);
+                                $arg_c = '<' . $type_index . ':' . $name_index . '>';
+
+                                $class = $route['subroutes'][$arg_c]['action'];
+                                $function = $route['subroutes'][$arg_c]['methods'][strtoupper($this->method)];
+
+                            }
                         }
                     }
                 }
             }
-
-//
-//            $uri_t = implode('/',)
-
-            $class = $this->routes[$this->uri]['action'];
-            $class_exp = explode('::', $class);
-
-
-            var_dump($this->uri);
-            var_dump($this->routes[$this->uri]);
-            exit();
-            if (count($class_exp) > 1) {
-                $class = $class_exp[0];
-                $function = $class_exp[1];
+            if(!isset($class)){
+                $class = $this->routes[$this->uri]['action'];
             }
 
             $invoke = $namespace . $class;
@@ -138,8 +144,16 @@ class Router
 
             $this->application = new $invoke();
 
-
-            $this->response = call_user_func_array([$this->application,$function],$this->attr_setted);
+            if(!isset($arg)){
+                if(strtoupper($this->method) == 'POST'){
+                    $original_uri = implode('/', $original_uri);
+                    $this->attr_setted[] = new Request($this->method, $original_uri, $this->request->header, $this->request->rawContent());
+                }
+                $this->response = call_user_func_array([$this->application,$function],$this->attr_setted);
+            }else{
+                $this->attr_setted[] = $arg;
+                $this->response = call_user_func_array([$this->application,$function],$this->attr_setted);
+            }
 
       /*  } catch ( \Exception $e){
             $this->response = [
