@@ -22,4 +22,16 @@ class Entitites
         return $this->em;
     }
 
+    public function all()
+    {
+        return $this->em->getRepository(get_class($this))->findAll();
+    }
+
+    public function unique(int $primaryKey = 0)
+    {
+        if($primaryKey > 0){
+            return $this->em->getRepository(get_class($this))->find($primaryKey);
+        }
+        return [];
+    }
 }

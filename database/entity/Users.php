@@ -24,9 +24,6 @@ class Users extends Entitites
     /** @ORM\Column(type="string", length=250) */
     public $email;
 
-    public function __construct()
-    {
-    }
 
     public function getName() { return $this->name; }
     public function getPassword() { return $this->password; }

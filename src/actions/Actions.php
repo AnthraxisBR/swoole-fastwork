@@ -9,6 +9,8 @@ class  Actions
 
     public $response;
 
+    public $conn;
+
     public function __construct()
     {
 

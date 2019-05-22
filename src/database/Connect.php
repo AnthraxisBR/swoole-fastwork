@@ -51,9 +51,14 @@ class Connect
         return $this->entity_manager;
     }
 
+    /**
+     * @param $config
+     * @return \PDO
+     * @deprecated
+     */
     public static function getConnectPDO($config)
     {
-        $pdo = new \PDO("mysql:host={$config['host']};dbname={$config['database']}", $config['username'], $config['password']);
+        $pdo = new \PDO("{$config['ddriver']}:port={$config['port']};host={$config['host']};dbname={$config['database']}", $config['username'], $config['password']);
         $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
         return $pdo;
     }
@@ -71,6 +76,7 @@ class Connect
             'driver'   => $this->driver,
             'user'     => $this->user,
             'host'     => $this->host,
+            'port'     => $this->port,
             'password' => $this->password,
             'dbname'   => $this->dbname
         ], $this->config);
@@ -85,6 +91,7 @@ class Connect
             $this->setPassword($this->default['password']);
             $this->setDatabase($this->default['dbname']);
             $this->setHost($this->default['host']);
+            $this->setPort($this->default['port']);
         }
     }
 
@@ -106,6 +113,11 @@ class Connect
     private function setHost(string $host) : void
     {
         $this->host = $host;
+    }
+
+    private function setPort(string $port) : void
+    {
+        $this->port = $port;
     }
 
     private function setUser(string $user) : void

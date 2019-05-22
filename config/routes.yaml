@@ -4,4 +4,14 @@ routes:
   api:
     users:
       action: Users
+      methods:
+        GET: index,
+        POST: store,
+      subroutes:
+          <int:id>:
+            action: Users
+            methods:
+              GET: get_user,
+              PUT': update,
+
 

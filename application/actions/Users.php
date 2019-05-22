@@ -11,7 +11,12 @@ class Users extends Actions
 
     public function index(UsersEntity $UsersEntity)
     {
-        return $this->conn->em()->getRepository(get_class($UsersEntity))->findAll();
+        return $UsersEntity->all();
+    }
+
+    public function get_user(UsersEntity $UsersEntity, int $id )
+    {
+        return $UsersEntity->unique($primaryKey= $id);
     }
 
     public function getResponse()

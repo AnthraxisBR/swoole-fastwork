@@ -33,8 +33,7 @@ class RoutesYamlReader
                     if($config_name == 'prefix'){
                         if(!isset($this->routes[$config_name])){
                             foreach ($configs[$config] as $route => $action) {
-                                $this->routes['/' . $config . '/' . $route] = $action['action'];
-
+                                $this->routes['/' . $config . '/' . $route] = $action;
                             }
                         }
                     }
