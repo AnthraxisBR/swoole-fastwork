@@ -30,17 +30,19 @@ class FwField extends FieldDefinition
              * Defined on final class
              */
             $config['args'] = $this->getArgs();
+            $config['name'] = $this->name;
             $config['type'] = $this->getType();
             $config['resolve'] = $this->getResolvedFunction();
             $this->fw_config = $config;
         }
-        parent::__construct($config);
+
+        parent::__construct($this->fw_config);
     }
 
     public function getResolvedFunction($root = '', $args = []) //: Actions
     {
         $resolve_exp = explode('::',$this->resolve);
-        if(count($resolve_exp) == 2){
+        if(count($resolve_exp) == 1){
             $class = $resolve_exp[0];
             $function = $resolve_exp[1];
             $full_class = '\App\actions\\' . $class;

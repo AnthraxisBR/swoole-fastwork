@@ -21,27 +21,12 @@ class FwObjectType extends ObjectType
 
     public function __construct($config = null)
     {
-        [
-            'name' => 'Query',
-            'fields' => [
-                'echo' => [
-                    'type' => Type::string(),
-                    'args' => [
-                        'message' => ['type' => Type::string()],
-                    ],
-                    'resolve' => function ($root, $args) {
-                        return $root['prefix'] . $args['message'];
-                    }
-                ],
-            ],
-        ];
 
         if(is_null($config )){
             $this->findFields();
             $config['name'] = $this->fw_name;
             $config['fields'] = $this->convertFwFields();
         }
-
         parent::__construct($config);
     }
 
@@ -54,21 +39,27 @@ class FwObjectType extends ObjectType
             $class = $full_namespace;
             $fieldInstance = new $class();
             if($fieldInstance instanceof FieldDefinition){
-                $convertedFields[] = $fieldInstance->getField();
+                $convertedField = $fieldInstance->getField();
+
+                $exp = explode('\\', key($convertedField));
+
+                $convertedFields[$exp[count($exp) - 1]] = $convertedField;
             }
         }
+        return $convertedFields;
     }
 
     public function findFields() : void
     {
-        $fields = scandir(getenv('root_folder') . 'database/graphql/' . $this->fw_name . '/Fields');
+        $fields = scandir(getenv('root_folder') . '/database/graphql/' . $this->fw_name . '/Fields');
+
         foreach ($fields as $field) {
-            $field_exp = explode('.');
-            if(count($field_exp) == 2){
-                if($field_exp[1] == 'php'){
-                    $this->fw_fields[] = $field;
-                }
+            $exp = explode('.', $field);
+
+            if(isset($exp[1] ) and $exp[1] == 'php'){
+                $this->fw_fields[] = $exp[0];
             }
+
         }
     }
 

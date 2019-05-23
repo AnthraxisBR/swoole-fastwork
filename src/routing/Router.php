@@ -4,6 +4,7 @@ namespace GabrielMourao\SwooleFW\routing;
 
 
 use GabrielMourao\SwooleFW\database\Entitites;
+use GabrielMourao\SwooleFW\graphql\GraphQL;
 use GabrielMourao\SwooleFW\http\Request;
 use GabrielMourao\SwooleFW\providers\Providers;
 use GabrielMourao\SwooleFW\graphql\GraphQLYamlReader;
@@ -36,6 +37,8 @@ class Router
     private $attr_setted = [];
 
     private $graphql_routes = [];
+
+    private $hasGraphQL = false;
 
     public function __construct($request)
     {
@@ -72,14 +75,28 @@ class Router
     private function applyProviders()
     {
         $attr = $this->parameters[0]->name;
-
         foreach ($this->providers as $provider => $class){
-            if(strpos($class[0]->getReference(),'Entities')){
-                if(strpos($this->parameters[0]->name,'Entity')){
-                    $providedClass = $this->parameters[0]->getClass()->name;
-                    $this->attr_setted[] = new $providedClass();
+            if($provider == 'entities'){
+                foreach ($this->parameters as $param){
+                    if(strpos($param->name,'Entity')){
+                        $providedClass = $param->getClass()->name;
+                        $this->attr_setted[] = new $providedClass();
+                    }
                 }
+            }elseif($provider == 'graphql') {
+                array_map(function($class_provider) use ($class){
+                    if($class_provider instanceof Entitites){
+                        if(isset($this->request->get['graphql'])){
+                            $this->hasGraphQL = true;
+                            $provided = $class[0]->getInstance($class_provider, $this->request->get['graphql']);
+                            $this->attr_setted[] = $provided;
+                        }
+                    }
+                },$this->attr_setted);
+            }else{
+                var_dump($provider);
             }
+
         }
     }
 
@@ -144,7 +161,19 @@ class Router
 
             $this->application = new $invoke();
 
+            if($this->hasGraphQL){
+                foreach ($this->attr_setted as $k => $attr){
+                    if($attr instanceof GraphQL){
+                        if($k != 0){
+                            $this->attr_setted[0]->graphql = $this->attr_setted[$k];
+                        }
+                    }
+                }
+                //$this->attr_setted[0] = $this->
+            }
+
             if(!isset($arg)){
+
                 if(strtoupper($this->method) == 'POST'){
                     $original_uri = implode('/', $original_uri);
                     $this->attr_setted[] = new Request($this->method, $original_uri, $this->request->header, $this->request->rawContent());

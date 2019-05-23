@@ -14,4 +14,9 @@ use GabrielMourao\SwooleFW\graphql\FwObjectType;
 class Users extends FwObjectType
 {
 
+    public function __construct( $config = null, $fw_name = '')
+    {
+        $this->fw_name = $fw_name;
+        parent::__construct($config);
+    }
 }

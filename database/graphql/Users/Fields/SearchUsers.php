@@ -15,14 +15,14 @@ use GabrielMourao\SwooleFW\graphql\FwField;
 final class SearchUsers extends FwField
 {
 
-    protected $type = 'string';
+    public $type = 'string';
 
-    protected $args = [
+    public $args = [
         'id' => [
             'type' => 'int'
         ]
     ];
 
-    protected $resolve = 'User::find';
+    public $resolve = 'Users::find';
 
 }

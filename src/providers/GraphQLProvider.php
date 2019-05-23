@@ -18,4 +18,9 @@ class GraphQLProvider
     {
         return $this->object_reference;
     }
+
+    public function getInstance($entity, $query)
+    {
+        return new $this->object_reference($entity, $query);
+    }
 }

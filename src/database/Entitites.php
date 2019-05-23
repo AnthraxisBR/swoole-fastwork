@@ -8,6 +8,7 @@ use Doctrine\ORM\ORMException;
 
 class Entitites
 {
+    public $graphql = null;
 
     private $connect;
 
