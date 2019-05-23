@@ -1,8 +1,12 @@
 ### Swoole Fast Work 
 
-Este é um projeto que visa prover uma camada de abstração para desenvolvimento de APIs com o Swoole, provendo uma construção baseada em estruturação, assim agilizando o desenvolvimento e forma de trabalhar.
+Este é um projeto que visa prover uma camada de abstração para desenvolvimento de APIs com o Swoole, provendo uma construção baseada em estruturação, assim agilizando o desenvolvimento e a forma de trabalhar.
 
-Atualmente o projeto encontra em fase de esboço, utilize apenas para brincar.
+Pretende prever o multitaks usando coroutines, queues orientada a threads, e também o uso de kubernets como objeto de classe, assim que que estiver 'testável' será criada uma documentação explicando direito o projeto. 
+
+Também pretende integrar nativamente com AWS, GCP, Azure e IBM Cloud.
+
+Atualmente o projeto encontra em fase de esboço.
 
 ###Rodando
 
