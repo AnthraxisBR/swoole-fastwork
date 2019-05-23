@@ -11,12 +11,26 @@ class GraphQLYamlReader
 
     public $routes = [];
 
+    public $yaml_file;
+
     public function __construct()
     {
         $config = getenv('root_folder') . 'config/graphql-routes.yaml';
         $this->yaml_file = Yaml::parseFile($config);
         $this->setEnv();
         $this->setRoutes();
+    }
+
+    public function getRoute($route)
+    {
+        $this->routes = $this->yaml_file['routes'];
+
+        if( isset($this->routes[$route['route']])){
+            unset($route['function']);
+            $route['function'] = $this->routes[$route['route']]['function'];
+            $route['graphql'] = $this->routes[$route['route']];
+        }
+        return $route;
     }
 
     public function getRoutes() : array

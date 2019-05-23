@@ -12,6 +12,7 @@ class GraphQLProvider
     public function __construct()
     {
         $this->object_reference = 'GabrielMourao\SwooleFW\graphql\GraphQL';
+
     }
 
     public function getReference()

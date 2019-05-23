@@ -1,0 +1,32 @@
+
+server:
+  http:
+    host: 127.0.0.1
+    port: 8101
+    config:
+      ssl_cert_file: null
+      ssl_key_file: null
+      open_http2_protocol: false
+
+
+  #websocket:
+  #  host: 127.0.0.1
+  #  port: 9502
+
+  #tcp_server:
+  #  host: 127.0.0.1
+  #  port: 9503
+
+  #tcp_client:
+  #  host: 127.0.0.1
+  #  port: 9501
+
+  #redis:
+  #  host: 127.0.0.1
+  #  port: 6379
+
+  #tasks:
+  #  host: 127.0.0.1
+  #  port: 9502
+  #  worker:
+  #    num: 4

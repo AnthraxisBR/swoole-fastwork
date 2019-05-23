@@ -22,10 +22,14 @@ class Providers
         $this->yaml_file = Yaml::parseFile($config);
         $this->setEnv();
         $this->setProviders();
-        
         $this->provide();
     }
 
+    public function getInstance()
+    {
+        $obj = $this->object_reference;
+        return new $obj();
+    }
     
     private function provide()
     {
@@ -46,7 +50,7 @@ class Providers
                 foreach ($configs as $provider_name => $config) {
                     if(!isset($this->providers[$provider_name])){
                         $config = '\\' . $configs[$provider_name];
-                        $this->providers[$provider_name][] = new $config();
+                        $this->providers[$provider_name] = new $config();
                     }
                 }
             }

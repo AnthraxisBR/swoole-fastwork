@@ -18,4 +18,5 @@ class EntitiesProvider
     {
         return $this->object_reference;
     }
+
 }

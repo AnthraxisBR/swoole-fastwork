@@ -33,7 +33,7 @@ class GraphQL
     {
         $this->entity = $entity;
 
-        $this->query_string = $query;
+        $this->query_string = str_replace('""','"',json_encode(json_decode($query)->query));
 
         $this->query = json_decode($query);
 
@@ -53,9 +53,10 @@ class GraphQL
         $this->schema = new Schema([
             'query' => $graphql_fw
         ]);
+
         unset($this->entity);
 
-        $this->result = GraphQLBase::executeQuery($this->schema, $this->query_string, $rootValue = ['prefix' => 'You said: '], null, isset($this->input['variables']) ? $this->input['variables'] : null);
+        $this->result = GraphQLBase::executeQuery($this->schema, $this->query_string, null , null, isset($this->input['variables']) ? $this->input['variables'] : null);
         $this->output = $this->result->toArray();
     }
 }

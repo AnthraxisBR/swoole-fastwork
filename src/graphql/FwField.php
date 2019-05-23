@@ -32,7 +32,9 @@ class FwField extends FieldDefinition
             $config['args'] = $this->getArgs();
             $config['name'] = $this->name;
             $config['type'] = $this->getType();
-            $config['resolve'] = $this->getResolvedFunction();
+            $config['resolve'] = function($root, $args){
+                return $this->getResolvedFunction($root, $args);
+            };
             $this->fw_config = $config;
         }
 

@@ -14,7 +14,6 @@ class  Actions
     public function __construct()
     {
 
-        $this->conn = new Entitites();
 
     }
 

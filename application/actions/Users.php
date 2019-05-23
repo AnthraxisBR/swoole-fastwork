@@ -5,10 +5,16 @@ namespace App\actions;
 use database\entity\Users as UsersEntity;
 use database\graphql\Users\Users as UsersGraphQL;
 use GabrielMourao\SwooleFW\actions\Actions;
+use GabrielMourao\SwooleFW\graphql\GraphQL;
 use GabrielMourao\SwooleFW\http\Request;
 
 class Users extends Actions
 {
+
+    public function graphql(GraphQL $GraphQL)
+    {
+        return $GraphQL->output;
+    }
 
     public function index(UsersEntity $UsersEntity)
     {

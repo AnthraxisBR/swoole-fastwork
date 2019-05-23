@@ -1,6 +1,7 @@
 
 routes:
   users:
+    function: graphql
     object: Users
     fields: ['SearchUsers']
 

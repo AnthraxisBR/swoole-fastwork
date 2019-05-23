@@ -38,32 +38,91 @@ class Router
 
     private $graphql_routes = [];
 
+    public $providers = [];
+
     private $hasGraphQL = false;
 
-    public function __construct($request)
+    private $query;
+
+    /**
+     * @var Wrapper
+     */
+    private $wrapper;
+
+    public $route = [];
+
+    public function __construct(Wrapper $wrapper)
     {
         $this->response = new \stdClass();
-        $this->request = $request;
+        $this->wrapper = $wrapper;
+
+
         $this->implementsRoutes();
     }
 
     public function implementsRoutes()
     {
-        $this->method = $this->request->server['request_method'];
-        $this->uri = $this->request->server['request_uri'];
-        $this->remote_addr = $this->request->server['remote_addr'];
-        $this->protocol = $this->request->server['server_protocol'];
+        $this->method = $this->wrapper->getRequestMethod();
+        $this->uri = $this->wrapper->getRequestUri();
+        $this->remote_addr = $this->wrapper->getRequestRemoteAddr();
+        $this->protocol = $this->wrapper->getRequestServerProtocol();
 
         $this->setProviders();
 
+        $uri_exp = explode('/', $this->uri);
+
+        if(isset($uri_exp[0]) and $uri_exp[0] == ''){
+            unset($uri_exp[0]);
+            $uri_exp = array_values($uri_exp);
+        }
 
         $RoutesYaml = new RoutesYamlReader();
-        $this->routes = $RoutesYaml->getRoutes();
+        $this->route = $RoutesYaml->getRoute($uri_exp);
 
-        $GraphQLRoutesYaml = new GraphQLYamlReader();
-        $this->graphql_routes = $GraphQLRoutesYaml->getRoutes();
+        $this->route['function'] = $this->route['methods'][$this->method];
 
-        $this->call();
+        if($this->method == 'POST'){
+            if($this->hasGraphQLQueryBody()){
+                $this->query = $this->wrapper->getPostBody()->query;
+                $GraphQLRoutesYaml = new GraphQLYamlReader();
+                $this->route = $GraphQLRoutesYaml->getRoute($this->route);
+            }
+        }
+        $this->route = (object) $this->route;
+        var_dump((object) $this->route);
+        var_dump($this->providers);
+        //$this->routes = $RoutesYaml->getRoutes();
+
+
+        $this->superCall();
+    }
+
+    private function superCall()
+    {
+        $namespace = '\App\actions\\';
+        $call_string = $namespace . $this->route->action;
+        //if(isset($this->route->graphql)){
+        //    $object_type_namespace = 'database\graphql\\' . $this->route->graphql['object'] . '\\' . $this->route->graphql['object'];
+        //}
+
+        $invokable_function = $call_string . '@' . $this->route->function;
+        $invokable_function = str_replace('()','',$invokable_function);
+
+
+        $this->parameters = $this->getParametersFromInvokableClassFunction($invokable_function);
+
+
+        $action_instanced = new $call_string();
+        foreach ($this->providers as $provider){
+            //TODO fazer injeção de entity manager
+            //TODO fazer injeção grphql e permitir inbjeção de provider independente
+            $action_instanced = $provider::getInstance();
+        }
+
+        if(isset($this->route->graphql)){
+            //TODO Verificar como fazer chamada no método da action
+            $action_instanced->{$this->route->function}(new GraphQL(new $object_type_namespace()));
+        }
     }
 
     private function setProviders()
@@ -192,6 +251,10 @@ class Router
 
     }
 
+    public function hasGraphQLQueryBody()
+    {
+        return isset($this->wrapper->getPostBody()->query);
+    }
 
     protected function getParametersFromInvokableClassFunction($invokable_function)
     {

@@ -51,7 +51,11 @@ class FwObjectType extends ObjectType
 
     public function findFields() : void
     {
-        $fields = scandir(getenv('root_folder') . '/database/graphql/' . $this->fw_name . '/Fields');
+        $str = get_class($this);
+        $exp = explode('\\',$str);
+        $name = $exp[count($exp) - 1];
+
+        $fields = scandir(getenv('root_folder') . '/database/graphql/' . $name . '/Fields');
 
         foreach ($fields as $field) {
             $exp = explode('.', $field);
