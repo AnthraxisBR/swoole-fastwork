@@ -18,6 +18,14 @@ Depois rode:
 
    `$ php start.php`
 
+Teste funcionando:
+
+GraphQL
+   `http://127.0.0.1:8101//api/users?graphql={"query": "query { echo(message: \"Hello World\") }" }`
+
+REST
+   `http://127.0.0.1:8101//api/users`
+
 ### Breve explicação
 
 As rotas serão sempre declaradas no `config/routes.yaml`
