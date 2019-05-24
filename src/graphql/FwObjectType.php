@@ -19,9 +19,10 @@ class FwObjectType extends ObjectType
 
     public $fw_name = '';
 
-    public function __construct($config = null)
+    public function __construct($name, $config = null)
     {
-
+        $this->fw_name = $name;
+        var_dump($this->fw_name );
         if(is_null($config )){
             $this->findFields();
             $config['name'] = $this->fw_name;
@@ -37,6 +38,7 @@ class FwObjectType extends ObjectType
         foreach ($this->fw_fields as $field) {
             $full_namespace = $namespace . '\\' . $field;
             $class = $full_namespace;
+            var_dump($class);
             $fieldInstance = new $class();
             if($fieldInstance instanceof FieldDefinition){
                 $convertedField = $fieldInstance->getField();
@@ -51,11 +53,8 @@ class FwObjectType extends ObjectType
 
     public function findFields() : void
     {
-        $str = get_class($this);
-        $exp = explode('\\',$str);
-        $name = $exp[count($exp) - 1];
 
-        $fields = scandir(getenv('root_folder') . '/database/graphql/' . $name . '/Fields');
+        $fields = scandir(getenv('root_folder') . '/database/graphql/' . $this->fw_name . '/Fields');
 
         foreach ($fields as $field) {
             $exp = explode('.', $field);

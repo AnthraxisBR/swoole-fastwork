@@ -10,13 +10,16 @@ namespace database\graphql\Users;
 
 
 use GabrielMourao\SwooleFW\graphql\FwObjectType;
+use GabrielMourao\SwooleFW\graphql\GraphQL;
 
-class Users extends FwObjectType
+class Users extends GraphQL
 {
 
-    public function __construct( $config = null, $fw_name = '')
+
+
+    public function __construct( $entity , $query)
     {
-        $this->fw_name = $fw_name;
-        parent::__construct($config);
+        $this->object_type = new FwObjectType('Users');
+        parent::__construct($entity , $query);
     }
 }

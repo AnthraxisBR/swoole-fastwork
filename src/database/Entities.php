@@ -85,5 +85,11 @@ class Entities
         return $class;
     }
 
+    public function graphql()
+    {
+        return $this->graphql;
+    }
+
+
 
 }

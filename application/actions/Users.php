@@ -11,19 +11,14 @@ use GabrielMourao\SwooleFW\http\Request;
 class Users extends Actions
 {
 
-    public function graphql(GraphQL $GraphQL)
+    public function graphql(UsersEntity $UsersEntity, UsersGraphQL $UsersGraphQL)
     {
-        return $GraphQL->output;
+        return $UsersGraphQL->output;
     }
 
     public function index(UsersEntity $UsersEntity)
     {
-        if(is_null($UsersEntity->graphql)){
-
-            return $UsersEntity->all();
-        }else{
-            return $UsersEntity->graphql->output;
-        }
+        return $UsersEntity->all();
     }
 
     public function get_user(UsersEntity $UsersEntity, int $id )

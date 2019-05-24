@@ -7,6 +7,7 @@ routes:
       methods:
         GET: index
         POST: store
+      graphql: Users
       subroutes:
           <int:id>:
             action: Users

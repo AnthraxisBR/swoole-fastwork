@@ -109,18 +109,18 @@ class Router
 
         foreach ($this->parameters as $param){
             $ref = $param->getClass()->name::getInjectReference();
-            $this->application->appendProvider($this->providers[$ref]->getInstance($this->parameters, $this->wrapper->getRequest()));
+            if(isset($this->application->providers['entity'])){
+                $this->application->appendProvider($this->providers[$ref]->getInstance($parameters = $this->parameters, $swoole_request = $this->wrapper->getRequest(), $entity = $this->application->providers['entity']));
+            }else{
+                $this->application->appendProvider($this->providers[$ref]->getInstance($this->parameters, $this->wrapper->getRequest()));
+            }
         }
+        var_dump('dupli');
 
         $this->providers = $this->application->providers;
         unset($this->application->providers);
 
-        if(!isset($arg)){
-            $this->response = call_user_func_array([$this->application,$function],$this->providers);
-        }else{
-            $this->attr_setted[] = $this->application->providers;
-            $this->response = call_user_func_array([$this->application,$function],$this->attr_setted);
-        }
+        $this->response = call_user_func_array([$this->application,$function],$this->providers);
     }
 
     private function setProviders()
