@@ -1,11 +1,17 @@
 <?php
 
 namespace GabrielMourao\SwooleFW\http;
+use GabrielMourao\SwooleFW\traits\Injection;
 use GuzzleHttp\Psr7\Request as RequestBase;
 use Swoole\Http\Request as SwooleRequest;
 
 class Request extends RequestBase
 {
+
+    use Injection;
+
+    public static $injection_reference = 'request';
+
     public function __construct(
         SwooleRequest $request,
         $method = '',
@@ -15,7 +21,14 @@ class Request extends RequestBase
         $version = '1.1'
     )
     {
+
+
+
         $this->swoole_request = $request;
+
+        if($request->server['request_method'] == 'POST'){
+            $this->setData($request->rawContent());
+        }
 
         parent::__construct(
             $request->server['request_method'],
@@ -26,6 +39,10 @@ class Request extends RequestBase
         );
     }
 
+    public function setData($data)
+    {
+        $this->data = json_decode($data);
+    }
 
     public function getData()
     {

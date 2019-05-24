@@ -4,13 +4,14 @@ namespace database\entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use GabrielMourao\SwooleFW\database\Entities;
 use GabrielMourao\SwooleFW\database\Entitites;
 
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity
  */
-class Users extends Entitites
+class Users extends Entities
 {
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
     public $id;

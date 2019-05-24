@@ -5,10 +5,16 @@ namespace GabrielMourao\SwooleFW\database;
 
 
 use Doctrine\ORM\ORMException;
+use GabrielMourao\SwooleFW\traits\Injection;
 
-class Entitites
+class Entities
 {
-    public $graphql = null;
+
+    use Injection;
+
+    public static $injection_reference = 'entities';
+
+    private $graphql = null;
 
     private $connect;
 
@@ -78,5 +84,6 @@ class Entitites
         }
         return $class;
     }
+
 
 }

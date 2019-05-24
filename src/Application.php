@@ -39,7 +39,7 @@ class Application
     public function run()
     {
         if($this->isHttpProtocol()){
-            $this->servers['HttpServer']->process();
+            return $this->servers['HttpServer']->process();
         }
     }
 

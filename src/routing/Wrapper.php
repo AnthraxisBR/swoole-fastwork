@@ -5,6 +5,7 @@ namespace GabrielMourao\SwooleFW\routing;
 
 
 use GabrielMourao\SwooleFW\builder\Builder;
+use GabrielMourao\SwooleFW\http\Response;
 
 class Wrapper
 {
@@ -15,7 +16,7 @@ class Wrapper
 
     public $route;
 
-    public function __construct($request, $response)
+    public function __construct($request, Response $response)
     {
 
         $this->request = $request;
@@ -27,6 +28,11 @@ class Wrapper
     public function getPostBody()
     {
         return json_decode($this->getRequest()->rawContent());
+    }
+
+    public function getHeaders()
+    {
+        return $this->getRequest()->headers;
     }
 
     public function getRequestMethod()
@@ -61,5 +67,8 @@ class Wrapper
     public function process()
     {
         $this->route = Builder::route($this);
+        $this->response->setBody($this->route->getResponse());
+        $this->response->swoole_response->header('Content-Type', 'application/json');
+        return $this->response;
     }
 }

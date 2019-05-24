@@ -11,10 +11,19 @@ class  Actions
 
     public $conn;
 
+    public $providers = [];
+
     public function __construct()
     {
 
+    }
 
+
+    public function appendProvider($provider)
+    {
+        if(!is_null($provider)){
+            $this->providers[$provider->name] = $provider;
+        }
     }
 
 }

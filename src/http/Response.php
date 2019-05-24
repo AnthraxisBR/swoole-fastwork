@@ -34,4 +34,9 @@ class Response extends ResponseBase
         parent::__construct($this->getStatusCode(), $this->getHeaders(), $body, $this->getProtocolVersion(), $this->getReasonPhrase());
 
     }
+
+    public function swoole()
+    {
+        return $this->swoole_response;
+    }
 }

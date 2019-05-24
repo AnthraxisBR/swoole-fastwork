@@ -36,9 +36,9 @@ class Users extends Actions
         return $UsersGraphQL->output;
     }
 
-    public function store(UsersEntity $UsersEntity, Request $Request)
+    public function store(Request $request, UsersEntity $UsersEntity)
     {
-        return $UsersEntity->create($Request->getData());
+        return $UsersEntity->create($request->getData());
     }
 
     public function getResponse()

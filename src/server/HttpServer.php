@@ -23,13 +23,13 @@ class HttpServer extends \swoole_http_server
         parent::__construct($this->host, $this->port);
 
         $this->on("request", function ($request, $response) use (&$app){
-            $response->end(
-                $app->appendConfig(
+            $response = $app->appendConfig(
                     $this,
                     new Request($request),
                     new Response($response)
-                )
-                ->run());
+            )->run();
+
+            $response->swoole()->end($response->getBody());
         });
 
     }

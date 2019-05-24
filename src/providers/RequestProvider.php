@@ -3,10 +3,10 @@
 namespace GabrielMourao\SwooleFW\providers;
 
 
-use GabrielMourao\SwooleFW\database\Entities;
+use GabrielMourao\SwooleFW\database\Entitites;
 use GabrielMourao\SwooleFW\providers\BaseProvider;
 
-class EntitiesProvider extends BaseProvider
+class RequestProvider extends BaseProvider
 {
     public $object_reference;
 
@@ -14,13 +14,12 @@ class EntitiesProvider extends BaseProvider
 
     public function __construct()
     {
-        $this->object_reference = 'GabrielMourao\SwooleFW\database\Entities';
-        $this->name = 'entity';
+        $this->object_reference = 'GabrielMourao\SwooleFW\http\Request';
+        $this->name = 'request';
     }
 
     public function getReference()
     {
         return $this->object_reference;
     }
-
 }

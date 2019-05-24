@@ -2,3 +2,4 @@
 providers:
   entities: 'GabrielMourao\SwooleFW\providers\EntitiesProvider'
   graphql: 'GabrielMourao\SwooleFW\providers\GraphQLProvider'
+  request: 'GabrielMourao\SwooleFW\providers\RequestProvider'
