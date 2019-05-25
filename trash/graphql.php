@@ -46,4 +46,4 @@ try {
     ];
 }
 header('Content-Type: application/json');
-echo json_encode($output);
+echo json_encode($query);

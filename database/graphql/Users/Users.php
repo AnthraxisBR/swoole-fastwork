@@ -15,11 +15,9 @@ use GabrielMourao\SwooleFW\graphql\GraphQL;
 class Users extends GraphQL
 {
 
-
-
-    public function __construct( $entity , $query)
+    public function find($message)
     {
-        $this->object_type = new FwObjectType('Users');
-        parent::__construct($entity , $query);
+        return $message;
     }
+
 }

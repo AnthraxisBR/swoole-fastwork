@@ -115,11 +115,10 @@ class Router
                 $this->application->appendProvider($this->providers[$ref]->getInstance($this->parameters, $this->wrapper->getRequest()));
             }
         }
-        var_dump('dupli');
 
         $this->providers = $this->application->providers;
-        unset($this->application->providers);
 
+        unset($this->application->providers);
         $this->response = call_user_func_array([$this->application,$function],$this->providers);
     }
 

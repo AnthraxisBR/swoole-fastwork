@@ -22,39 +22,47 @@ class FwField extends FieldDefinition
 
     public $fw_config = [];
 
-    public function __construct($config = null)
+    public $obj;
+
+    public function __construct($obj, $config = null)
     {
+        $this->obj = $obj;
+
+
         $this->setFieldName($this->whoAmI());
+
         if(is_null($config)){
             /**
              * Defined on final class
              */
             $config['args'] = $this->getArgs();
+
             $config['name'] = $this->name;
             $config['type'] = $this->getType();
-            $config['resolve'] = function($root, $args){
-                return $this->getResolvedFunction($root, $args);
+            $config['resolve'] = function ($root, $args) {
+                $this->getResolvedFunction($root, $args);
             };
             $this->fw_config = $config;
+        }else{
+            parent::__construct($config);
         }
-
-        parent::__construct($this->fw_config);
     }
 
     public function getResolvedFunction($root = '', $args = []) //: Actions
     {
         $resolve_exp = explode('::',$this->resolve);
         if(count($resolve_exp) == 1){
-            $class = $resolve_exp[0];
             $function = $resolve_exp[1];
-            $full_class = '\App\actions\\' . $class;
-            $actions = new $full_class();
-            return $actions->{$function}($args);
+            return $this->obj->{$function}($args);
         }
     }
 
+    public function getField()
+    {
+        return $this->field;
+    }
 
-    public function getField() : array
+    public function setFields() : array
     {
         $response = [];
         $response[$this->field_name] = [];
@@ -83,6 +91,7 @@ class FwField extends FieldDefinition
 
     public function getType(string $type = null) : Type
     {
+
         if(is_null($type)){
             return Type::{$this->type}();
         }

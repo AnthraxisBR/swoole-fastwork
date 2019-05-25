@@ -19,33 +19,35 @@ class FwObjectType extends ObjectType
 
     public $fw_name = '';
 
-    public function __construct($name, $config = null)
+    public $entity;
+
+    public function __construct($entity, $name, $config = null)
     {
         $this->fw_name = $name;
-        var_dump($this->fw_name );
         if(is_null($config )){
             $this->findFields();
             $config['name'] = $this->fw_name;
-            $config['fields'] = $this->convertFwFields();
+            $config['fields'] = $this->convertFwFields($entity);
         }
         parent::__construct($config);
     }
 
-    private function convertFwFields() : array
+    private function convertFwFields($entity) : array
     {
         $namespace = '\database\graphql\Users\Fields';
         $convertedFields = [];
+
         foreach ($this->fw_fields as $field) {
             $full_namespace = $namespace . '\\' . $field;
             $class = $full_namespace;
-            var_dump($class);
-            $fieldInstance = new $class();
+
+            $fieldInstance = new $class($this, $entity);
+            var_dump(get_class($fieldInstance));
             if($fieldInstance instanceof FieldDefinition){
                 $convertedField = $fieldInstance->getField();
-
-                $exp = explode('\\', key($convertedField));
-
-                $convertedFields[$exp[count($exp) - 1]] = $convertedField;
+                $name = $convertedField['name'];
+                unset($convertedField['name']);
+                $convertedFields[$name] = $convertedField;
             }
         }
         return $convertedFields;

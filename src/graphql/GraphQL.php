@@ -11,6 +11,8 @@ namespace GabrielMourao\SwooleFW\graphql;
 
 use GabrielMourao\SwooleFW\database\Entities;
 use GabrielMourao\SwooleFW\traits\Injection;
+use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use GraphQL\GraphQL as GraphQLBase;
 
@@ -20,7 +22,7 @@ class GraphQL
 
     public static $injection_reference = 'graphql';
 
-    private $entity;
+    public $entity;
 
     private $query;
 
@@ -38,8 +40,14 @@ class GraphQL
 
     public function __construct($entity, $query)
     {
-        $this->entity = $entity;
 
+        $name = get_class($this);
+        $name_exp = explode('\\',$name);
+        $name = $name_exp[count($name_exp) - 1];
+
+        $this->object_type = new FwObjectType($entity, $name);
+
+        $this->entity = $entity;
 
         $this->query_string = $query;
 
@@ -50,28 +58,12 @@ class GraphQL
 
     public function build()
     {
-        try {
-
-            $entity_str = str_replace('database\entity\\', '', get_class($this->entity));
-        }catch (\Exception $e){
-            var_dump($e->getMessage());
-        }
-        /**
-         * TODO Fazer a coreção onde está chamando a classe graphql duas vezes de forma errada
-         */
-         var_dump($entity_str);
-        exit();
-
-        $class_entity_str = '\database\graphql\\' . $entity_str . '\\' . $entity_str;
-
-        $graphql_fw = new $class_entity_str(null,$entity_str);
-
         $this->schema = new Schema([
-            'query' => $graphql_fw
+            'query' => $this->object_type
         ]);
-        unset($this->entity);
 
-        $this->result = GraphQLBase::executeQuery($this->schema, $this->query_string, null , null, isset($this->input['variables']) ? $this->input['variables'] : null);
+        $query = json_decode($this->query_string)->query;
+        $this->result = GraphQLBase::executeQuery($this->schema, $query, null , null, isset($this->input['variables']) ? $this->input['variables'] : null);
         $this->output = $this->result->toArray();
     }
 }

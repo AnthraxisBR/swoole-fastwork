@@ -24,14 +24,13 @@ class BaseProvider
                 break;
             }
         }
+
         if(!is_null($class)) {
             if (is_a($class, Request::class, true)) {
                 $inst = new $class($swoole_request);
             } else {
                 if (is_a($class, GraphQL::class, true)) {
-                    var_dump($class . 'asdsadsadasd');
                     $inst = new $class($entity, $swoole_request->rawContent());
-                    var_dump(get_class($inst));
                 }else{
                     if (is_a($class, Entities::class, true)) {
                         $inst = new $class();

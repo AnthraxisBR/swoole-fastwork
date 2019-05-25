@@ -22,6 +22,11 @@ class HttpServer extends \swoole_http_server
 
         parent::__construct($this->host, $this->port);
 
+
+        $this->on('start', function ($server) {
+            echo "Swoole http server is started at http://" . $this->host . ":" . $this->port ."\n";
+        });
+
         $this->on("request", function ($request, $response) use (&$app){
             $response = $app->appendConfig(
                     $this,

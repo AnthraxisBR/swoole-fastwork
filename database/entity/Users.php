@@ -25,7 +25,6 @@ class Users extends Entities
     /** @ORM\Column(type="string", length=250) */
     public $email;
 
-
     public function getName() { return $this->name; }
     public function getPassword() { return $this->password; }
     public function getEmail() { return $this->email; }
