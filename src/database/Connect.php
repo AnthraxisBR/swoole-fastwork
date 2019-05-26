@@ -58,15 +58,15 @@ class Connect
      */
     public static function getConnectPDO($config)
     {
-        $pdo = new \PDO("{$config['ddriver']}:port={$config['port']};host={$config['host']};dbname={$config['database']}", $config['username'], $config['password']);
+        $pdo = new \PDO("{$config['driver']}:port={$config['port']};host={$config['host']};dbname={$config['database']}", $config['username'], $config['password']);
         $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
         return $pdo;
     }
 
-    private function connect() : void
+    public function connect() : void
     {
-
         $driver = new AnnotationDriver(new AnnotationReader(), $this->paths);
+
 
         $this->config = Setup::createAnnotationMetadataConfiguration($this->paths, $this->dev_mode);
 
