@@ -1,6 +1,6 @@
 <?php
 
-namespace GabrielMourao\SwooleFW\database;
+namespace AnthraxisBR\SwooleFW\database;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\Common\Persistence\Mapping\Driver\PHPDriver;

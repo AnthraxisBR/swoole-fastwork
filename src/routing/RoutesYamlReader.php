@@ -1,7 +1,7 @@
 <?php
 
 
-namespace GabrielMourao\SwooleFW\routing;
+namespace AnthraxisBR\SwooleFW\routing;
 
 use Symfony\Component\Yaml\Yaml;
 

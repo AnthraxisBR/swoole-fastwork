@@ -4,8 +4,8 @@ namespace database\entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use GabrielMourao\SwooleFW\database\Entities;
-use GabrielMourao\SwooleFW\database\Entitites;
+use AnthraxisBR\SwooleFW\database\Entities;
+use AnthraxisBR\SwooleFW\database\Entitites;
 
 /**
  * @ORM\Table(name="users")

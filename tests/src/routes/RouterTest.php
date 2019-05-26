@@ -2,7 +2,7 @@
 
 namespace tests\src\routes;
 
-use GabrielMourao\SwooleFW\routing\RoutesYamlReader;
+use AnthraxisBR\SwooleFW\routing\RoutesYamlReader;
 use tests\TestCase;
 
 class RouterTest extends TestCase

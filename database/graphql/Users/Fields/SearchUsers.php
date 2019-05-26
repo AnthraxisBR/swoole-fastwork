@@ -8,8 +8,8 @@
 
 namespace database\graphql\Users\Fields;
 
-use GabrielMourao\SwooleFW\graphql\FwField;
-use GabrielMourao\SwooleFW\graphql\FwObjectType;
+use AnthraxisBR\SwooleFW\graphql\FwField;
+use AnthraxisBR\SwooleFW\graphql\FwObjectType;
 use GraphQL\Type\Definition\Type;
 
 final class SearchUsers extends FwField

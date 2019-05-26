@@ -4,9 +4,9 @@ namespace App\actions;
 
 use database\entity\Users as UsersEntity;
 use database\graphql\Users\Users as UsersGraphQL;
-use GabrielMourao\SwooleFW\actions\Actions;
-use GabrielMourao\SwooleFW\graphql\GraphQL;
-use GabrielMourao\SwooleFW\http\Request;
+use AnthraxisBR\SwooleFW\actions\Actions;
+use AnthraxisBR\SwooleFW\graphql\GraphQL;
+use AnthraxisBR\SwooleFW\http\Request;
 
 class Users extends Actions
 {

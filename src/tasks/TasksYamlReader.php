@@ -7,33 +7,19 @@ use AnthraxisBR\SwooleFW\Application;
 use Symfony\Component\Yaml\Yaml;
 
 
-class ServerYamlReader
+class TasksYamlReader
 {
 
     public static $yaml_file = [];
 
     public static $instances = [];
-    public static function getExtraConfig()
+
+    public static function getTasks()
     {
         try {
-            $config = getenv('root_folder') . 'config/server.yml';
+            $config = getenv('root_folder') . 'config/tasks.yml';
         }catch (\Exception $e){
-            $config = getenv('root_folder') . 'config/server.yaml';
-        }
-
-        self::$yaml_file = Yaml::parseFile($config);
-
-        unset(self::$yaml_file['server']);
-
-        return self::$yaml_file;
-    }
-
-    public static function getConfig(Application $app)
-    {
-        try {
-            $config = getenv('root_folder') . 'config/server.yml';
-        }catch (\Exception $e){
-            $config = getenv('root_folder') . 'config/server.yaml';
+            $config = getenv('root_folder') . 'config/tasks.yaml';
         }
 
         self::$yaml_file = Yaml::parseFile($config);

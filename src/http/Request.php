@@ -1,7 +1,7 @@
 <?php
 
-namespace GabrielMourao\SwooleFW\http;
-use GabrielMourao\SwooleFW\traits\Injection;
+namespace AnthraxisBR\SwooleFW\http;
+use AnthraxisBR\SwooleFW\traits\Injection;
 use GuzzleHttp\Psr7\Request as RequestBase;
 use Swoole\Http\Request as SwooleRequest;
 
@@ -39,9 +39,19 @@ class Request extends RequestBase
         );
     }
 
+    public function getServerJson()
+    {
+        return $this->swoole_request->server;
+    }
+
     public function setData($data)
     {
         $this->data = json_decode($data);
+    }
+
+    public function getJsonData()
+    {
+        return json_encode($this->data);
     }
 
     public function getData()

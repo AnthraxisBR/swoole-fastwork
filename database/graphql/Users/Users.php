@@ -9,8 +9,8 @@
 namespace database\graphql\Users;
 
 
-use GabrielMourao\SwooleFW\graphql\FwObjectType;
-use GabrielMourao\SwooleFW\graphql\GraphQL;
+use AnthraxisBR\SwooleFW\graphql\FwObjectType;
+use AnthraxisBR\SwooleFW\graphql\GraphQL;
 
 class Users extends GraphQL
 {

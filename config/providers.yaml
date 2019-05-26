@@ -1,5 +1,8 @@
 
-providers:
-  entities: 'GabrielMourao\SwooleFW\providers\EntitiesProvider'
-  graphql: 'GabrielMourao\SwooleFW\providers\GraphQLProvider'
-  request: 'GabrielMourao\SwooleFW\providers\RequestProvider'
+action_providers:
+  entities: 'AnthraxisBR\SwooleFW\providers\EntitiesProvider'
+  graphql: 'AnthraxisBR\SwooleFW\providers\GraphQLProvider'
+  request: 'AnthraxisBR\SwooleFW\providers\RequestProvider'
+  tasks: 'AnthraxisBR\SwooleFW\providers\TasksProvider'
+fixed_providers:
+  auth: 'AnthraxisBR\SwooleFW\providers\AuthProvider'

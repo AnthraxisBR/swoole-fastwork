@@ -1,10 +1,10 @@
 <?php
 
-namespace GabrielMourao\SwooleFW\providers;
+namespace AnthraxisBR\SwooleFW\providers;
 
 
-use GabrielMourao\SwooleFW\database\Entities;
-use GabrielMourao\SwooleFW\providers\BaseProvider;
+use AnthraxisBR\SwooleFW\database\Entities;
+use AnthraxisBR\SwooleFW\providers\BaseProvider;
 
 class EntitiesProvider extends BaseProvider
 {
@@ -14,7 +14,7 @@ class EntitiesProvider extends BaseProvider
 
     public function __construct()
     {
-        $this->object_reference = 'GabrielMourao\SwooleFW\database\Entities';
+        $this->object_reference = 'AnthraxisBR\SwooleFW\database\Entities';
         $this->name = 'entity';
     }
 

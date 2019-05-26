@@ -6,7 +6,7 @@
  * Time: 11:22
  */
 
-namespace GabrielMourao\SwooleFW\traits;
+namespace AnthraxisBR\SwooleFW\traits;
 
 
 trait ObjectIdentity

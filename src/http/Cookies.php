@@ -1,7 +1,7 @@
 <?php
 
 
-namespace GabrielMourao\SwooleFW\server;
+namespace AnthraxisBR\SwooleFW\server;
 
 
 class Cookies

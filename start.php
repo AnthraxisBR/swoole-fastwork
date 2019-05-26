@@ -2,7 +2,7 @@
 
 include "app.php";
 
-use GabrielMourao\SwooleFW\server\Server;
+use AnthraxisBR\SwooleFW\server\Server;
 
 
 $http = new Server($app);

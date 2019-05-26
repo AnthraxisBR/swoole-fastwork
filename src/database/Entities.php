@@ -1,11 +1,11 @@
 <?php
 
 
-namespace GabrielMourao\SwooleFW\database;
+namespace AnthraxisBR\SwooleFW\database;
 
 
 use Doctrine\ORM\ORMException;
-use GabrielMourao\SwooleFW\traits\Injection;
+use AnthraxisBR\SwooleFW\traits\Injection;
 
 class Entities
 {

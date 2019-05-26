@@ -6,11 +6,11 @@
  * Time: 11:13
  */
 
-namespace GabrielMourao\SwooleFW\graphql;
+namespace AnthraxisBR\SwooleFW\graphql;
 
 
-use GabrielMourao\SwooleFW\database\Entities;
-use GabrielMourao\SwooleFW\traits\Injection;
+use AnthraxisBR\SwooleFW\database\Entities;
+use AnthraxisBR\SwooleFW\traits\Injection;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;

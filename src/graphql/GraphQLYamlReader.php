@@ -1,7 +1,7 @@
 <?php
 
 
-namespace GabrielMourao\SwooleFW\graphql;
+namespace AnthraxisBR\SwooleFW\graphql;
 
 use Symfony\Component\Yaml\Yaml;
 

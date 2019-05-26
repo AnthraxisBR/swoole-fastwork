@@ -17,7 +17,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "GabrielMourao\\SwooleFW\\": "src/",
+            "AnthraxisBR\\SwooleFW\\": "src/",
             "App\\": "application/",
             "database\\" : "database/",
             "tests\\" : "tests/"

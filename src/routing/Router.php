@@ -1,13 +1,13 @@
 <?php
 
-namespace GabrielMourao\SwooleFW\routing;
+namespace AnthraxisBR\SwooleFW\routing;
 
 
-use GabrielMourao\SwooleFW\database\Entitites;
-use GabrielMourao\SwooleFW\graphql\GraphQL;
-use GabrielMourao\SwooleFW\http\Request;
-use GabrielMourao\SwooleFW\providers\Providers;
-use GabrielMourao\SwooleFW\graphql\GraphQLYamlReader;
+use AnthraxisBR\SwooleFW\database\Entitites;
+use AnthraxisBR\SwooleFW\graphql\GraphQL;
+use AnthraxisBR\SwooleFW\http\Request;
+use AnthraxisBR\SwooleFW\providers\Providers;
+use AnthraxisBR\SwooleFW\graphql\GraphQLYamlReader;
 use Illuminate\Support\Str;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -32,7 +32,7 @@ class Router
 
     public $response;
 
-    private $parameters;
+    public $parameters;
 
     private $attr_setted = [];
 
@@ -47,7 +47,7 @@ class Router
     /**
      * @var Wrapper
      */
-    private $wrapper;
+    public $wrapper;
 
     public $route = [];
 
@@ -110,15 +110,16 @@ class Router
         foreach ($this->parameters as $param){
             $ref = $param->getClass()->name::getInjectReference();
             if(isset($this->application->providers['entity'])){
-                $this->application->appendProvider($this->providers[$ref]->getInstance($parameters = $this->parameters, $swoole_request = $this->wrapper->getRequest(), $entity = $this->application->providers['entity']));
+                $this->application->appendProvider($this->providers['action_providers'][$ref]->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest(), $entity = $this->application->providers['entity']));
             }else{
-                $this->application->appendProvider($this->providers[$ref]->getInstance($this->parameters, $this->wrapper->getRequest()));
+                $this->application->appendProvider($this->providers['action_providers'][$ref]->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest()));
             }
         }
 
         $this->providers = $this->application->providers;
 
         unset($this->application->providers);
+
         $this->response = call_user_func_array([$this->application,$function],$this->providers);
     }
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace GabrielMourao\SwooleFW\providers;
+namespace AnthraxisBR\SwooleFW\providers;
 
 
-use GabrielMourao\SwooleFW\database\Entitites;
-use GabrielMourao\SwooleFW\providers\BaseProvider;
-use GabrielMourao\SwooleFW\traits\Injection;
+use AnthraxisBR\SwooleFW\database\Entitites;
+use AnthraxisBR\SwooleFW\providers\BaseProvider;
+use AnthraxisBR\SwooleFW\traits\Injection;
 
-class GraphQLProvider extends BaseProvider
+class TasksProvider extends BaseProvider
 {
 
     public $object_reference;
@@ -16,8 +16,8 @@ class GraphQLProvider extends BaseProvider
 
     public function __construct()
     {
-        $this->object_reference = 'GabrielMourao\SwooleFW\graphql\GraphQL';
-        $this->name = 'graphql';
+        $this->object_reference = 'AnthraxisBR\SwooleFW\tasks\TasksManager';
+        $this->name = 'tasks';
     }
 
     public function getReference()

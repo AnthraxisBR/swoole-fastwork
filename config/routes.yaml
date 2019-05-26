@@ -14,5 +14,15 @@ routes:
             methods:
               GET: get_user
               PUT': update
-
+    tasks:
+      action: Tasks
+      methods:
+        GET: index
+        POST: create
+      subroutes:
+        create:
+          action: Tasks
+          methods:
+            GET: /
+            POST': create
 
