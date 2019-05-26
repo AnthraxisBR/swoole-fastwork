@@ -6,11 +6,11 @@
  * Time: 11:16
  */
 
-namespace GabrielMourao\SwooleFW\graphql;
+namespace AnthraxisBR\SwooleFW\graphql;
 
 
-use GabrielMourao\SwooleFW\actions\Actions;
-use GabrielMourao\SwooleFW\traits\ObjectIdentity;
+use AnthraxisBR\SwooleFW\actions\Actions;
+use AnthraxisBR\SwooleFW\traits\ObjectIdentity;
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\Type;
 

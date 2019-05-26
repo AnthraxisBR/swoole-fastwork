@@ -1,6 +1,6 @@
 <?php
 
-namespace GabrielMourao\SwooleFW\http;
+namespace AnthraxisBR\SwooleFW\http;
 
 use \GuzzleHttp\Psr7\Request;
 

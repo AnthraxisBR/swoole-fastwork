@@ -1,11 +1,11 @@
 <?php
 
 
-namespace GabrielMourao\SwooleFW\routing;
+namespace AnthraxisBR\SwooleFW\routing;
 
 
-use GabrielMourao\SwooleFW\builder\Builder;
-use GabrielMourao\SwooleFW\http\Response;
+use AnthraxisBR\SwooleFW\builder\Builder;
+use AnthraxisBR\SwooleFW\http\Response;
 
 class Wrapper
 {
@@ -16,8 +16,11 @@ class Wrapper
 
     public $route;
 
-    public function __construct($request, Response $response)
+    public $server;
+
+    public function __construct($server, $request, Response $response)
     {
+        $this->server = $server;
 
         $this->request = $request;
 

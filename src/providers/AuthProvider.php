@@ -6,7 +6,7 @@ namespace AnthraxisBR\SwooleFW\providers;
 use AnthraxisBR\SwooleFW\database\Entities;
 use AnthraxisBR\SwooleFW\providers\BaseProvider;
 
-class EntitiesProvider extends BaseProvider
+class AuthProvider extends BaseProvider
 {
     public $object_reference;
 
@@ -14,8 +14,8 @@ class EntitiesProvider extends BaseProvider
 
     public function __construct()
     {
-        $this->object_reference = 'AnthraxisBR\SwooleFW\database\Entities';
-        $this->name = 'entity';
+        $this->object_reference = 'AnthraxisBR\SwooleFW\auth\Authentication';
+        $this->name = 'auth';
     }
 
     public function getReference()

@@ -6,7 +6,7 @@
  * Time: 11:13
  */
 
-namespace GabrielMourao\SwooleFW\graphql;
+namespace AnthraxisBR\SwooleFW\graphql;
 
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\ObjectType;

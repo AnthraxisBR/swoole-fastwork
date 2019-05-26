@@ -1,8 +1,8 @@
 <?php
 
-namespace GabrielMourao\SwooleFW\actions;
+namespace AnthraxisBR\SwooleFW\actions;
 
-use GabrielMourao\SwooleFW\database\Entitites;
+use AnthraxisBR\SwooleFW\database\Entitites;
 
 class  Actions
 {
@@ -18,7 +18,10 @@ class  Actions
 
     }
 
-
+    /**
+     * adiciona
+     * @param $provider
+     */
     public function appendProvider($provider)
     {
         if(!is_null($provider)){

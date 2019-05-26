@@ -1,9 +1,9 @@
 <?php
 
-namespace GabrielMourao\SwooleFW\server;
+namespace AnthraxisBR\SwooleFW\server;
 
-use GabrielMourao\SwooleFW\Application;
-use GabrielMourao\SwooleFW\server\ServerYamlReader;
+use AnthraxisBR\SwooleFW\Application;
+use AnthraxisBR\SwooleFW\server\ServerYamlReader;
 
 class Server
 {
@@ -12,6 +12,7 @@ class Server
 
     public function __construct(Application $app)
     {
+
         $this->config($app);
 
         $this->run();
@@ -23,6 +24,7 @@ class Server
          * $config is one of Swoole server class
          */
         foreach ($this->getConfig() as $config){
+            $config->implements_config($this->extra_config());
             $config->start();
         }
     }
@@ -30,6 +32,11 @@ class Server
     public function config(Application $app)
     {
         $this->setConfig(ServerYamlReader::getConfig($app));
+    }
+
+    public function extra_config()
+    {
+        return ServerYamlReader::getExtraConfig();
     }
 
     public function setConfig($config)

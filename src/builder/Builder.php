@@ -1,10 +1,11 @@
 <?php
 
 
-namespace GabrielMourao\SwooleFW\builder;
+namespace AnthraxisBR\SwooleFW\builder;
 
 
-use GabrielMourao\SwooleFW\routing\Router;
+use AnthraxisBR\SwooleFW\routing\Router;
+use AnthraxisBR\SwooleFW\routing\Wrapper;
 
 class Builder
 {
@@ -14,5 +15,8 @@ class Builder
         return new Router($object);
     }
 
-
+    public static function wrapper($server, $request, $response)
+    {
+        return new Wrapper($server, $request, $response);
+    }
 }

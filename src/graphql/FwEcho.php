@@ -6,7 +6,7 @@
  * Time: 11:20
  */
 
-namespace GabrielMourao\SwooleFW\graphql;
+namespace AnthraxisBR\SwooleFW\graphql;
 
 
 final class FwEcho extends FwField
