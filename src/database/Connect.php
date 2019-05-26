@@ -95,9 +95,14 @@ class Connect
         }
     }
 
-    private function setPaths(): void
+    public function changePath(): void
     {
         $this->paths = [getenv('root_folder') . 'application/Entities'];
+    }
+
+    private function setPaths(): void
+    {
+        $this->paths = [getenv('root_folder') . 'database/entity'];
     }
 
     private function setEnv() : void

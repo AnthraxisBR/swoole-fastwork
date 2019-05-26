@@ -23,3 +23,4 @@ $metadata->mapField(array(
         'unsigned' => true,
         'default' => 0
     )
+));

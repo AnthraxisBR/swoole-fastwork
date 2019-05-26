@@ -4,8 +4,9 @@ namespace database\entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+
 use AnthraxisBR\SwooleFW\database\Entities;
-use AnthraxisBR\SwooleFW\database\Entitites;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
  * @ORM\Table(name="users")
@@ -25,9 +26,48 @@ class Users extends Entities
     /** @ORM\Column(type="string", length=250) */
     public $email = null;
 
-    public function getName() { return $this->name; }
-    public function getPassword() { return $this->password; }
-    public function getEmail() { return $this->email; }
+    /** @ORM\Column(type="string", length=250) */
+    public $text = null;
+
+    public function getName() : string { return $this->name; }
+    public function getPassword() : string { return $this->password; }
+    public function getEmail() : string { return $this->email; }
+
+    public static function loadMetadata(ClassMetadata $metadata)
+    {
+        $metadata->mapField([
+            'id' => true,
+            'fieldName' => 'id',
+            'type' => 'integer'
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'name',
+            'type' => 'string',
+            'options' => [
+                'fixed' => true,
+                'comment' => "User's name"
+            ]
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'password',
+            'type' => 'string',
+            'options' => [
+                'fixed' => true,
+                'comment' => "User's password"
+            ]
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'email',
+            'type' => 'string',
+            'options' => [
+                'fixed' => true,
+                'comment' => "User's email"
+            ]
+        ]);
+    }
 
     public function __toString()
     {
