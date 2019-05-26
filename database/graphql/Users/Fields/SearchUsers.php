@@ -15,23 +15,26 @@ use GraphQL\Type\Definition\Type;
 final class SearchUsers extends FwField
 {
 
-    public $field;
+    public $field = null;
 
-    public function __construct(FwObjectType $obj, $entity)
+    public $type = 'string';
+
+    public $args = [
+        'id' => 'nonnull::int'
+    ];
+
+    public $resolve;
+
+    public $entity = null;
+
+    public function __construct(FwObjectType $obj, $entity = null)
     {
+        parent::__construct($obj = $obj, null, $entity = $entity);
+    }
 
-        $this->field = [
-            'name' => 'SearchUsers',
-            'type' => Type::string(),
-            'args' => [
-                'id' => Type::nonNull(Type::int()),
-            ],
-            'resolve' => function ($root, $args) use($entity) {
-                return $entity->unique($args['id']);
-            }
-        ];
-
-        parent::__construct($obj, $this->field);
+    public function resolve($root, $args)
+    {
+        return $this->entity->unique($args['id']);
     }
 
 }

@@ -18,16 +18,21 @@ class FwField extends FieldDefinition
 {
     use ObjectIdentity;
 
-    public $field_name = '';
+    public $field_name = [];
 
     public $fw_config = [];
 
     public $obj;
 
-    public function __construct($obj, $config = null)
+    public $entity;
+
+    public function __construct($obj = null, $config = null, $entity = null)
     {
         $this->obj = $obj;
 
+        if(!is_null($entity)){
+            $this->entity = $entity;
+        }
 
         $this->setFieldName($this->whoAmI());
 
@@ -35,14 +40,28 @@ class FwField extends FieldDefinition
             /**
              * Defined on final class
              */
-            $config['args'] = $this->getArgs();
 
-            $config['name'] = $this->name;
+            $config['args'] = $this->getArgs();
+            $config['name'] = $this->field_name;
             $config['type'] = $this->getType();
+/*
             $config['resolve'] = function ($root, $args) {
-                $this->getResolvedFunction($root, $args);
-            };
+                return $this->resolve($root, $args);
+            };*/
+
             $this->fw_config = $config;
+            $exp = explode('\\', $this->field_name);
+            $n = $exp[count($exp) - 1];
+            $this->field_name = [
+                    'name' => $n,
+                    'args' => $config['args'],
+                    'type' => $config['type'],
+                    'resolve' => function ($root, $args) {
+                        return $this->resolve($root, $args);
+                    }
+            ];
+            //parent::__construct($config);
+
         }else{
             parent::__construct($config);
         }
@@ -59,13 +78,13 @@ class FwField extends FieldDefinition
 
     public function getField()
     {
-        return $this->field;
+        return $this->field_name;
     }
 
     public function setFields() : array
     {
         $response = [];
-        $response[$this->field_name] = [];
+        $response[] = [];
         return [
             $this->field_name => [
                 'type' => $this->fw_config['type'],
@@ -82,9 +101,24 @@ class FwField extends FieldDefinition
         $args = [];
         foreach ($this->args as $arg_name => $arg){
             $args[$arg_name] = [];
-            if(isset($arg['type'])){
-                $args[$arg_name]['type'] = $this->getType($arg['type']);
+
+            $exp = explode('::', $arg);
+            if(count($exp) > 1){
+                $max_index = count($exp) - 1;
+                $i = 0;
+                foreach ($exp as $type){
+                    if(isset($exp[count($exp) - 2])){
+                        $prev = count($exp) - 2;
+                    }
+                    if($i == $max_index){
+                        $args[$arg_name] = Type::{$exp[$prev]}(Type::{$type}());
+                    }
+                    $i += 1;
+                }
+            }else{
+                $args[$arg_name] = $this->getType($arg);
             }
+
         }
         return $args;
     }

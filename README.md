@@ -8,7 +8,7 @@ https://github.com/swoole/swoole-src/wiki/Installing
 
 Instale o docker, e docker-compose:
 
-   `$ sudo apt install docker.io docker-compose`
+    `$ sudo apt install docker.io docker-compose`
 
 Depois: 
 

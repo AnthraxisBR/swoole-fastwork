@@ -8,6 +8,7 @@
 
 namespace AnthraxisBR\SwooleFW\graphql;
 
+use AnthraxisBR\SwooleFW\database\Entities;
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
@@ -28,11 +29,12 @@ class FwObjectType extends ObjectType
             $this->findFields();
             $config['name'] = $this->fw_name;
             $config['fields'] = $this->convertFwFields($entity);
+            var_dump(count($config['fields']));
         }
         parent::__construct($config);
     }
 
-    private function convertFwFields($entity) : array
+    private function convertFwFields(Entities $entity) : array
     {
         $namespace = '\database\graphql\Users\Fields';
         $convertedFields = [];
