@@ -1,14 +1,6 @@
-### Swoole Fast Work 
+**Swoole Fast Work**
 
-Este é um projeto que visa prover uma camada de abstração para desenvolvimento de APIs com o Swoole, provendo uma construção baseada em estruturação, assim agilizando o desenvolvimento e a forma de trabalhar.
-
-Pretende prever o multitaks usando coroutines, queues orientada a threads, e também o uso de kubernets como objeto de classe, assim que que estiver 'testável' será criada uma documentação explicando direito o projeto. 
-
-Também pretende integrar nativamente com AWS, GCP, Azure e IBM Cloud.
-
-Atualmente o projeto encontra em fase de esboço.
-
-##Iniciando
+**Iniciando**
 
 Instale o swoole:
 
@@ -24,7 +16,7 @@ Depois:
 
    `$ ./run.sh`
 
-##Banco de dados
+**Banco de dados**
 
 No arquivo `docker-compose.yml` está um imagem do banco mysql, e está pré-configurado.
 
@@ -36,7 +28,7 @@ Qualquer configuração aceita pelo **ORM Doctrine** será aceita.
 Veja: 
 https://www.doctrine-project.org/projects/doctrine-dbal/en/2.9/reference/configuration.html
 
-##Roteamento
+**Roteamento**
 
 Para declarar um rota, é necessário apenas inserilá no arquivo:
 
@@ -49,7 +41,7 @@ Deverá ser criada dentro de:
 
   `application\actions`
   
-##Providers
+**Providers**
 
 O projeto prove o injeção de serviçõs na requisição, que permite alterar, inserir, apagar, ou qualquer coisa, em cima da requisiçãom, antes, durante, ou depois da execução do do código da chamada em sí.
 
@@ -65,7 +57,7 @@ Action providers, são os providers que podem ser injetos diretamente no método
   
 Se for um parametro da função indicada na rota, o serviço será injetado.
 
-##GraphQL
+**GraphQL**
 
 Para declarar que uma rota terá acesso ao recurso, é necessário informar em na configuração no arquigo:
   
@@ -95,7 +87,7 @@ Dentro da pasta:
 
 Lembrando que, para os Fields serem encontrados, é necessário declarar na routa do arquivo de configurações de rotas graphql.
 
-##Queues \ Tasks
+**Queues \ Tasks**
 
 O uso de tasks é bem simples, e não precisa de nada além do proprio swoole até o momento do projeto. 
 
@@ -115,7 +107,7 @@ Para iniciar a classe informe com argumento da função a heranção do TaskMana
 
 A função startTask vai aceitar até 3 argumentos, sempre arrays sem objetos não serializaveis. 
 
-## TODO
+**TODO**
 
 Muita coisa
 
