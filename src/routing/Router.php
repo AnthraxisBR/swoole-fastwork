@@ -28,7 +28,7 @@ class Router
 
     private $routes = [];
 
-    private $application;
+    public $application;
 
     public $response;
 
@@ -116,10 +116,17 @@ class Router
             }
         }
 
+        foreach ($this->providers['fixed_providers'] as $provider){
+            $this->application->appendFixedProvider($provider->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest(), null, true));
+        }
+        $fixed_providers = $this->application->providers['fixed'];
+        unset($this->application->providers['fixed']);
+
         $this->providers = $this->application->providers;
 
         unset($this->application->providers);
 
+        $this->application->providers = $fixed_providers;
         $this->response = call_user_func_array([$this->application,$function],$this->providers);
     }
 

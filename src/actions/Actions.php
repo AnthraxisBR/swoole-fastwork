@@ -29,4 +29,13 @@ class  Actions
         }
     }
 
+    public function appendFixedProvider($provider)
+    {
+        $this->providers['fixed'] = [];
+        if(!is_null($provider)){
+            $this->providers['fixed'][$provider->name] = $provider;
+            $this->providers['fixed'][$provider->name]->routes = $provider->routes;
+        }
+    }
+
 }

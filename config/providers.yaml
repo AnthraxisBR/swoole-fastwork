@@ -5,4 +5,6 @@ action_providers:
   request: 'AnthraxisBR\SwooleFW\providers\RequestProvider'
   tasks: 'AnthraxisBR\SwooleFW\providers\TasksProvider'
 fixed_providers:
-  auth: 'AnthraxisBR\SwooleFW\providers\AuthProvider'
+    auth:
+      provider: AnthraxisBR\SwooleFW\providers\AuthProvider
+      routes: [Users]

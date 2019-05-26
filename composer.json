@@ -6,7 +6,9 @@
         "symfony/yaml": "^4.3@dev",
         "doctrine/orm": "^2.6@dev",
         "phpunit/phpunit": "^8.2@dev",
-        "webonyx/graphql-php": "dev-master"
+        "webonyx/graphql-php": "dev-master",
+        "league/oauth2-server": "dev-master",
+        "doctrine/migrations": "2.0.x-dev"
     },
     "authors": [
         {

@@ -39,6 +39,7 @@ class Request extends RequestBase
         );
     }
 
+
     public function getServerJson()
     {
         return $this->swoole_request->server;

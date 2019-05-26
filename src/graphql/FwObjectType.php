@@ -29,7 +29,6 @@ class FwObjectType extends ObjectType
             $this->findFields();
             $config['name'] = $this->fw_name;
             $config['fields'] = $this->convertFwFields($entity);
-            var_dump(count($config['fields']));
         }
         parent::__construct($config);
     }
@@ -44,7 +43,6 @@ class FwObjectType extends ObjectType
             $class = $full_namespace;
 
             $fieldInstance = new $class($this, $entity);
-            var_dump(get_class($fieldInstance));
             if($fieldInstance instanceof FieldDefinition){
                 $convertedField = $fieldInstance->getField();
                 $name = $convertedField['name'];

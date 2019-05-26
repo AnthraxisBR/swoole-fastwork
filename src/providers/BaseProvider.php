@@ -15,7 +15,7 @@ class BaseProvider
 {
 
 
-    public function getInstance(Router $router, $swoole_request, $entity = null)
+    public function getInstance(Router $router, $swoole_request, $entity = null, $fixed = false)
     {
         $class = null;
         foreach ($router->parameters as $item){
@@ -27,6 +27,12 @@ class BaseProvider
             }
         }
 
+        if($fixed === true) {
+            $class = $this->object_reference;
+            $inst = new $class($router,$this->routes);
+            $inst->name = $this->name;
+            return $inst;
+        }
         if(!is_null($class)) {
             if (is_a($class, Request::class, true)) {
                 $inst = new $class($swoole_request);
@@ -38,7 +44,9 @@ class BaseProvider
                         $inst = new $class();
                     }elseif(is_a($class, TasksManager::class, true)){
                         $inst = new $class($router->wrapper->server);
-                        //throw new Exception('Erro');
+                    }else{
+
+                        $inst = new $class($router);
                     }
                 }
             }

@@ -46,6 +46,7 @@ class Providers
     private function setProviders()
     {
         foreach ( $this->yaml_file as $providers => $configs) {
+
             if($providers == 'action_providers'){
                 if(isset($this->providers['action_providers'])){
                     $this->providers['action_providers'] = [];
@@ -63,8 +64,9 @@ class Providers
                 }
                 foreach ($configs as $provider_name => $config) {
                     if(!isset($this->providers[$provider_name])){
-                        $config = '\\' . $configs[$provider_name];
+                        $config = '\\' . $configs[$provider_name]['provider'];
                         $this->providers['fixed_providers'][$provider_name] = new $config();
+                        $this->providers['fixed_providers'][$provider_name]->routes = $configs[$provider_name]['routes'];
                     }
                 }
             }
