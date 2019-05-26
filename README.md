@@ -30,7 +30,7 @@ https://www.doctrine-project.org/projects/doctrine-dbal/en/2.9/reference/configu
 
 **Roteamento**
 
-Para declarar um rota, é necessário apenas inserilá no arquivo:
+Para declarar um rota, é necessário apenas inserir no arquivo:
 
   `config\routes.yaml`
   
