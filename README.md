@@ -1,5 +1,7 @@
 **Swoole Fast Work**
 
+Wiki: https://github.com/AnthraxisBR/swoole-fastwork/wiki
+
 **Iniciando**
 
 Instale o swoole:
