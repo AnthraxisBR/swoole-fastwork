@@ -1,0 +1,13 @@
+aws:
+  AWS_ACCESS_KEY_ID: AAAAAAAAAAAAAA
+  AWS_SECRET_ACCESS_KEY: SSSSSSSSSSSSSS
+  #profile: default
+  #version: latest
+  region: sa-east-1
+azure:
+  DefaultEndpointsProtocol: https
+  AccountName: AccountName
+  AccountKey: AccountKey
+google:
+  projectId: google-project-id
+  KeyFile: /folder/google-credentials

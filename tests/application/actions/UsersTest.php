@@ -2,14 +2,14 @@
 
 namespace tests\src\routes;
 
-use App\actions\Users;
+use App\actions\UsersAction;
 use tests\TestCase;
 
 class UsersTest extends TestCase
 {
     public function testSetPrefixes()
     {
-        $users = new Users();
+        $users = new UsersAction();
         $users->index();
 
     }

@@ -25,4 +25,7 @@ routes:
           methods:
             GET: /
             POST': create
-
+    cloud:
+      action: CloudServices
+      methods:
+        GET: index

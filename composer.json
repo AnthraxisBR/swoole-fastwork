@@ -8,11 +8,12 @@
         "phpunit/phpunit": "^8.2@dev",
         "webonyx/graphql-php": "dev-master",
         "league/oauth2-server": "dev-master",
-        "doctrine/migrations": "2.0.x-dev",
+        "aws/aws-sdk-php": "^3.0@dev",
         "microsoft/azure-storage-blob": "*",
         "microsoft/azure-storage-table": "*",
         "microsoft/azure-storage-queue": "*",
         "microsoft/azure-storage-file": "*",
+        "google/cloud": "dev-master"
     },
     "authors": [
         {

@@ -37,9 +37,14 @@ class Application
      */
     public function appendConfig($server, Request $request, $response)
     {
-
+        /**
+         * Set request Protocol
+         */
         $this->setProtocol($protocol = $request->swoole_request->server['server_protocol']);
 
+        /**
+         * Set server instances on attribute 'SERVER', it will be used to run the server
+         */
         $this->servers[$this->getServerId($server)] = Builder::wrapper($server, $request, $response);
 
         return $this;
@@ -56,11 +61,22 @@ class Application
         return $server_exp[count($server_exp ) - 1];
     }
 
+    /**
+     * This method will start a tarsg signed on request
+     * @param $serv
+     * @param $task_id
+     * @param $from_id
+     * @param $data
+     */
     public function runSignedTask($serv, $task_id, $from_id, $data)
     {
         $this->taskResponse = Tasks::run($serv, $task_id, $from_id, $data);
     }
 
+    /**
+     * Will run the server when it configured
+     * @return mixed
+     */
     public function run()
     {
         if($this->isHttpProtocol()){

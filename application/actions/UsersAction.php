@@ -8,7 +8,7 @@ use AnthraxisBR\SwooleFW\actions\Actions;
 use AnthraxisBR\SwooleFW\graphql\GraphQL;
 use AnthraxisBR\SwooleFW\http\Request;
 
-class Users extends Actions
+class UsersAction extends Actions
 {
 
     public function graphql(UsersEntity $UsersEntity, UsersGraphQL $UsersGraphQL)

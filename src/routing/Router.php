@@ -96,7 +96,8 @@ class Router
     private function superCall()
     {
         $namespace = '\App\actions\\';
-        $call_string = $namespace . $this->route->action;
+        $call_string = $namespace . $this->route->action . 'Action';
+        var_dump($call_string);
 
         $invokable_function = $call_string . '@' . $this->route->function;
         $invokable_function = str_replace('()','',$invokable_function);
@@ -108,7 +109,7 @@ class Router
         $this->application = new $call_string();
 
         foreach ($this->parameters as $param){
-            $ref = $param->getClass()->name::getInjectReference();
+                $ref = $param->getClass()->name::getInjectReference();
             if(isset($this->application->providers['entity'])){
                 $this->application->appendProvider($this->providers['action_providers'][$ref]->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest(), $entity = $this->application->providers['entity']));
             }else{

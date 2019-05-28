@@ -9,7 +9,7 @@ use AnthraxisBR\SwooleFW\graphql\GraphQL;
 use AnthraxisBR\SwooleFW\http\Request;
 use AnthraxisBR\SwooleFW\tasks\TasksManager;
 
-class Tasks extends Actions
+class TasksAction extends Actions
 {
 
     public function create(TasksManager $TasksManager, Request $request)

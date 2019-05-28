@@ -26,7 +26,6 @@ class BaseProvider
                 break;
             }
         }
-
         if($fixed === true) {
             $class = $this->object_reference;
             $inst = new $class($router,$this->routes);
@@ -34,6 +33,9 @@ class BaseProvider
             return $inst;
         }
         if(!is_null($class)) {
+
+            var_dump($class);
+            var_dump($fixed);
             if (is_a($class, Request::class, true)) {
                 $inst = new $class($swoole_request);
             } else {
@@ -45,7 +47,6 @@ class BaseProvider
                     }elseif(is_a($class, TasksManager::class, true)){
                         $inst = new $class($router->wrapper->server);
                     }else{
-
                         $inst = new $class($router);
                     }
                 }
