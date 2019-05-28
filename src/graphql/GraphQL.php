@@ -38,6 +38,12 @@ class GraphQL
 
     public $object_type;
 
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
     public function __construct($entity, $query)
     {
 

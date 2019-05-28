@@ -38,6 +38,7 @@ class Providers
         }
     }
 
+
     public function getProviders()
     {
         return $this->providers;

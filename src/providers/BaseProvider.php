@@ -34,8 +34,6 @@ class BaseProvider
         }
         if(!is_null($class)) {
 
-            var_dump($class);
-            var_dump($fixed);
             if (is_a($class, Request::class, true)) {
                 $inst = new $class($swoole_request);
             } else {

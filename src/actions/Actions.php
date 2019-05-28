@@ -3,6 +3,7 @@
 namespace AnthraxisBR\SwooleFW\actions;
 
 use AnthraxisBR\SwooleFW\database\Entitites;
+use AnthraxisBR\SwooleFW\providers\BaseProvider;
 
 class  Actions
 {
@@ -19,17 +20,19 @@ class  Actions
     }
 
     /**
-     * adiciona
+     * Receive some provided class
      * @param $provider
      */
-    public function appendProvider($provider)
+    public function appendProvided($provider) : void
     {
-        if(!is_null($provider)){
-            $this->providers[$provider->name] = $provider;
-        }
+        $this->providers[$provider->getName()] = $provider;
     }
 
-    public function appendFixedProvider($provider)
+    /**
+     * Receive mandatory provided class
+     * @param $provider
+     */
+    public function appendFixedProvided($provider)
     {
         $this->providers['fixed'] = [];
         if(!is_null($provider)){

@@ -16,8 +16,6 @@ use ReflectionMethod;
 class Router
 {
 
-    private $request;
-
     private $method;
 
     private $uri;
@@ -26,21 +24,13 @@ class Router
 
     private $protocol;
 
-    private $routes = [];
-
     public $application;
 
     public $response;
 
     public $parameters;
 
-    private $attr_setted = [];
-
-    private $graphql_routes = [];
-
     public $providers = [];
-
-    private $hasGraphQL = false;
 
     private $query;
 
@@ -51,16 +41,20 @@ class Router
 
     public $route = [];
 
+    private $invokable_function;
+
+    private $classname;
+
     public function __construct(Wrapper $wrapper)
     {
         $this->response = new \stdClass();
         $this->wrapper = $wrapper;
 
 
-        $this->implementsRoutes();
+        $this->build();
     }
 
-    public function implementsRoutes()
+    public function build()
     {
         $this->method = $this->wrapper->getRequestMethod();
         $this->uri = $this->wrapper->getRequestUri();
@@ -68,6 +62,39 @@ class Router
         $this->protocol = $this->wrapper->getRequestServerProtocol();
 
         $this->setProviders();
+
+        $this->setRunningRoute();
+
+        $this->applyHttpMethodRules();
+
+        $this->route = (object) $this->route;
+
+        $this->superCall();
+    }
+
+    private function applyHttpMethodRules()
+    {
+        if($this->method == 'POST'){
+            $this->applyHttpMethodPostRules();
+        }
+    }
+
+    private function applyHttpMethodPostRules()
+    {
+        $this->implementsGraphqlroute();
+    }
+
+    private function implementsGraphqlroute()
+    {
+        if($this->hasGraphQLQueryBody()) {
+            $this->query = $this->wrapper->getPostBody()->query;
+            $GraphQLRoutesYaml = new GraphQLYamlReader();
+            $this->route = $GraphQLRoutesYaml->getRoute($this->route);
+        }
+    }
+
+    private function setRunningRoute() : void
+    {
 
         $uri_exp = explode('/', $this->uri);
 
@@ -81,46 +108,57 @@ class Router
 
         $this->route['function'] = $this->route['methods'][$this->method];
 
-        if($this->method == 'POST'){
-            if($this->hasGraphQLQueryBody()){
-                $this->query = $this->wrapper->getPostBody()->query;
-                $GraphQLRoutesYaml = new GraphQLYamlReader();
-                $this->route = $GraphQLRoutesYaml->getRoute($this->route);
-            }
-        }
-        $this->route = (object) $this->route;
+    }
+    /**
+     *
+     */
+    private function superCall() : void
+    {
+        $this->buildInvokableFunction();
 
-        $this->superCall();
+        $this->application = new $this->classname();
+
+        $this->runProviders();
+
+        /**
+         * Call action
+         */
+        $this->response = call_user_func_array([$this->application,$this->route->function],$this->providers);
     }
 
-    private function superCall()
+    /**
+     *
+     */
+    private function runProviders() : void
     {
-        $namespace = '\App\actions\\';
-        $call_string = $namespace . $this->route->action . 'Action';
-        var_dump($call_string);
-
-        $invokable_function = $call_string . '@' . $this->route->function;
-        $invokable_function = str_replace('()','',$invokable_function);
-
-        $function = $this->route->function;
-
-        $this->parameters = $this->getParametersFromInvokableClassFunction($invokable_function);
-
-        $this->application = new $call_string();
-
+        /**
+         * Appending providers from action function parameters
+         */
         foreach ($this->parameters as $param){
-                $ref = $param->getClass()->name::getInjectReference();
+
+            /**
+             * Use a reference provided inside all provided classes
+             */
+            $ref = $param->getClass()->name::getInjectReference();
+
+            /**
+             * Some providers cannot be used without an entity instance
+             */
             if(isset($this->application->providers['entity'])){
-                $this->application->appendProvider($this->providers['action_providers'][$ref]->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest(), $entity = $this->application->providers['entity']));
+                $this->application->appendProvided($this->providers['action_providers'][$ref]->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest(), $entity = $this->application->providers['entity']));
             }else{
-                $this->application->appendProvider($this->providers['action_providers'][$ref]->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest()));
+                $this->application->appendProvided($this->providers['action_providers'][$ref]->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest()));
             }
         }
-
-        foreach ($this->providers['fixed_providers'] as $provider){
-            $this->application->appendFixedProvider($provider->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest(), null, true));
+        /**
+         * Applying fixed providers, can be mandatory
+         */
+        foreach ($this->fixedProviders() as $provider){
+            $this->application->appendFixedProvided($provider->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest(), null, true));
         }
+
         $fixed_providers = $this->application->providers['fixed'];
+
         unset($this->application->providers['fixed']);
 
         $this->providers = $this->application->providers;
@@ -128,20 +166,52 @@ class Router
         unset($this->application->providers);
 
         $this->application->providers = $fixed_providers;
-        $this->response = call_user_func_array([$this->application,$function],$this->providers);
     }
 
+    /**
+     * @return string
+     */
+    private function buildInvokableFunction() : void
+    {
+        $namespace = '\App\actions\\';
+        $this->classname = $namespace . $this->route->action . 'Action';
+        $this->invokable_function = $this->classname  . '@' . $this->route->function;
+        $this->invokable_function  =str_replace('()','',$this->invokable_function);
+        $this->parameters = $this->getParametersFromInvokableClassFunction($this->invokable_function);
+    }
+
+    /**
+     * Return all fixed providers available
+     * @return array
+     */
+    public function fixedProviders() : array
+    {
+        return $this->providers['fixed_providers'];
+    }
+
+    /**
+     * Define providers from primary instance into router provider attribute
+     */
     private function setProviders()
     {
         $providers = new Providers($this);
         $this->providers = $providers->getProviders();
     }
 
+    /**
+     * Check a request is to append graphql provider
+     * @return bool
+     */
     public function hasGraphQLQueryBody()
     {
         return isset($this->wrapper->getPostBody()->query);
     }
 
+    /**
+     * @param $invokable_function
+     * @return \ReflectionParameter[]
+     * @throws \ReflectionException
+     */
     protected function getParametersFromInvokableClassFunction($invokable_function)
     {
         $exp = explode('@',$invokable_function);
@@ -149,6 +219,9 @@ class Router
         return $ReflectionMethod->getParameters();
     }
 
+    /**
+     * @return false|string
+     */
     public function getResponse()
     {
         return json_encode($this->response);

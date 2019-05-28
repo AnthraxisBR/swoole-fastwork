@@ -35,7 +35,7 @@ class Wrapper
 
     }
 
-    public function getPostBody() : array
+    public function getPostBody() : object
     {
         return json_decode($this->getRequest()->rawContent());
     }
