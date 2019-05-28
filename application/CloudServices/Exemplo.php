@@ -6,7 +6,7 @@ namespace App\CloudServices;
 use AnthraxisBR\SwooleFW\CloudServices\AWS\S3\Bucket;
 use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\ObjectStorage;
 
-class Exemplo extends Bucket
+class Exemplo extends ObjectStorage
 {
 
     public $serviceProvider = 'aws';

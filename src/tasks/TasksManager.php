@@ -4,6 +4,7 @@ namespace AnthraxisBR\SwooleFW\tasks;
 
 
 
+use AnthraxisBR\SwooleFW\CloudServices\CloudService;
 use AnthraxisBR\SwooleFW\traits\Injection;
 
 class TasksManager
@@ -26,6 +27,11 @@ class TasksManager
     public function signature($signature)
     {
         $this->signature = $signature;
+    }
+
+    public function startCloudServiceTask(CloudService $service)
+    {
+
     }
 
     public function startTask($data, $headers = [], $server = [])

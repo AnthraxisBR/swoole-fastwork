@@ -2,10 +2,8 @@
 
 namespace App\actions;
 
-use database\entity\Users as UsersEntity;
-use database\graphql\Users\Users as UsersGraphQL;
+use AnthraxisBR\SwooleFW\CloudServices\CloudServices;
 use AnthraxisBR\SwooleFW\actions\Actions;
-use AnthraxisBR\SwooleFW\graphql\GraphQL;
 use AnthraxisBR\SwooleFW\http\Request;
 use AnthraxisBR\SwooleFW\tasks\TasksManager;
 
@@ -16,6 +14,12 @@ class TasksAction extends Actions
     {
         $TasksManager->signature('Users@insertUser');
         return $TasksManager->startTask($request->getData(),$request->getHeaders(),$request->getServerJson());
+    }
+
+    public function createS3(TasksManager $TasksManager, Request $request, CloudServices $CloudServices)
+    {
+        $TasksManager->signature('CloudServices@cloudServiceTask');
+        return $TasksManager->startCloudServiceTask($CloudServices->willGoToTask($request));
     }
 
 }

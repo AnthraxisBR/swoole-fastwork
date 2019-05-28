@@ -26,16 +26,14 @@ class CloudServicesYamlReader
 
     public static  function getAWS()
     {
-        $r = "/home/bitflix/PhpstormProjects/swoole-fastwork/";
-        $config = /*getenv('root_folder') */ $r. 'config/cloud-services.yaml';
+        $config = getenv('root_folder') . 'config/cloud-services.yaml';
         self::$yaml_file = Yaml::parseFile($config);
         return self::$yaml_file['aws'];
     }
 
     public static  function getAzure()
     {
-        $r = "/home/bitflix/PhpstormProjects/swoole-fastwork/";
-        $config = /*getenv('root_folder') */ $r. 'config/cloud-services.yaml';
+        $config = getenv('root_folder') . 'config/cloud-services.yaml';
         self::$yaml_file = Yaml::parseFile($config);
         return self::$yaml_file['azure'];
     }
