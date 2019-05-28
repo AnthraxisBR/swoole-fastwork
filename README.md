@@ -2,9 +2,16 @@
 
 Wiki: https://github.com/AnthraxisBR/swoole-fastwork/wiki
 
+
+**Integrações**
+https://github.com/Azure/azure-storage-php
+https://cloud.google.com/php/getting-started/tutorial-app?hl=pt-br
+https://aws.amazon.com/pt/sdk-for-php/
+
 **Iniciando**
 
 Instale o swoole:
+
 
 https://github.com/swoole/swoole-src/wiki/Installing
 
