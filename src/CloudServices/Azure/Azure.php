@@ -5,9 +5,12 @@ namespace AnthraxisBR\SwooleFW\CloudServices\Azure;
 
 
 use AnthraxisBR\SwooleFW\CloudServices\CloudServicesYamlReader;
+use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 
 class Azure
 {
+
+    private $connectionString;
 
     public $blob_client;
 
@@ -15,9 +18,14 @@ class Azure
     {
         $config = CloudServicesYamlReader::getAzure();
 
-        $connectionString = "DefaultEndpointsProtocol=https;AccountName=".$config['account_name'].";AccountKey=".$config['account_key'];
-        // Create blob client.
-        $this->blob_client = BlobRestProxy::createBlobService($connectionString);
+        $this->connectionString = "DefaultEndpointsProtocol=https;AccountName=".$config['account_name'].";AccountKey=".$config['account_key'];
+
+        $this->blob_client = $this->getConnectionService();
+    }
+
+    public function getConnectionService()
+    {
+        return BlobRestProxy::createBlobService($this->connectionString);;
     }
 
 }

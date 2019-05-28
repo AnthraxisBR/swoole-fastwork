@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices;
+namespace AnthraxisBR\SwooleFW\CloudServices\ObjectStorage;
 
 
 interface FwObjectStorageInterface
@@ -15,7 +15,7 @@ interface FwObjectStorageInterface
 
     function setTarget($bucket);
 
-    function sendToCloud();
+    function uploadObject();
 
     function getObjectConfig();
 }

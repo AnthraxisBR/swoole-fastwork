@@ -4,7 +4,7 @@
 namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Storage    ;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\FwObjectStorageInterface;
+use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\FwObjectStorageInterface;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\Google;
 
 
@@ -16,7 +16,7 @@ class Bucket extends StorageClient implements FwObjectStorageInterface
 
     public $key;
 
-    public $filename;
+    public $name;
 
     public function createFolder(string $foldername)
     {
@@ -40,7 +40,10 @@ class Bucket extends StorageClient implements FwObjectStorageInterface
 
     public function sendToCloud()
     {
-        $this->putObject($this->getObjectConfig());
+
+        return $this->upload($this->file, [
+            'name' => $this->name
+        ]);
     }
 
     public function getObjectConfig()

@@ -11,6 +11,8 @@ class StorageClient extends GoogleStorageClient
 
     public $config = [];
 
+    public $bucket;
+
     public function __construct()
     {
         $this->setConfig();
@@ -28,6 +30,17 @@ class StorageClient extends GoogleStorageClient
          * already accepts if is build correctly at 'cloud-services.yaml'
          */
         $this->config['keyFile'] = $this->readCredentialsFile();
+
+        if(!is_null($this->bucket)){
+            $this->bucket($this->getBucketName());
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBucketName(){
+        return $this->bucket;
     }
 
     /**

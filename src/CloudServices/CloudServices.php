@@ -18,6 +18,10 @@ class CloudServices
 
     public $service_object;
 
+    public $command;
+
+    public $use;
+
     public function __construct()
     {
 
@@ -27,17 +31,41 @@ class CloudServices
      * Start a new CloudService From class instance type
      * @param $object
      */
-    public function new($object)
+    public function exec($object)
     {
-        $this->service_object = ServiceCommuting::checkService($object);
+        try {
+
+            return $object->{$this->command}();
+        }catch (\Exception $e){
+            var_dump($e->getMessage());
+            return [];
+        }
+
+    }
+
+    /**
+     *
+     * @param string $service
+     */
+    public function setService(string $service )
+    {
+        $this->service = $service;
+    }
+
+    /**
+     * @param string $command
+     */
+    public function command(string $command )
+    {
+        $this->command = $command;
     }
 
     /**
      * Define the service target (AWS, Azure, GCP)
      * @param $service
      */
-    public function use($service)
+    public function use($use)
     {
-        $this->service = $service;
+        $this->use = $use;
     }
 }

@@ -5,40 +5,41 @@ namespace AnthraxisBR\SwooleFW\CloudServices\Azure\Storage;
 
 
 use AnthraxisBR\SwooleFW\CloudServices\Azure\Azure;
-use AnthraxisBR\SwooleFW\CloudServices\FwObjectStorageInterface;
+use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\FwObjectStorageInterface;
+
 
 class Blobs extends Azure implements FwObjectStorageInterface
 {
 
-    public $body;
+    public $content;
 
-    public $bucket;
+    public $container;
 
-    public $key;
+    public $name;
 
     public function createFolder(string $foldername)
     {
 
     }
 
-    public function setBody($body)
+    public function setBody($content)
     {
-        $this->body = $body;
+        $this->content = $content;
     }
 
-    public function setFilename($key)
+    public function setFilename($name)
     {
-        $this->key = $key;
+        $this->name = $name;
     }
 
-    public function setTarget($bucket)
+    public function setTarget($container)
     {
-        $this->bucket = $bucket;
+        $this->container = $container;
     }
 
-    public function sendToCloud()
+    public function uploadObject()
     {
-        $this->putObject($this->getObjectConfig());
+        $this->blob_client->createBlockBlock($this->container, $this->name, $this->content);
     }
 
     public function getObjectConfig()

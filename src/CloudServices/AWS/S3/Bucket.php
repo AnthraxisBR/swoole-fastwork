@@ -4,40 +4,50 @@
 namespace AnthraxisBR\SwooleFW\CloudServices\AWS\S3;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\FwObjectStorageInterface;
+use AnthraxisBR\SwooleFW\CloudServices\GCP\Storage\StorageClient;
+use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\FwObjectStorageInterface;
 
 
-class Bucket extends S3 implements FwObjectStorageInterface
+class Bucket extends StorageClient implements FwObjectStorageInterface
 {
-    public $body;
+    public $content;
 
     public $bucket;
 
-    public $key;
+    public $name;
+
+    public function __construct($content)
+    {
+        $this->content = $content;
+        parent::__construct();
+    }
 
     public function createFolder(string $foldername)
     {
         $this->sendToCloud();
     }
 
-    public function setBody($body)
+    public function setBody($content)
     {
-        $this->body = $body;
+        $this->content = $content;
+        return $this;
     }
 
-    public function setFilename($key)
+    public function setFilename($name)
     {
-        $this->key = $key;
+        $this->name = $name;
+        return $this;
     }
 
     public function setTarget($bucket)
     {
         $this->bucket = $bucket;
+        return $this;
     }
 
-    public function sendToCloud()
+    public function uploadObject()
     {
-        $this->putObject($this->getObjectConfig());
+        return  $this->putObject($this->getObjectConfig());
     }
 
     public function getObjectConfig()

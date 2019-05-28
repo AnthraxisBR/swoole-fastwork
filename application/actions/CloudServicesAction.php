@@ -16,9 +16,14 @@ class CloudServicesAction extends Actions
     public function index(Request $request, CloudServices $CloudServices)
     {
 
-        $CloudServices->use('AWS');
+        $CloudServices->use('AWS'); // GCP ou Azure
 
-        $CloudServices->new( new Exemplo($request->rawContent()) );
+        $file = new Exemplo($request->rawContent());
+
+        $file->setFilename('arquivo.json')->setTarget('teste');
+
+        return $CloudServices->setService($file)->command('upload')->exec();
+
 
     }
 
