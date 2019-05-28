@@ -17,5 +17,12 @@ interface FwObjectStorageInterface
 
     function uploadObject();
 
-    function getObjectConfig();
+    function listObjects();
+
+    function getObject();
+
+    #function deleteObject();
+
+    function deleteFolder();
+
 }

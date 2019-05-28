@@ -11,7 +11,8 @@ class S3 extends S3Client
 {
     public function __construct()
     {
-        parent::__construct([]);
+
+        parent::__construct($this->getS3Config());
     }
 
     public function getS3Config()

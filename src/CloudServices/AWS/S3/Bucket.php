@@ -8,7 +8,7 @@ use AnthraxisBR\SwooleFW\CloudServices\GCP\Storage\StorageClient;
 use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\FwObjectStorageInterface;
 
 
-class Bucket extends StorageClient implements FwObjectStorageInterface
+class Bucket implements FwObjectStorageInterface
 {
     public $content;
 
@@ -16,10 +16,13 @@ class Bucket extends StorageClient implements FwObjectStorageInterface
 
     public $name;
 
+    public $client;
+
     public function __construct($content)
     {
         $this->content = $content;
-        parent::__construct();
+
+        $this->client = new S3();
     }
 
     public function createFolder(string $foldername)
@@ -45,9 +48,61 @@ class Bucket extends StorageClient implements FwObjectStorageInterface
         return $this;
     }
 
+    /**
+     * Return a single uploaded object
+     * Use $obj['body'] to get content of object
+     * @return mixed
+     */
     public function uploadObject()
     {
-        return  $this->putObject($this->getObjectConfig());
+        return $this->client->putObject($this->getObjectConfig());
+    }
+
+    /**
+     * Return a list of objects
+     * Use $obj['body'] to get content of object
+     * @return mixed
+     */
+    public function listObjects()
+    {
+        return $this->client->listObjects([
+            'Bucket' => $this->bucket
+        ]);
+    }
+
+    /**
+     * Return a single object
+     * Use $obj['body'] to get content of object
+     * @return mixed
+     */
+    public function getObject()
+    {
+        return $this->client->listObjects([
+            'Bucket' => $this->bucket,
+            'Key' => $this->name
+        ]);
+    }
+
+    /**
+     * Remove object from s3
+     * @return \Aws\Result
+     */
+    public function deleteObject()
+    {
+
+        return $this->client->deleteObject([
+            'Bucket' => $this->bucket,
+            'Key' => $this->name
+        ]);
+    }
+
+    /**
+     * Remove full bucekt
+     * @return \Aws\Result
+     */
+    public function deleteFolder()
+    {
+        return $this->client->deleteBucket($this->bucket);
     }
 
     public function getObjectConfig()

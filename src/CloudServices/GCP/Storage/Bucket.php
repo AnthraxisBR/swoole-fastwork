@@ -8,7 +8,7 @@ use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\FwObjectStorageInterface;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\Google;
 
 
-class Bucket extends StorageClient implements FwObjectStorageInterface
+class Bucket implements FwObjectStorageInterface
 {
     public $object;
 
@@ -17,6 +17,13 @@ class Bucket extends StorageClient implements FwObjectStorageInterface
     public $key;
 
     public $name;
+
+    public $client;
+
+    public function __construct()
+    {
+        $this->client = new StorageClient();
+    }
 
     public function createFolder(string $foldername)
     {
@@ -38,12 +45,41 @@ class Bucket extends StorageClient implements FwObjectStorageInterface
         $this->bucket = $bucket;
     }
 
-    public function sendToCloud()
+    public function uploadObject()
     {
-
-        return $this->upload($this->file, [
+        return $this->client->upload($this->file, [
             'name' => $this->name
         ]);
+    }
+
+    public function listObjects()
+    {
+        return $this->client->objects();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObject()
+    {
+        return $this->client->object($this->name);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function deleteObject()
+    {
+        return $this->client->getObject()->delete();
+    }
+
+    /**
+     *
+     */
+    public function deleteFolder()
+    {
+        return $this->client->bucket($this->bucket)->delete();
     }
 
     public function getObjectConfig()

@@ -12,15 +12,12 @@ class Azure
 
     private $connectionString;
 
-    public $blob_client;
-
     public function __construct()
     {
         $config = CloudServicesYamlReader::getAzure();
 
         $this->connectionString = "DefaultEndpointsProtocol=https;AccountName=".$config['account_name'].";AccountKey=".$config['account_key'];
 
-        $this->blob_client = $this->getConnectionService();
     }
 
     public function getConnectionService()
