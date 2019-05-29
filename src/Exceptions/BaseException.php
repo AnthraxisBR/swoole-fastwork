@@ -4,7 +4,7 @@
 namespace AnthraxisBR\SwooleFW\Exceptions;
 
 
-class BaseException
+class BaseException extends \Exception
 {
 
 }

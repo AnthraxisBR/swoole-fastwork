@@ -4,7 +4,7 @@
 namespace AnthraxisBR\SwooleFW\Exceptions;
 
 
-class ItemNotFoundException
+class ItemNotFoundException extends DatabaseExceptions
 {
 
 }

@@ -4,7 +4,13 @@
 namespace AnthraxisBR\SwooleFW\Exceptions;
 
 
-class DatabaseExcpetions extends \Exception
+use Throwable;
+
+class DatabaseExceptions extends \Exception
 {
 
+    public function __construct($message = [])
+    {
+        parent::__construct(json_encode($message));
+    }
 }
