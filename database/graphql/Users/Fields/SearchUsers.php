@@ -8,31 +8,51 @@
 
 namespace database\graphql\Users\Fields;
 
-use AnthraxisBR\SwooleFW\graphql\FwField;
-use AnthraxisBR\SwooleFW\graphql\FwObjectType;
 use GraphQL\Type\Definition\Type;
+use AnthraxisBR\SwooleFW\Exceptions\DatabaseExceptions;
+use AnthraxisBR\SwooleFW\Exceptions\ItemNotFoundException;
+use AnthraxisBR\SwooleFW\graphql\FwField;
+use GraphQL\Type\Definition\NonNull;
+use Exception;
 
+/**
+ * Reference for Field to be read when GraophQL is enabled on routes
+ * Class SearchUsers
+ * @package database\graphql\Users\Fields
+ */
 final class SearchUsers extends FwField
 {
 
-    public $field = null;
-
-    public $type = 'string';
-
-    public $args = [
-        'id' => 'nonnull::int'
+    /**
+     * Define messages for exceptions when it throwed by FwField building runtime
+     * @var array
+     */
+    public $responses = [
+        ItemNotFoundException::class => 'Nenhum usuário localizado com o primaryKey: %s',
+        DatabaseExceptions::class => 'Erro ao comunicar com o banco de dados',
+        Exception::class => "Um erro não identificado ocorreu ao executar a query"
     ];
 
-    public $resolve;
+    /**
+     * Define field Type
+     * @var Type
+     */
+    public $type = Type::STRING;
 
-    public $entity = null;
+    /**
+     * Define args types in Field
+     * @var array
+     */
+    public $args = [
+        'id' => NonNull::INT
+    ];
 
-    public function __construct(FwObjectType $obj, $entity = null)
-    {
-        parent::__construct($obj = $obj, null, $entity = $entity);
-    }
-
-    public function resolve($root, $args)
+    /**
+     * Resolution function to this field
+     * @param array $args
+     * @return mixed
+     */
+    public function resolve(array $args)
     {
         return $this->entity->unique($args['id']);
     }
