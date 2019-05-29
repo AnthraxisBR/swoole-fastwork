@@ -25,12 +25,13 @@ class GraphQLYamlReader
     {
         $this->routes = $this->yaml_file['routes'];
 
-        if( isset($this->routes[$route['route']])){
-            unset($route['function']);
-            $route['function'] = $this->routes[$route['route']]['function'];
-            $route['graphql'] = $this->routes[$route['route']];
+        $rs = [];
+        if( isset($this->routes[$route])){
+//            unset($route['function']);
+            $rs['function'] = $this->routes[$route]['function'];
+            $rs['graphql'] = $this->routes[$route];
         }
-        return $route;
+        return $rs;
     }
 
     public function getRoutes() : array

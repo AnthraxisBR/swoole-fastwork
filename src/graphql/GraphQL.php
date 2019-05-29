@@ -11,6 +11,7 @@ namespace AnthraxisBR\SwooleFW\graphql;
 
 use AnthraxisBR\SwooleFW\database\Entities;
 use AnthraxisBR\SwooleFW\traits\Injection;
+use GraphQL\Executor\ExecutionResult;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
@@ -38,6 +39,7 @@ class GraphQL
 
     public $object_type;
 
+    public $field;
 
     public function getName()
     {
@@ -69,11 +71,18 @@ class GraphQL
         ]);
 
         $query = json_decode($this->query_string)->query;
-        $this->result = GraphQLBase::executeQuery($this->schema, $query, null , null, isset($this->input['variables']) ? $this->input['variables'] : null);
-        $this->output = $this->result->toArray();
 
+        $this->result = $this->prepareResponse(GraphQLBase::executeQuery($this->schema, $query, null , null, isset($this->input['variables']) ? $this->input['variables'] : null));
+        $this->output = $this->result->toArray();
         if(isset($this->output['data'])){
             $this->output['data'][key($this->output['data'])] = json_decode($this->output['data'][key($this->output['data'])]);
         }
+        $this->field = key($this->output['data']);
+
+    }
+
+    public function prepareResponse(ExecutionResult $result) : ExecutionResult
+    {
+        return $result;
     }
 }

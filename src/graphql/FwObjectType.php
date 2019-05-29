@@ -42,7 +42,7 @@ class FwObjectType extends ObjectType
             $full_namespace = $namespace . '\\' . $field;
             $class = $full_namespace;
 
-            $fieldInstance = new $class($this, $entity);
+            $fieldInstance = new $class($this, null, $entity);
             if($fieldInstance instanceof FieldDefinition){
                 $convertedField = $fieldInstance->getField();
                 $name = $convertedField['name'];
