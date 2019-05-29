@@ -1,6 +1,6 @@
 
 routes:
-  users:
+  \users:
     function: graphql
     object: Users
     fields: ['SearchUsers']

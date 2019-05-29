@@ -10,6 +10,8 @@ namespace AnthraxisBR\SwooleFW\graphql;
 
 
 use AnthraxisBR\SwooleFW\actions\Actions;
+use AnthraxisBR\SwooleFW\Exceptions\DatabaseExceptions;
+use AnthraxisBR\SwooleFW\Exceptions\ItemNotFoundException;
 use AnthraxisBR\SwooleFW\traits\ObjectIdentity;
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\Type;
@@ -24,9 +26,13 @@ class FwField extends FieldDefinition
 
     public $obj;
 
-    public $entity;
+    public $field = null;
 
-    public function __construct($obj = null, $config = null, $entity = null)
+    public $resolve;
+
+    public $entity = null;
+
+    public function __construct(FwObjectType $obj = null, $config = null, $entity = null)
     {
         $this->obj = $obj;
 
@@ -57,10 +63,36 @@ class FwField extends FieldDefinition
                     'args' => $config['args'],
                     'type' => $config['type'],
                     'resolve' => function ($root, $args) {
-                        return $this->resolve($root, $args);
+                        try{
+                            return $this->resolve($args);
+                        }catch ( ItemNotFoundException $e){
+                            if(isset($this->responses[get_class($e)])){
+                                $sp = [$this->responses[get_class($e)]];
+                                $sp = array_merge($sp, array_values($args));
+                                return json_encode(call_user_func_array('sprintf', $sp));
+
+                            }else{
+                                return $e->getMessage();
+                            }
+                        } catch ( DatabaseExceptions$e){
+                            if(isset($this->responses[get_class($e)])){
+                                $sp = [$this->responses[get_class($e)]];
+                                $sp = array_merge($sp, array_values($args));
+                                return json_encode(call_user_func_array('sprintf', $sp));
+                            }else {
+                                return $e->getMessage();
+                            }
+                        } catch (\Exception $e ){
+                            if(isset($this->responses[get_class($e)])){
+                                $sp = [$this->responses[get_class($e)]];
+                                $sp = array_merge($sp, array_values($args));
+                                return json_encode(call_user_func_array('sprintf', $sp));
+                            }else {
+                                return json_encode("Not identified error on call function 'unique' on Entities, see: " . $e->getTraceAsString());
+                            }
+                        }
                     }
             ];
-            //parent::__construct($config);
 
         }else{
             parent::__construct($config);
@@ -72,7 +104,11 @@ class FwField extends FieldDefinition
         $resolve_exp = explode('::',$this->resolve);
         if(count($resolve_exp) == 1){
             $function = $resolve_exp[1];
-            return $this->obj->{$function}($args);
+            try {
+                return $this->obj->{$function}($args);
+            }catch (\Exception $e) {
+                var_dump($e->getTrace());
+            }
         }
     }
 

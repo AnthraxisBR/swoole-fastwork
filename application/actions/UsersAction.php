@@ -13,7 +13,7 @@ class UsersAction extends Actions
 
     public function graphql(UsersEntity $UsersEntity, UsersGraphQL $UsersGraphQL)
     {
-        return $UsersGraphQL->output;
+        return $UsersGraphQL;
     }
 
     public function index(UsersEntity $UsersEntity)

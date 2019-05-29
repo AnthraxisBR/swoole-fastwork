@@ -11,13 +11,18 @@ namespace database\graphql\Users;
 
 use AnthraxisBR\SwooleFW\graphql\FwObjectType;
 use AnthraxisBR\SwooleFW\graphql\GraphQL;
+use mysql_xdevapi\Exception;
 
+/**
+ * Class Users
+ * @package database\graphql\Users
+ */
 class Users extends GraphQL
 {
 
-    public function find($message)
+    public function __construct($entity, $query)
     {
-        return $message;
+        parent::__construct($entity, $query);
     }
 
 }

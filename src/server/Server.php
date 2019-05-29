@@ -18,7 +18,10 @@ class Server
         $this->run();
     }
 
-    public function run()
+    /**
+     *
+     */
+    public function run() :void
     {
         /**
          * $config is one of Swoole server class
@@ -29,23 +32,35 @@ class Server
         }
     }
 
-    public function config(Application $app)
+    /**
+     * @param Application $app
+     */
+    public function config(Application $app): void
     {
         $this->setConfig(ServerYamlReader::getConfig($app));
     }
 
-    public function extra_config()
+    /**
+     * @return array
+     */
+    public function extra_config() : array
     {
-        return ServerYamlReader::getExtraConfig();
+        return (array) ServerYamlReader::getExtraConfig();
     }
 
-    public function setConfig($config)
+    /**
+     * @param array $config
+     */
+    public function setConfig(array $config) : void
     {
-        $this->config = $config;
+        $this->config = (array) $config;
     }
 
-    public function getConfig()
+    /**
+     * @return array
+     */
+    public function getConfig() : array
     {
-        return $this->config;
+        return (array) $this->config;
     }
 }

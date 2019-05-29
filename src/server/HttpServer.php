@@ -51,7 +51,7 @@ class HttpServer extends \swoole_http_server
                     new \AnthraxisBR\SwooleFW\http\Response($response)
             )->run();
 
-            $response->swoole()->end($response->getBody());
+            $response->swoole()->end($response->getResponse());
         });
 
     }
