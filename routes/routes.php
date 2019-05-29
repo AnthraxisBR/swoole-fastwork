@@ -13,9 +13,7 @@ $routes = Route::implements(
     $prefix = 'api',
     $routes =
     [
-        (new Multiple(
-            ['POST','GET']
-        ))
+        (new Multiple(['POST','GET']))
             ->name('\users')
             ->actionPost('Users@store')
             ->actionGet('Users@index')

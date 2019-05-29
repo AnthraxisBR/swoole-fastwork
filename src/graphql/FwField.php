@@ -10,6 +10,7 @@ namespace AnthraxisBR\SwooleFW\graphql;
 
 
 use AnthraxisBR\SwooleFW\actions\Actions;
+use AnthraxisBR\SwooleFW\database\Entities;
 use AnthraxisBR\SwooleFW\Exceptions\DatabaseExceptions;
 use AnthraxisBR\SwooleFW\Exceptions\ItemNotFoundException;
 use AnthraxisBR\SwooleFW\traits\ObjectIdentity;
@@ -30,6 +31,9 @@ class FwField extends FieldDefinition
 
     public $resolve;
 
+    /**
+     * @var Entities
+     */
     public $entity = null;
 
     public function __construct(FwObjectType $obj = null, $config = null, $entity = null)
@@ -63,34 +67,7 @@ class FwField extends FieldDefinition
                     'args' => $config['args'],
                     'type' => $config['type'],
                     'resolve' => function ($root, $args) {
-                        try{
-                            return $this->resolve($args);
-                        }catch ( ItemNotFoundException $e){
-                            if(isset($this->responses[get_class($e)])){
-                                $sp = [$this->responses[get_class($e)]];
-                                $sp = array_merge($sp, array_values($args));
-                                return json_encode(call_user_func_array('sprintf', $sp));
-
-                            }else{
-                                return $e->getMessage();
-                            }
-                        } catch ( DatabaseExceptions$e){
-                            if(isset($this->responses[get_class($e)])){
-                                $sp = [$this->responses[get_class($e)]];
-                                $sp = array_merge($sp, array_values($args));
-                                return json_encode(call_user_func_array('sprintf', $sp));
-                            }else {
-                                return $e->getMessage();
-                            }
-                        } catch (\Exception $e ){
-                            if(isset($this->responses[get_class($e)])){
-                                $sp = [$this->responses[get_class($e)]];
-                                $sp = array_merge($sp, array_values($args));
-                                return json_encode(call_user_func_array('sprintf', $sp));
-                            }else {
-                                return json_encode("Not identified error on call function 'unique' on Entities, see: " . $e->getTraceAsString());
-                            }
-                        }
+                        return $this->buildResolve($args);
                     }
             ];
 
@@ -108,6 +85,62 @@ class FwField extends FieldDefinition
                 return $this->obj->{$function}($args);
             }catch (\Exception $e) {
                 var_dump($e->getTrace());
+            }
+        }
+    }
+
+    public function buildResolve($args)
+    {
+
+        try{
+            return $this->resolve($args);
+        }catch ( ItemNotFoundException $e){
+            if(isset($this->responses[get_class($e)])){
+                $sp = [$this->responses[get_class($e)]];
+                $sp = array_merge($sp, array_values($args));
+                return json_encode([
+                    'message' => 'Item not found resolving Field: ' . $this->field_name,
+                    'errors' =>  [
+                        call_user_func_array('sprintf', $sp)
+                    ]
+                ]);
+
+            }else{
+                return $e->getMessage();
+            }
+        } catch ( DatabaseExceptions$e){
+            if(isset($this->responses[get_class($e)])){
+                $sp = [$this->responses[get_class($e)]];
+                $sp = array_merge($sp, array_values($args));
+
+                return json_encode([
+                    'message' => 'Database error resolving Field: ' . $this->field_name,
+                    'errors' =>  [
+                        call_user_func_array('sprintf', $sp)
+                    ]
+                ]);
+            }else {
+                return $e->getMessage();
+            }
+        } catch (\Exception $e ){
+            if(isset($this->responses[get_class($e)])){
+                $sp = [$this->responses[get_class($e)]];
+                $sp = array_merge($sp, array_values($args));
+
+                return json_encode([
+                    'message' => 'Undefined error resolving Field: ' . $this->field_name,
+                    'errors' =>  [
+                        call_user_func_array('sprintf', $sp)
+                    ]
+                ]);
+            }else {
+                return json_encode([
+                    'message' => "Not identified error on call function 'unique' on Entities, see: ",
+                    'errors' =>  [
+                        $e->getTraceAsString()
+                    ]
+                ]);
+
             }
         }
     }

@@ -63,6 +63,64 @@ class Entities
         }
     }
 
+    public function search(Entities $entity)
+    {
+        $args = $this->getEntityEvaluatedAttributes($entity);
+
+        $data = $this->em->getRepository(get_class($this))->findBy($args);
+
+        if(is_null($data)){
+            throw new ItemNotFoundException(
+                [
+                    'message' => sprintf("Unable to find items from args : '%s' ", implode(',', $args)) . ' using entity ' . get_class($this),
+                    'errors' =>  [
+                        'Items not found using args : ' . implode(',', $args)
+                    ]
+                ]
+            );
+        }
+        return $data;
+    }
+
+    public function getEntityEvaluatedAttributes(Entities $entity)
+    {
+        $reflection = new \ReflectionClass($entity);
+        return $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
+
+    }
+
+    public function searchLike(Entities $entity)
+    {
+        $args = $this->getEntityEvaluatedAttributes($entity);
+
+        $query = $this->em->getRepository(get_class($this))->createQueryBuilder('e');
+
+        $q = 0;
+        foreach ($args as $name => $value){
+            if($q == 0){
+                $query = $query->where('e.' . $name . ' LIKE  :' . $value);
+            }else{
+                $query = $query->orWhere('e.' . $name . ' LIKE  :' . $value);
+            }
+            $q += 1;
+        }
+        $data = $query->getQuery()->getResult();
+
+        if(is_null($data)){
+            throw new ItemNotFoundException(
+                [
+                    'message' => sprintf("Unable to find items from args : '%s' ", implode(',', $args)) . ' using entity ' . get_class($this),
+                    'errors' =>  [
+                        'Items not found using args : ' . implode(',', $args)
+                    ]
+                ]
+            );
+        }
+
+        return $data;
+
+    }
+
     public function unique(int $primaryKey = 0)
     {
         $class = get_class($this);
