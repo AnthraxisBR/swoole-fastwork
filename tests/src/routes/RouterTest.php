@@ -2,7 +2,7 @@
 
 namespace tests\src\routes;
 
-use AnthraxisBR\SwooleFW\routing\RoutesYamlReader;
+use AnthraxisBR\SwooleFW\Routing\RoutesYamlReader;
 use tests\TestCase;
 
 class RouterTest extends TestCase
@@ -11,5 +11,12 @@ class RouterTest extends TestCase
     {
         $RoutesYamlReader = new RoutesYamlReader();
 
+    }
+
+    public function testRouter()
+    {
+        $RoutesYamlReader = new RoutesYamlReader();
+
+        var_dump($RoutesYamlReader->getRoute(['api','users']));
     }
 }
