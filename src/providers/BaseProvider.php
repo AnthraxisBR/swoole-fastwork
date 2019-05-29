@@ -7,7 +7,7 @@ namespace AnthraxisBR\SwooleFW\providers;
 use AnthraxisBR\SwooleFW\database\Entities;
 use AnthraxisBR\SwooleFW\graphql\GraphQL;
 use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\routing\Router;
+use AnthraxisBR\SwooleFW\Routing\Router;
 use AnthraxisBR\SwooleFW\tasks\TasksManager;
 use mysql_xdevapi\Exception;
 

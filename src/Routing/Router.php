@@ -1,8 +1,10 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\routing;
+namespace AnthraxisBR\SwooleFW\Routing;
 
 
+use AnthraxisBR\SwooleFW\actions\Actions;
+use AnthraxisBR\SwooleFW\Application;
 use AnthraxisBR\SwooleFW\database\Entitites;
 use AnthraxisBR\SwooleFW\graphql\GraphQL;
 use AnthraxisBR\SwooleFW\http\Request;
@@ -14,37 +16,79 @@ use ReflectionFunction;
 use ReflectionMethod;
 
 
+/**
+ * Class Router
+ */
 class Router
 {
+    /**
+     *
+     */
     use UrlTreatmentTrait;
 
+    /**
+     * @var string
+     */
     private $method;
 
+    /**
+     * @var string
+     */
     private $uri;
 
+    /**
+     * @var string
+     */
     private $remote_addr;
 
+    /**
+     * @var string
+     */
     private $protocol;
 
+    /**
+     * @var Actions
+     */
     public $application;
 
+    /**
+     * @var \stdClass
+     */
     public $response;
 
-    public $parameters;
+    /**
+     * @var array
+     */
+    public $parameters = [];
 
+    /**
+     * @var array
+     */
     public $providers = [];
 
-    private $query;
+    /**
+     * @var string
+     */
+    private $query = '';
 
     /**
      * @var Wrapper
      */
     public $wrapper;
 
+    /**
+     * @var array
+     */
     public $route = [];
 
+    /**
+     * @var string
+     */
     private $invokable_function;
 
+    /**
+     * @var string
+     */
     private $classname;
 
     /**

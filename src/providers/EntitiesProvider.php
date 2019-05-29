@@ -5,6 +5,9 @@ namespace AnthraxisBR\SwooleFW\providers;
 
 use AnthraxisBR\SwooleFW\database\Entities;
 use AnthraxisBR\SwooleFW\providers\BaseProvider;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
+
 
 class EntitiesProvider extends BaseProvider
 {
@@ -16,6 +19,17 @@ class EntitiesProvider extends BaseProvider
     {
         $this->object_reference = 'AnthraxisBR\SwooleFW\database\Entities';
         $this->name = 'entity';
+
+
+        $whoops = new Run();
+        $handler = new PrettyPageHandler();
+
+        $whoops->pushHandler($handler);
+
+        $whoops->register();
+
+
+
     }
 
     public function getReference()

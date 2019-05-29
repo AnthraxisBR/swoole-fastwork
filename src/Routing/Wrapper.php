@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\routing;
+namespace AnthraxisBR\SwooleFW\Routing;
 
 
 use AnthraxisBR\SwooleFW\builder\Builder;
