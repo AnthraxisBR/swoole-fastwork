@@ -43,7 +43,11 @@ class ServerYamlReader
         return $result;
     }
 
-    public static function parseConfig(Application $app)
+    /**
+     * @param Application $app
+     * @return array
+     */
+    public static function parseConfig(Application $app) : array
     {
 
         foreach (self::$yaml_file['server'] as $server => $item) {

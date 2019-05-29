@@ -8,6 +8,7 @@ use AnthraxisBR\SwooleFW\graphql\GraphQL;
 use AnthraxisBR\SwooleFW\http\Request;
 use AnthraxisBR\SwooleFW\providers\Providers;
 use AnthraxisBR\SwooleFW\graphql\GraphQLYamlReader;
+use AnthraxisBR\SwooleFW\traits\UrlTreatmentTrait;
 use Illuminate\Support\Str;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -15,6 +16,7 @@ use ReflectionMethod;
 
 class Router
 {
+    use UrlTreatmentTrait;
 
     private $method;
 
@@ -45,6 +47,10 @@ class Router
 
     private $classname;
 
+    /**
+     * Router constructor.
+     * @param Wrapper $wrapper
+     */
     public function __construct(Wrapper $wrapper)
     {
         $this->response = new \stdClass();
@@ -54,7 +60,10 @@ class Router
         $this->build();
     }
 
-    public function build()
+    /**
+     *
+     */
+    public function build() : void
     {
         $this->method = $this->wrapper->getRequestMethod();
         $this->uri = $this->wrapper->getRequestUri();
@@ -72,19 +81,28 @@ class Router
         $this->superCall();
     }
 
-    private function applyHttpMethodRules()
+    /**
+     *
+     */
+    private function applyHttpMethodRules() : void
     {
         if($this->method == 'POST'){
             $this->applyHttpMethodPostRules();
         }
     }
 
-    private function applyHttpMethodPostRules()
+    /**
+     *
+     */
+    private function applyHttpMethodPostRules() : void
     {
         $this->implementsGraphqlroute();
     }
 
-    private function implementsGraphqlroute()
+    /**
+     *
+     */
+    private function implementsGraphqlroute() : void
     {
         if($this->hasGraphQLQueryBody()) {
             $this->query = $this->wrapper->getPostBody()->query;
@@ -93,9 +111,21 @@ class Router
         }
     }
 
+    /**
+     *
+     */
     private function setRunningRoute() : void
     {
+        $this->prepareRouterFromFile();
 
+        $this->route['function'] = $this->route['methods'][$this->method];
+    }
+
+    /**
+     *
+     */
+    private function prepareRouterFromFile() : void
+    {
         $uri_exp = explode('/', $this->uri);
 
         if(isset($uri_exp[0]) and $uri_exp[0] == ''){
@@ -105,10 +135,8 @@ class Router
 
         $RoutesYaml = new RoutesYamlReader();
         $this->route = $RoutesYaml->getRoute($uri_exp);
-
-        $this->route['function'] = $this->route['methods'][$this->method];
-
     }
+
     /**
      *
      */

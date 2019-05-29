@@ -35,45 +35,66 @@ class Wrapper
 
     }
 
+    /**
+     * @return object
+     */
     public function getPostBody() : object
     {
-        return json_decode($this->getRequest()->rawContent());
+        return (object) json_decode($this->getRequest()->rawContent());
     }
 
-    public function getHeaders() : string
+    /**
+     * @return array
+     */
+    public function getHeaders() : array
     {
-        return $this->getRequest()->headers;
+        return (array) $this->getRequest()->headers;
     }
 
+    /**
+     * @return string
+     */
     public function getRequestMethod() : string
     {
-        return $this->getRequest()->server['request_method'];
+        return (string) $this->getRequest()->server['request_method'];
     }
 
+    /**
+     * @return string
+     */
     public function getRequestServerProtocol() : string
     {
-        return $this->getRequest()->server['server_protocol'];
+        return (string) $this->getRequest()->server['server_protocol'];
     }
 
-
+    /**
+     * @return string
+     */
     public function getRequestRemoteAddr() : string
     {
-        return $this->getRequest()->server['remote_addr'];
+        return (string) $this->getRequest()->server['remote_addr'];
     }
 
 
+    /**
+     * @return string
+     */
     public function getRequestUri() : string
     {
-        return $this->getRequest()->server['request_uri'];
+        return (string) $this->getRequest()->server['request_uri'];
     }
 
-
+    /**
+     * @return \Swoole\Http\Request
+     */
     public function getRequest() : \Swoole\Http\Request
     {
-        return $this->request->swoole_request;
+        return  $this->request->swoole_request;
     }
 
-
+    /**
+     * @return Response
+     */
     public function process() : Response
     {
         $this->route = Builder::route($this);

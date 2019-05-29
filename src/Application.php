@@ -68,7 +68,7 @@ class Application
      * @param $from_id
      * @param $data
      */
-    public function runSignedTask($serv, $task_id, $from_id, $data)
+    public function runSignedTask($serv, $task_id, $from_id, $data) : void
     {
         $this->taskResponse = Tasks::run($serv, $task_id, $from_id, $data);
     }
@@ -84,14 +84,20 @@ class Application
         }
     }
 
+    /**
+     * @param string $protocol
+     */
     public function setProtocol(string $protocol = '') : void
     {
-        $this->protocol = $protocol;
+        $this->protocol = (string) $protocol;
     }
 
+    /**
+     * @return bool
+     */
     public function isHttpProtocol() : bool
     {
-        return explode('/', $this->protocol)[0] == 'HTTP';
+        return (bool) explode('/', $this->protocol)[0] == 'HTTP';
     }
 
 }

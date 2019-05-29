@@ -3,93 +3,235 @@
 
 namespace AnthraxisBR\SwooleFW\routing;
 
+include  '../../vendor/autoload.php';
+
+use AnthraxisBR\SwooleFW\Defining\Type;
+use AnthraxisBR\SwooleFW\traits\UrlTreatmentTrait;
 use Symfony\Component\Yaml\Yaml;
+use tests\src\routes\RoutesYamlReaderTest;
 
 
 class RoutesYamlReader
 {
 
+    /**
+     * @var array
+     */
     public $routes = [];
 
+    /**
+     * array
+     * @var mixed
+     */
     private $yaml_file;
+
+    /**
+     * array
+     * @var
+     */
     public $route;
+
+    /**
+     * string
+     * @var
+     */
     public $action;
+
+    /**
+     * @var array
+     */
     public $methods;
+
+    /**
+     * @var array
+     */
     public $args;
 
+    /**
+     * @var string
+     */
+    public $prefix;
+
+    /**
+     * @var string
+     */
+    public $uri;
+
+    /**
+     * RoutesYamlReader constructor.
+     */
     public function __construct()
     {
-        $config = getenv('root_folder') . 'config/routes.yaml';
+        $config = /*getenv('root_folder') .*/ 'C:\Users\Gabriel\PhpstormProjects\swoole-fastwork\routes/routes.yaml';
         $this->yaml_file = Yaml::parseFile($config);
+        $this->routes = $this->yaml_file['routes'];
         $this->setEnv();
-        //$this->setRoutes();
+    }
+
+    /**
+     * @param $arr
+     * @return mixed
+     */
+    public function getUriPrefix($arr)
+    {
+        return $arr[0];
+    }
+
+    /**
+     * Function to prepare uri arr, thah uri will return uri, action and http methods
+     * @param $arr
+     * @param int $index
+     * @param null $routes
+     * @param array $mount
+     * @return array
+     */
+    private function urisLooper($arr, $index = 0, $routes = null, $mount = [])
+    {
+        if(is_null($routes)){
+            $routes = $this->getRouteFromPrefix();
+        }
+
+        if(!isset($arr[$index])){
+            return $this->getRouteArray($routes, $mount);
+        }
+
+        foreach ($routes as $route => $config){
+
+            /**
+             * Split this part of uri
+             */
+            $exp_route = $this->cleanRoute($route);
+
+            /**
+             * Check iteration level
+             */
+            if(count($exp_route) == count($arr)){
+                /**
+                 * get str of this part uf uri
+                 */
+                $uri_arg_str = $exp_route[$index];
+
+                /**
+                 * Check if has :, if has :, is a attr $uri_agr_str
+                 */
+                if(strpos($uri_arg_str,':')){
+                    $type = $this->getUriArgType($uri_arg_str);
+
+                    if(Type::{$type}($arr[$index])){
+                        $mount[] = $exp_route[$index];
+                    }else{
+                        /**
+                         * TODO: iniciar criação dos excpetions e dos tratamentos
+                         */
+                    }
+                }else{
+                    if($arr[$index] == $uri_arg_str){
+                        $mount[] = $exp_route[$index];
+                    }
+                }
+
+            }
+        }
+        $index += 1;
+
+        $this->urisLooper($arr, $index, $routes, $mount);
     }
 
     public function getRoute($uri_arr)
     {
+
         if(count($uri_arr) > 1){
-            $prefix = $uri_arr[0];
+            $this->prefix = $this->getUriPrefix($uri_arr);
+
             unset($uri_arr[0]);
             $uri_arr = array_values($uri_arr);
 
-            $prefixed_s = $this->yaml_file['routes'][$prefix];
-
-            if(count($uri_arr) > 1){
-                $base = $uri_arr[0];
-
-                unset($uri_arr[0]);
-                $uri_arr = array_values($uri_arr);
-
-                if(count($uri_arr) == 1){
-                    $arg = $uri_arr[0];
-
-                }else{
-
-                }
-            }else{
-                if(count($uri_arr) == 1){
-                    $this->route = $uri_arr[0];
-                    $this->action = $prefixed_s[$this->route]['action'];
-                    $this->methods = $prefixed_s[$this->route]['methods'];
-                    $this->args = [];
-                }
-            }
+            $this->urisLooper($uri_arr);
+        }else{
+            /**
+             * TODO: exceções
+             */
         }
 
         return [
-            'route' => $this->route,
-            'action' => $this->action,
-            'methods' => $this->methods,
-            'args' => $this->args
+            'uri' => $this->route['uri'],
+            'action' => $this->route['action'],
+            'methods' => $this->route['methods']
         ];
     }
 
+    /**
+     * @param string $uri_arg_str
+     * @return string
+     */
+    private function getUriArgType(string $uri_arg_str) : string
+    {
+        $rt_str = str_replace('<', '',str_replace('>', '',$uri_arg_str));
+        $exp_rt = explode(':',$rt_str);
+        $type = $exp_rt[0];
+        return (string) $type;
+    }
+
+    /**
+     * @return array
+     */
     public function getRoutes() : array
     {
-        return $this->routes;
+        return (array) $this->routes;
     }
 
-
-    private function setRoutes() : void
+    /**
+     * @param string $route
+     * @return array
+     */
+    private function cleanRoute(string $route) : array
     {
-        foreach ( $this->yaml_file as $route => $configs) {
-            if($route == 'routes'){
-                foreach ($configs as $config_name => $config) {
-                    if($config_name == 'prefix'){
-                        if(!isset($this->routes[$config_name])){
-                            foreach ($configs[$config] as $route => $action) {
-                                $this->routes['/' . $config . '/' . $route] = $action;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        $exp_route = explode('\\', $route);
+        $exp_route = array_filter($exp_route, function($it){
+            return $it != '';
+        });
+        $exp_route = array_values($exp_route);
+        return (array) $exp_route;
     }
+
+    /**
+     * @return array
+     */
+    private function getRouteFromPrefix() : array
+    {
+        return (array) $this->routes[$this->prefix];
+    }
+
+    /**
+     * @param string $mount
+     * @return string
+     */
+    private function mountUriBaseFromArray(string $mount) : string
+    {
+        return (string) '\\' . implode('\\', $mount);
+    }
+
 
     private function setEnv() : void
     {
         $this->dev_mode = getenv('env') == 'Development' ? true : false;
     }
+
+    /**
+     * @param array $routes
+     * @param array $mount
+     * @return array
+     */
+    private function getRouteArray(array $routes, array $mount) : array
+    {
+
+        $str = $this->mountUriBaseFromArray($mount);
+
+        $routes[$str]['uri'] = $str;
+        $this->route = $routes[$str];
+
+        return (array) $routes[$str];
+    }
+
 
 }

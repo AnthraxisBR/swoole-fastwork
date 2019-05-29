@@ -7,6 +7,15 @@ server:
       ssl_cert_file: null
       ssl_key_file: null
       open_http2_protocol: false
+      upload_tmp_dir: null #'/data/uploadfiles/'
+      http_parse_post: null
+      document_root: null #'/data/webroot/example.com'
+      enable_static_handler: true
+      log_file: null #'/data/log/swoole.log'
+      timeout: 2.5
+      poll_thread_num: 2
+      max_conn: 10000
+
 worker:
   worker_num: 1
   task_worker_num: 4

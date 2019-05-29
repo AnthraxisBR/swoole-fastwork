@@ -4,6 +4,7 @@ namespace AnthraxisBR\SwooleFW\actions;
 
 use AnthraxisBR\SwooleFW\database\Entitites;
 use AnthraxisBR\SwooleFW\providers\BaseProvider;
+use AnthraxisBR\SwooleFW\tasks\TasksManager;
 
 class  Actions
 {
@@ -19,6 +20,10 @@ class  Actions
 
     }
 
+    public function async(TasksManager $taskManager, $class, $function, $args, $callback)
+    {
+        return $taskManager->asyncCall($class, $function, $args, $callback);
+    }
     /**
      * Receive some provided class
      * @param $provider

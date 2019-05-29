@@ -33,7 +33,15 @@ class TasksManager
     {
 
     }
+    public function asyncCall($class, $function, $args, $callback)
+    {
 
+        $this->server->task($task, -1, function ($serv, $task_id, $data) use( &$response)
+        {
+
+            $response .= $task_id;
+        });
+    }
     public function startTask($data, $headers = [], $server = [])
     {
         $response = '';
