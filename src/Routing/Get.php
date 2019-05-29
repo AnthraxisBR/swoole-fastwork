@@ -4,7 +4,10 @@
 namespace AnthraxisBR\SwooleFW\Routing;
 
 
-class Get
+class Get extends Route
 {
+
+    const method = 'GET';
+
 
 }

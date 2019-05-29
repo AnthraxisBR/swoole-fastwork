@@ -3,7 +3,6 @@
 
 namespace AnthraxisBR\SwooleFW\Routing;
 
-include  '../../vendor/autoload.php';
 
 use AnthraxisBR\SwooleFW\Defining\Type;
 use AnthraxisBR\SwooleFW\traits\UrlTreatmentTrait;
@@ -11,6 +10,10 @@ use Symfony\Component\Yaml\Yaml;
 use tests\src\routes\RoutesYamlReaderTest;
 
 
+/**
+ * Class RoutesYamlReader
+ * @package AnthraxisBR\SwooleFW\Routing
+ */
 class RoutesYamlReader
 {
 
@@ -62,9 +65,12 @@ class RoutesYamlReader
      */
     public function __construct()
     {
-        $config = /*getenv('root_folder') .*/ 'C:\Users\Gabriel\PhpstormProjects\swoole-fastwork\routes/routes.yaml';
-        $this->yaml_file = Yaml::parseFile($config);
-        $this->routes = $this->yaml_file['routes'];
+        $config = getenv('root_folder') . 'routes/routes.php';
+        include($config);
+        /*var_dump($routes);
+        exit();
+        $this->yaml_file = Yaml::parseFile($config);*/
+        $this->routes = $routes;
         $this->setEnv();
     }
 
@@ -100,7 +106,8 @@ class RoutesYamlReader
             /**
              * Split this part of uri
              */
-            $exp_route = $this->cleanRoute($route);
+
+            $exp_route = $this->cleanRoute($config['uri']);
 
             /**
              * Check iteration level
@@ -110,7 +117,6 @@ class RoutesYamlReader
                  * get str of this part uf uri
                  */
                 $uri_arg_str = $exp_route[$index];
-
                 /**
                  * Check if has :, if has :, is a attr $uri_agr_str
                  */
@@ -155,7 +161,6 @@ class RoutesYamlReader
 
         return [
             'uri' => $this->route['uri'],
-            'action' => $this->route['action'],
             'methods' => $this->route['methods']
         ];
     }
@@ -206,7 +211,7 @@ class RoutesYamlReader
      * @param string $mount
      * @return string
      */
-    private function mountUriBaseFromArray(string $mount) : string
+    private function mountUriBaseFromArray(array $mount) : string
     {
         return (string) '\\' . implode('\\', $mount);
     }
@@ -227,10 +232,15 @@ class RoutesYamlReader
 
         $str = $this->mountUriBaseFromArray($mount);
 
-        $routes[$str]['uri'] = $str;
-        $this->route = $routes[$str];
+        //$routes[$str]['uri'] = $str;
 
-        return (array) $routes[$str];
+        foreach ($routes as $route){
+            if($route['uri'] == $str){
+                $this->route = $route;
+            }
+        }
+
+        return (array) $routes;
     }
 
 

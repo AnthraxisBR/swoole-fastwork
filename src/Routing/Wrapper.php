@@ -3,20 +3,32 @@
 
 namespace AnthraxisBR\SwooleFW\Routing;
 
-
 use AnthraxisBR\SwooleFW\builder\Builder;
+use AnthraxisBR\SwooleFW\Exceptions\MethodNotAllowed;
 use AnthraxisBR\SwooleFW\http\Request;
 use AnthraxisBR\SwooleFW\http\Response;
 
 class Wrapper
 {
 
+    /**
+     * @var Request
+     */
     public $request;
 
+    /**
+     * @var Response
+     */
     public $response;
 
+    /**
+     * @var string
+     */
     public $route;
 
+    /**
+     * @var
+     */
     public $server;
 
     /**
@@ -97,9 +109,15 @@ class Wrapper
      */
     public function process() : Response
     {
-        $this->route = Builder::route($this);
-        $this->response->setBody($this->route->getResponse());
+        try {
+            $this->route = Builder::route($this);
+            $this->response->setBody($this->route->getResponse());
+
+        }catch (\Exception $e){
+            $this->response->setBody($e->getMessage());
+        }
         $this->response->swoole_response->header('Content-Type', 'application/json');
         return $this->response;
+
     }
 }

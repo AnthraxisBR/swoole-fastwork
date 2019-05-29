@@ -6,6 +6,7 @@ namespace AnthraxisBR\SwooleFW\Routing;
 use AnthraxisBR\SwooleFW\actions\Actions;
 use AnthraxisBR\SwooleFW\Application;
 use AnthraxisBR\SwooleFW\database\Entitites;
+use AnthraxisBR\SwooleFW\Exceptions\MethodNotAllowed;
 use AnthraxisBR\SwooleFW\graphql\GraphQL;
 use AnthraxisBR\SwooleFW\http\Request;
 use AnthraxisBR\SwooleFW\providers\Providers;
@@ -14,10 +15,13 @@ use AnthraxisBR\SwooleFW\traits\UrlTreatmentTrait;
 use Illuminate\Support\Str;
 use ReflectionFunction;
 use ReflectionMethod;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
 
 
 /**
  * Class Router
+ * @package AnthraxisBR\SwooleFW\Routing
  */
 class Router
 {
@@ -92,11 +96,18 @@ class Router
     private $classname;
 
     /**
+     * @var string
+     */
+    private $function;
+
+    /**
      * Router constructor.
      * @param Wrapper $wrapper
      */
     public function __construct(Wrapper $wrapper)
     {
+
+
         $this->response = new \stdClass();
         $this->wrapper = $wrapper;
 
@@ -151,7 +162,8 @@ class Router
         if($this->hasGraphQLQueryBody()) {
             $this->query = $this->wrapper->getPostBody()->query;
             $GraphQLRoutesYaml = new GraphQLYamlReader();
-            $this->route = $GraphQLRoutesYaml->getRoute($this->route);
+            $this->route = array_merge($this->route, $GraphQLRoutesYaml->getRoute($this->route['uri']));
+            $this->function = $this->route['graphql']['function'];
         }
     }
 
@@ -161,8 +173,11 @@ class Router
     private function setRunningRoute() : void
     {
         $this->prepareRouterFromFile();
-
-        $this->route['function'] = $this->route['methods'][$this->method];
+        try {
+            $this->route['function'] = $this->route['methods'][$this->method];
+        } catch (\ErrorException $e) {
+            throw new MethodNotAllowed([], $this->method);
+        }
     }
 
     /**
@@ -195,7 +210,14 @@ class Router
         /**
          * Call action
          */
-        $this->response = call_user_func_array([$this->application,$this->route->function],$this->providers);
+
+        try {
+            $this->response = call_user_func_array([$this->application,$this->function],$this->providers);
+
+        } catch (\Exception $e)
+        {
+
+        }
     }
 
     /**
@@ -245,10 +267,8 @@ class Router
      */
     private function buildInvokableFunction() : void
     {
-        $namespace = '\App\actions\\';
-        $this->classname = $namespace . $this->route->action . 'Action';
-        $this->invokable_function = $this->classname  . '@' . $this->route->function;
-        $this->invokable_function  =str_replace('()','',$this->invokable_function);
+        $this->invokable_function = '\App\actions\\' . $this->route->methods[$this->method];
+
         $this->parameters = $this->getParametersFromInvokableClassFunction($this->invokable_function);
     }
 
@@ -287,7 +307,13 @@ class Router
     protected function getParametersFromInvokableClassFunction($invokable_function)
     {
         $exp = explode('@',$invokable_function);
-        $ReflectionMethod = new ReflectionMethod($exp[0], $exp[1]);
+        $this->classname = $exp[0] . 'Action';
+
+        if(is_null($this->function)){
+            $this->function = $exp[1];
+        }
+
+        $ReflectionMethod = new ReflectionMethod($this->classname, $this->function);
         return $ReflectionMethod->getParameters();
     }
 

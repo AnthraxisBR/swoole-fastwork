@@ -4,7 +4,9 @@
 namespace AnthraxisBR\SwooleFW\Routing;
 
 
-class Post
+class Post extends Route
 {
+
+    const method = 'POST';
 
 }
