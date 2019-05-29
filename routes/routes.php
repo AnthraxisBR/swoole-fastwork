@@ -1,6 +1,6 @@
 <?php
 
-include "../application/bootstrap.php";
+//include "../application/bootstrap.php";
 
 
 use AnthraxisBR\SwooleFW\Routing\Route;
@@ -9,11 +9,10 @@ use AnthraxisBR\SwooleFW\Routing\Multiple;
 use AnthraxisBR\SwooleFW\Routing\Get;
 
 
-Route::implements(
+$routes = Route::implements(
     $prefix = 'api',
     $routes =
     [
-
         (new Multiple(
             ['POST','GET']
         ))
@@ -25,8 +24,11 @@ Route::implements(
         (new Get())
             ->name('\users\<int:id>')
             ->args(['id'])
-            ->action('Users@get_user')
-            ->graphql('Users')
+            ->action('Users@get_user'),
+
+        (new Post())
+            ->name('\tasks')
+            ->action('Tasks@create')
     ]
 );
 

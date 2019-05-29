@@ -13,7 +13,9 @@
         "microsoft/azure-storage-table": "*",
         "microsoft/azure-storage-queue": "*",
         "microsoft/azure-storage-file": "*",
-        "google/cloud": "dev-master"
+        "google/cloud": "dev-master",
+        "swoole/library": "dev-master",
+        "filp/whoops": "^2.2@dev"
     },
     "authors": [
         {

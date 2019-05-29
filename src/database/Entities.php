@@ -4,8 +4,13 @@
 namespace AnthraxisBR\SwooleFW\database;
 
 
+use AnthraxisBR\SwooleFW\Exceptions\DatabaseExceptions;
+use AnthraxisBR\SwooleFW\Exceptions\ItemNotFoundException;
 use Doctrine\ORM\ORMException;
 use AnthraxisBR\SwooleFW\traits\Injection;
+use mysql_xdevapi\Exception;
+use Whoops\Handler\JsonResponseHandler;
+use Whoops\Run;
 
 class Entities
 {
@@ -60,19 +65,28 @@ class Entities
 
     public function unique(int $primaryKey = 0)
     {
+        $class = get_class($this);
         if($primaryKey > 0){
-            try {
-                $data = $this->em->getRepository(get_class($this))->find($primaryKey);
-                if(is_null($data)){
-                    return new \stdClass();
-                }
-                return $data;
-            }catch ( ORMException $e){
-                var_dump($e->getMessage());
-                return new \stdClass();
+            $data = $this->em->getRepository(get_class($this))->find($primaryKey);
+            if(is_null($data)){
+                throw new ItemNotFoundException(
+                    [
+                        'message' => sprintf("Unable to find item : '%s' ", $primaryKey) . ' using entity ' . $class,
+                        'errors' =>  [
+                            'Item not found using primaryKey: ' . $primaryKey
+                        ]
+                    ]
+                );
             }
+            return $data;
         }
-        return new \stdClass();
+        throw new DatabaseExceptions(
+            [
+                'message' => 'You need to provide some valid primaryKey to fetch unique item on entity: ' . $class,
+                'errors' =>  [
+                    'invalid primaryKey: ' . $primaryKey
+                ]
+        ]);
     }
 
     public function getObject($object)
@@ -84,6 +98,7 @@ class Entities
         }
         return $class;
     }
+
 
     public function graphql()
     {

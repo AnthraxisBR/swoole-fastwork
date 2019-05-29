@@ -6,8 +6,8 @@ namespace AnthraxisBR\SwooleFW\builder;
 
 use AnthraxisBR\SwooleFW\http\Request;
 use AnthraxisBR\SwooleFW\http\Response;
-use AnthraxisBR\SwooleFW\routing\Router;
-use AnthraxisBR\SwooleFW\routing\Wrapper;
+use AnthraxisBR\SwooleFW\Routing\Router;
+use AnthraxisBR\SwooleFW\Routing\Wrapper;
 
 class Builder
 {

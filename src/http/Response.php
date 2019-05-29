@@ -30,6 +30,20 @@ class Response extends ResponseBase
 
     }
 
+    public function getResponse()
+    {
+        $body = json_decode($this->getBody());
+
+        if(isset($body->output)){
+            if(isset($body->output->data->{$body->field}->errors) and count($body->output->data->{$body->field}->errors) > 0){
+                return json_encode($body->output->data->{$body->field});
+            }else{
+                return json_encode($body->output->data);
+            }
+        }
+        return $this->getBody();
+    }
+
     public function setBody($body)
     {
         parent::__construct($this->getStatusCode(), $this->getHeaders(), $body, $this->getProtocolVersion(), $this->getReasonPhrase());
