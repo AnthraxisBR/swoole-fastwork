@@ -7,11 +7,24 @@ namespace App\actions;
 use AnthraxisBR\SwooleFW\actions\Actions;
 use AnthraxisBR\SwooleFW\CloudServices\CloudServices;
 use AnthraxisBR\SwooleFW\http\Request;
+use App\CloudServices\CloundFunctions\GetUrlCloudFunction;
 use App\CloudServices\Exemplo;
 
 
 class CloudServicesAction extends Actions
 {
+    public function createCloudFunction(Request $request, CloudServices $CloudServices)
+    {
+        $CloudServices->use('GCP');
+
+        $CloudServices->setService( new GetUrlCloudFunction() );
+
+        $CloudServices->createCloudFunction();
+var_dump('a');
+
+    }
+
+
     public function index(Request $request, CloudServices $CloudServices)
     {
 

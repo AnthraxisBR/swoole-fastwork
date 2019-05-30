@@ -19,7 +19,7 @@ class EntitiesProvider extends BaseProvider
     {
         $this->object_reference = 'AnthraxisBR\SwooleFW\database\Entities';
         $this->name = 'entity';
-
+/*
 
         $whoops = new Run();
         $handler = new PrettyPageHandler();
@@ -27,7 +27,7 @@ class EntitiesProvider extends BaseProvider
         $whoops->pushHandler($handler);
 
         $whoops->register();
-
+*/
 
 
     }
