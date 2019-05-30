@@ -14,8 +14,9 @@
         "microsoft/azure-storage-queue": "*",
         "microsoft/azure-storage-file": "*",
         "google/cloud": "dev-master",
-        "swoole/library": "dev-master",
-        "filp/whoops": "^2.2@dev"
+        "filp/whoops": "^2.2@dev",
+        "czproject/git-php": "dev-master",
+        "nelexa/zip": "dev-master"
     },
     "authors": [
         {
