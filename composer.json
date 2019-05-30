@@ -16,7 +16,8 @@
         "google/cloud": "dev-master",
         "filp/whoops": "^2.2@dev",
         "czproject/git-php": "dev-master",
-        "nelexa/zip": "dev-master"
+        "nelexa/zip": "dev-master",
+        "google/apiclient": "^2.0"
     },
     "authors": [
         {

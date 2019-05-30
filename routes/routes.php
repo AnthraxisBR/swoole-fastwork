@@ -26,7 +26,11 @@ $routes = Route::implements(
 
         (new Post())
             ->name('\tasks')
-            ->action('Tasks@create')
+            ->action('Tasks@create'),
+
+        (new Get())
+            ->name('\cloud')
+            ->action('CloudServices@createCloudFunction')
     ]
 );
 

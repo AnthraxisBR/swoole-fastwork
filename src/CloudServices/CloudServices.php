@@ -5,10 +5,19 @@ namespace AnthraxisBR\SwooleFW\CloudServices;
 
 
 use AnthraxisBR\SwooleFW\CloudServices\AWS\S3\Bucket;
+use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
 use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\ObjectStorage;
 use AnthraxisBR\SwooleFW\http\Request;
 use AnthraxisBR\SwooleFW\traits\Injection;
 
+/**
+ * @method CloudFunctions createCloudFunction(){
+ *      Create cloud function from object
+ * }
+ *
+ * Class CloudServices
+ * @package AnthraxisBR\SwooleFW\CloudServices
+ */
 class CloudServices
 {
     use Injection;
@@ -26,6 +35,27 @@ class CloudServices
 
     public $use;
 
+    /**
+     * @param $name
+     * @param $arguments
+     * @return array|mixed
+     */
+    public function __call($name, $arguments)
+    {
+        if(method_exists($this, $name)){
+            call_user_func_array($this->{$name}, $arguments);
+
+        } else {
+
+            try {
+                return $this->service->call($this->command, $arguments);
+                //return call_user_func_array($this->service->{$this->command}, $arguments);
+            }catch (\Exception $e){
+                var_dump($e->getMessage());
+                return [];
+            }
+        }
+    }
 
     public function willGoToTask(Request $request)
     {
@@ -59,6 +89,16 @@ class CloudServices
     }
 
     /**
+     *
+     * @param string $service
+     */
+    public function createService(CloudService $service )
+    {
+        $this->service = $service;
+        return $this->service;
+    }
+
+    /**
      * @return CloudService
      */
     public function getService()
@@ -74,6 +114,10 @@ class CloudServices
         $this->command = $this->service->readCommand($command);
     }
 
+    /**
+     * @param null $service
+     * @return array
+     */
     public function upload($service = null)
     {
         if(!is_null($service)){
@@ -87,8 +131,9 @@ class CloudServices
      * Define the service target (AWS, Azure, GCP)
      * @param $service
      */
-    public function use($use)
+    public function use(string $use)
     {
         $this->use = $use;
     }
+
 }

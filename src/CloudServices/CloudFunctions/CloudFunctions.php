@@ -4,11 +4,22 @@
 namespace AnthraxisBR\SwooleFW\CloudServices\CloudFunctions;
 
 
+use AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda\Lambda;
+use AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction\AzureFunction;
+use AnthraxisBR\SwooleFW\CloudServices\CloudService;
+use AnthraxisBR\SwooleFW\CloudServices\CloudServicesCommandsInterface;
+use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionClient;
+use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
 use Cz\Git\GitRepository;
 use PhpZip\ZipFile;
 
-class CloudFunctions
+class CloudFunctions extends CloudService implements CloudServicesCommandsInterface
 {
+    /**
+     * @var string
+     */
+    public $serviceProvider;
+
     /**
      * @var string
      */
@@ -49,20 +60,19 @@ class CloudFunctions
      */
     public $publish = false;
 
+    /**
+     * @var CloudFunctionInterface
+     */
 
-    public function __construct()
-    {
-        if(!is_null($this->git)){
+    public const cloudFunctionsTypes = [
+            'gcp' => GoogleCloudFunction::class,
+            'aws' => Lambda::class,
+            'azure' => AzureFunction::class
+        ];
 
-            $location = getenv('root_folder') . '/repositories/cloud-functions';
-            $repo = GitRepository::cloneRepository($this->git, $location);
 
-            $zip = new ZipFile();
+    public function readCommand(string $command){
 
-            $zip->addDir($repo->getRepositoryPath())
-                ->saveAsFile(get_class($this) . '.zip')
-                ->close();
-        }
     }
 
 }
