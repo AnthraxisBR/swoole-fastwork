@@ -105,4 +105,9 @@ class CloudFunctionObject
      * @var EventTriggerObject
      */
     public $eventTrigger;
+
+    public function __toString()
+    {
+        return \GuzzleHttp\json_encode($this);
+    }
 }

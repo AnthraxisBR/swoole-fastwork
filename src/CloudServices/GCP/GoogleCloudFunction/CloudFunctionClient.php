@@ -15,13 +15,13 @@ class CloudFunctionClient extends Google
 
     public const attr = '{name}';
 
+    public $client;
 
     public function __construct(array $config = array())
     {
-
-
-
+        $this->client = new Client();
         parent::__construct($config);
+        var_dump('aa');
     }
 
     /**
@@ -34,10 +34,12 @@ class CloudFunctionClient extends Google
         return $this->get($url);
     }
 
-    public function create(CloudFunctionObject $cloudFunctionObject, $location) : Request
+    public function create(CloudFunctionObject $cloudFunctionObject, string $application) : Request
     {
-        $url = $this::url . $location . '/functions';
-        $this->post($url, $cloudFunctionObject->json());
+        $url = $this::url . $application . '/functions';
+        $this->client->post($url, [
+            'json' => (string) $cloudFunctionObject
+        ]);
     }
 
     public function deleteFunction(string $name)

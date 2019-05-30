@@ -10,7 +10,7 @@ use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
 class GetUrlCloudFunction extends CloudFunctions
 {
 
-    public $serviceProvider = 'GCP';
+    public $serviceProvider = 'AWS';//'GCP';
 
     public $function_name = 'GetUrlCloudFunction';
 
@@ -22,7 +22,7 @@ class GetUrlCloudFunction extends CloudFunctions
      * Change if change Service
      * @var array
      */
-    public $locations = [\AnthraxisBR\SwooleFW\CloudServices\GCP\Regions\Regions::southamerica_east1];
+    public $locations = [Regions::sa_east_1];//[\AnthraxisBR\SwooleFW\CloudServices\GCP\Regions\Regions::southamerica_east1];
 
     public function boot()
     {

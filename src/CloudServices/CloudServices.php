@@ -48,6 +48,7 @@ class CloudServices
         } else {
 
             try {
+                $this->command = $name;
                 return $this->service->call($this->command, $arguments);
                 //return call_user_func_array($this->service->{$this->command}, $arguments);
             }catch (\Exception $e){

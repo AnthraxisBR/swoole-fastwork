@@ -18,9 +18,10 @@ class CloudServicesAction extends Actions
         $CloudServices->use('GCP');
 
         $CloudServices->setService( new GetUrlCloudFunction() );
-
+        var_dump('a');
         $CloudServices->createCloudFunction();
-var_dump('a');
+
+        var_dump('a');
 
     }
 
