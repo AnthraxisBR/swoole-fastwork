@@ -79,7 +79,6 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
 
     public function getAWSFunctionArray()
     {
-        var_dump('aaa');
         return [
             'FunctionName' => $this->function_name,
             // Runtime is required
@@ -87,7 +86,7 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
             // Role is required
             'Role' => $this->role,
             // Handler is required
-            'Handler' => $this->h,
+            'Handler' => '$this->h',
             // Code is required
             'Code' => $this->getFunctionCode()/*array(
                 'ZipFile' => '',
@@ -96,9 +95,9 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
                 'S3ObjectVersion' => 'string',
             )*/,
             'Description' => 'string',
-            'Timeout' => integer,
-            'MemorySize' => integer,
-            'Publish' => true || false,
+            'Timeout' => 20,
+            'MemorySize' => 512,
+            'Publish' => false,
         ];
     }
 
@@ -106,6 +105,64 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
     {
         if(!is_null($this->git)){
 
+            $location = getenv('root_folder') . 'repositories/cloud-functions/'. $this->function_name;
+
+            if(is_dir($location)){
+                $this->rrmdir($location);
+            }
+
+            $repo = GitRepository::cloneRepository($this->git, $location);
+
+            try {
+                $microtime = microtime();
+
+                $zip = new ZipFile();
+
+                while (true){
+                    sleep(0.5);
+                    var_dump($microtime);
+                    if(!is_dir($location)){
+                        continue;
+                    }
+
+
+                    $di = new \RecursiveDirectoryIterator($location);
+                    foreach (new \RecursiveIteratorIterator($di) as $filename => $file) {
+                        if(!strpos($filename, '.git/') and !strpos($filename, '.idea')){
+                            if(is_file($filename)){
+                                var_dump($filename);
+                                $zip->addFile($filename);
+                            }
+                        }
+                    }
+
+                    break;
+
+                }
+
+                $zip->saveAsFile($location . '/'. $this->function_name . '.zip')
+                    ->close();
+
+                return [ 'ZipFile' =>$location . '/'. $this->function_name . '.zip' ];
+            }catch (\Exception $e){
+                var_dump($e->getMessage());
+            }
+        }
+    }
+
+
+    function rrmdir($dir) {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir."/".$object) == "dir")
+                        $this->rrmdir($dir."/".$object);
+                    else unlink   ($dir."/".$object);
+                }
+            }
+            reset($objects);
+            rmdir($dir);
         }
     }
 

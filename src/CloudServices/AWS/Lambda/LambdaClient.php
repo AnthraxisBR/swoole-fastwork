@@ -7,6 +7,12 @@ use Aws\Lambda\LambdaClient as LambdaClientAws;
 
 class LambdaClient
 {
+
+    /**
+     * @var LambdaClientAws
+     */
+    public $client;
+
     public function __construct()
     {
         $this->client = new LambdaClientAws([
@@ -15,6 +21,5 @@ class LambdaClient
         ]);
 
     }
-
 
 }

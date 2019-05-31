@@ -13,7 +13,7 @@ class Lambda extends LambdaClient implements CloudFunctionInterface
 
     public function createCloudFunction(CloudFunctions $CloudFunctions)
     {
-        return $this->createFunction($CloudFunctions->getAWSFunctionArray());
+        return $this->client->createFunction($CloudFunctions->getAWSFunctionArray());
     }
 
     public function callCloudFunction(CloudFunctions $CloudFunctions)
