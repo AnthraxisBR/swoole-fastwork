@@ -4,8 +4,6 @@
 namespace AnthraxisBR\SwooleFW\Exceptions;
 
 
-use Throwable;
-
 class DatabaseExceptions extends \Exception
 {
 
