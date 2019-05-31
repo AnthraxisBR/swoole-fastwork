@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Storage    ;
+namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Storage;
 
 
 use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\FwObjectStorageInterface;
@@ -10,14 +10,55 @@ use AnthraxisBR\SwooleFW\CloudServices\GCP\Google;
 
 class Bucket implements FwObjectStorageInterface
 {
-    public $object;
 
-    public $bucket;
+    public $acl;
 
-    public $key;
+    public $cache_control;
+
+    /**
+     * @var string|null
+     */
+    public $content_disposition = null;
+
+
+    /**
+     * @var string|null
+     */
+    public $content_enconding = null;
+
+
+    /**
+     * @var string|null
+     */
+    public $content_language = null;
+
+    /**
+     * @var string|null
+     */
+    public $content_type = null;
+
+    /**
+     * @var
+     */
+    public $crc32c;
+
+    public $event_based_hold;
+
+    public $md5_hash;
+
+    public $metadata;
+
+    public $metadata_key;
 
     public $name;
 
+    public $storage_class;
+
+    public $bucket;
+
+    /**
+     * @var StorageClient
+     */
     public $client;
 
     public function __construct()
@@ -30,9 +71,9 @@ class Bucket implements FwObjectStorageInterface
         $this->sendToCloud();
     }
 
-    public function setBody($body)
+    public function setBody(string $content)
     {
-        $this->object = $body;
+        $this->metadata = $content;
     }
 
     public function setFilename($name)
@@ -42,12 +83,12 @@ class Bucket implements FwObjectStorageInterface
 
     public function setTarget($bucket)
     {
-        $this->bucket = $bucket;
+        $this->metadata_key = (string) $bucket;
     }
 
     public function uploadObject()
     {
-        return $this->client->upload($this->file, [
+        return $this->client->upload($this->metadata, [
             'name' => $this->name
         ]);
     }
