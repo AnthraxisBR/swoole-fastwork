@@ -26,7 +26,7 @@ class CloudService
     public function setCloudFunctionClass()
     {
         if($this->cloudFunctionsTypes[strtolower($this->serviceProvider)] == GoogleCloudFunction::class){
-            $this->implemented = new $this->cloudFunctionsTypes[strtolower($this->serviceProvider)]($this);
+            $this->implemented = new $this->cloudFunctionsTypes[strtolower($this->serviceProvider)]();
         }
         if ($this->cloudFunctionsTypes[strtolower($this->serviceProvider)] ==  Lambda::class){
             $this->implemented = new $this->cloudFunctionsTypes[strtolower($this->serviceProvider)]($this);

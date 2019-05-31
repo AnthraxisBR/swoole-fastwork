@@ -13,9 +13,8 @@ use App\CloudServices\Exemplo;
 
 class CloudServicesAction extends Actions
 {
-    public function createCloudFunction(Request $request, CloudServices $CloudServices)
+    public function createCloudFunction(CloudServices $CloudServices)
     {
-        $CloudServices->use('GCP');
 
         $CloudServices->setService( new GetUrlCloudFunction() );
 

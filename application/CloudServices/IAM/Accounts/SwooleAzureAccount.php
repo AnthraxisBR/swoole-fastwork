@@ -9,12 +9,16 @@ use AnthraxisBR\SwooleFW\CloudServices\IAM\AccountService;
 /**
  * Representing AWS account using an class object
  *
- * Class SwooleAccount
+ * Class SwooleAwsAccount
  * @package App\CloudServices\IAM
  */
-class SwooleAccount extends AccountService
+class SwooleAzureAccount extends AccountService
 {
 
-        public $id = '0000000000';
+    public $AccountName = 'AAA';
+
+    public $AaccountKey = '000';
+
+    public $DefaultEndpointsProtocol = 'https';
 
 }

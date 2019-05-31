@@ -5,7 +5,7 @@ namespace App\CloudServices\IAM\Roles;
 
 
 use AnthraxisBR\SwooleFW\CloudServices\AWS\IAM\Role;
-use App\CloudServices\IAM\Accounts\SwooleAccount;
+use App\CloudServices\IAM\Accounts\SwooleAwsAccount;
 
 class LambdaBasicExecution extends Role
 {
@@ -14,7 +14,7 @@ class LambdaBasicExecution extends Role
 
     public $service = 'iam';
 
-    public $account = SwooleAccount::class;
+    public $account = SwooleAwsAccount::class;
 
     public $policies;
 

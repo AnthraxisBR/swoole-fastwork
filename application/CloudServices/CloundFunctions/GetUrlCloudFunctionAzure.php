@@ -9,10 +9,10 @@ use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
 use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\RuntimeOptions;
 use App\CloudServices\IAM\Roles\LambdaBasicExecution;
 
-class GetUrlCloudFunction extends CloudFunctions
+class GetUrlCloudFunctionAzure extends CloudFunctions
 {
 
-    public $serviceProvider = 'AWS';//'GCP';
+    public $serviceProvider = 'Azure';//'GCP';
 
     public $git = 'https://github.com/AnthraxisBR/get-url-cloud-function.git';
 

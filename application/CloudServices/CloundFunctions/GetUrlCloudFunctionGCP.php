@@ -9,18 +9,18 @@ use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
 use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\RuntimeOptions;
 use App\CloudServices\IAM\Roles\LambdaBasicExecution;
 
-class GetUrlCloudFunction extends CloudFunctions
+class GetUrlCloudFunctionGCP extends CloudFunctions
 {
 
-    public $serviceProvider = 'AWS';//'GCP';
+    public $serviceProvider = 'GCP';//'GCP';
 
     public $git = 'https://github.com/AnthraxisBR/get-url-cloud-function.git';
 
     public $locations = Regions::sa_east_1;
 
-    public $runtime = RuntimeOptions::runtime_aws_python_3_6;
+    public $runtime = RuntimeOptions::runtime_gcp_python37;
 
-    public $role = LambdaBasicExecution::class;
+    public $account = LambdaBasicExecution::class;
 
     public $handler  = 'get_url_cloud_function';
 

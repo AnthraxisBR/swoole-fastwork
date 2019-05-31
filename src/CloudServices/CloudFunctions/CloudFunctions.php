@@ -10,11 +10,11 @@ use AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions;
 use AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction\AzureFunction;
 use AnthraxisBR\SwooleFW\CloudServices\CloudService;
 use AnthraxisBR\SwooleFW\CloudServices\CloudServicesCommandsInterface;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionClient;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionObject;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
 use AnthraxisBR\SwooleFW\CloudServices\IAM\AccountService;
 use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
+use Cz\Git\GitException;
 use Cz\Git\GitRepository;
 use PhpZip\ZipFile;
 
@@ -124,27 +124,27 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
     public function getAWSFunctionArray()
     {
         return [
-            'FunctionName' => $this->function_name,
-            // Runtime is required
-            'Runtime' => $this->runtime,
-            // Role is required
+            'FunctionName' => $this->getFunctionName(),
+            'Runtime' => $this->getRuntime(),
             'Role' => $this->getRole(),
-            // Handler is required
             'Handler' => $this->handler,
-            // Code is required
             'Code' => $this->getFunctionCode()/*array(
                 'ZipFile' => '',
                 'S3Bucket' => 'string',
                 'S3Key' => 'string',
                 'S3ObjectVersion' => 'string',
             )*/,
-            'Description' => 'string',
-            'Timeout' => 20,
-            'MemorySize' => 512,
-            'Publish' => false,
+            'Description' => $this->getDescription(),
+            'Timeout' => $this->getTimeout(),
+            'MemorySize' => $this->getMemoryAvailable(),
+            'Publish' => $this->getPublish(),
         ];
     }
 
+    /**
+     * @return array
+     * @throws \Cz\Git\GitException
+     */
     public function getFunctionCode()
     {
         if(!is_null($this->git)){
@@ -188,10 +188,24 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
                     ->close();
 
                 return [ 'ZipFile' =>$location . '/'. $this->function_name . '.zip' ];
+            }catch (GitException $e){
+                throw new \Exception($e->getMessage());
             }catch (\Exception $e){
                 var_dump($e->getMessage());
+                throw new \Exception("Not identified error on generate code to CloudFunction");
             }
         }
+    }
+
+    public function getPublish() : bool
+    {
+        return (bool) $this->publish;
+    }
+
+
+    public function getDescription() : string
+    {
+        return (string) $this->description;
     }
 
     public function getRole()
@@ -237,8 +251,8 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
     {
 
         $CloudFunctionClient = new CloudFunctionObject();
-        $CloudFunctionClient->name = $this->function_name;
-        $CloudFunctionClient->description = $this->description;
+        $CloudFunctionClient->name = $this->getFunctionName();
+        $CloudFunctionClient->description = $this->getDescription();
         $CloudFunctionClient->runtime = $this->getRuntime();
         $CloudFunctionClient->availableMemoryMb = $this->getMemoryAvailable();
         $CloudFunctionClient->entryPoint = $this->getEntryPoint();
@@ -250,6 +264,11 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
         $CloudFunctionClient->network = $this->getNetwork();
         return $CloudFunctionClient;
         //$CloudFunctionClient->application_name = (is_null($this->application_name) ? getenv('application_name'): $this->application_name); ;
+    }
+
+    public function getTimeout() : int
+    {
+        return (int) $this->timeout;
     }
 
     public function getAccountId()
