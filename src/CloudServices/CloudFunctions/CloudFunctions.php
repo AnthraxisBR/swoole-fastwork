@@ -13,6 +13,7 @@ use AnthraxisBR\SwooleFW\CloudServices\CloudServicesCommandsInterface;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionClient;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionObject;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
+use AnthraxisBR\SwooleFW\CloudServices\IAM\AccountService;
 use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
 use Cz\Git\GitRepository;
 use PhpZip\ZipFile;
@@ -87,6 +88,13 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
 
     public $handler  = 'cloud_function';
 
+    public $function_version = null;
+    public $alias_name = null;
+
+    /**
+     * @var AccountService
+     */
+    public $account = null;
 
     /**
      * @var CloudFunctionInterface
@@ -244,39 +252,75 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
         //$CloudFunctionClient->application_name = (is_null($this->application_name) ? getenv('application_name'): $this->application_name); ;
     }
 
-    public function getFunctionName()
+    public function getAccountId()
     {
-        return $this->function_name;
+        return (new $this->account())->id;
+    }
+    public function getAccount()
+    {
+        return new $this->account();
     }
 
-    public function getApplicationName()
+    public function hasFunctionVersion() : bool
     {
-        return $this->application_name;
+        return (bool) !is_null($this->function_version );
     }
 
-    public function getLocation($index)
+    public function getFunctionVersion() : string
     {
-        return $this->locations[$index];
+        return (string) $this->function_version;
     }
 
-    public function getRegion()
+    public function hasAliasName() : bool
     {
-        return $this->locations;
+        return (bool) !is_null($this->alias_name );
     }
 
-    public function getVersion()
+    public function getAliasName() : string
     {
-        return $this->version;
+        return (string) $this->alias_name;
     }
 
-    public function getRuntime()
+
+    public function getFunctionName() : string
     {
-        return $this->runtime;
+        return (string) $this->function_name;
     }
 
-    public function getMemoryAvailable()
+    /**
+     * arn:aws:lambda:sa-east-1:123456789:function:GetUrlCloudFunction"
+     * arn:aws:lambda:region:account-id:function:function-name
+     * arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+ -
+     * @return string
+     */
+    public function getApplicationName() : string
     {
-        return $this->memory_size;
+        return (string)  $this->application_name;
+    }
+
+    public function getLocation($index): string
+    {
+        return (string) $this->locations[$index];
+    }
+
+    public function getRegion(): string
+    {
+        return (string) $this->locations;
+    }
+
+    public function getVersion(): string
+    {
+        return (string) $this->version;
+    }
+
+    public function getRuntime(): string
+    {
+        return (string) $this->runtime;
+    }
+
+    public function getMemoryAvailable(): int
+    {
+        return (int) $this->memory_size;
     }
 
     public function getEntryPoint()

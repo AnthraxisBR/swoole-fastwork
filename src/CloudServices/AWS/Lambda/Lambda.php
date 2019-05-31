@@ -7,6 +7,7 @@ namespace AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda;
 use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctionInterface;
 use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
 use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
+use Aws\Lambda\Exception\LambdaException;
 
 class Lambda extends LambdaClient implements CloudFunctionInterface
 {
@@ -16,11 +17,18 @@ class Lambda extends LambdaClient implements CloudFunctionInterface
     {
         try {
             $this->client->createFunction($CloudFunctions->getAWSFunctionArray());
-        } catch (\Exception $e){
+        } catch (LambdaException $e){
             try {
-                throw new AwsLambdaExceptions($e->getMessage());
+                return json_decode($e->getResponse()->getBody());
             } catch (AwsLambdaExceptions $e){
                 return $e->getMessage();
+            } catch (\Exception $e){
+                return [
+                    'message' => 'Erro não identificado ao tentar criar um Lambda Function',
+                    'errors' => [
+                        $e->getMessage()
+                    ]
+                ];
             }
         }
     }

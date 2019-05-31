@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\CloudServices\IAM;
+namespace App\CloudServices\IAM\Accounts;
 
 
 use AnthraxisBR\SwooleFW\CloudServices\IAM\AccountService;
@@ -15,6 +15,6 @@ use AnthraxisBR\SwooleFW\CloudServices\IAM\AccountService;
 class SwooleAccount extends AccountService
 {
 
-    public $id = '123456789';
+        public $id = '0000000000';
 
 }

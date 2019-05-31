@@ -21,7 +21,18 @@ class Arn
 
     public function buildLambdaArn(CloudFunctions $object)
     {
-        $this->arn = "arn:aws:lambda:{$object->getLocation()}:{$object->getAccountId()}:function:{$object->getFunctionName()}";
+
+        $role = new $object->role();
+
+        if(!isset($role->name)){
+            $role_name = get_class($role);
+            $exp_role_name = explode('\\', $role_name);
+            $role_name = $exp_role_name[count($exp_role_name) - 1];
+        }else{
+            $role_name = $role->name;
+        }
+        $this->arn = "arn:aws:{$role->service}::{$role->account->id}:role/{$role_name}";
+        //{$object->getRegion()}
     }
 
     /**
