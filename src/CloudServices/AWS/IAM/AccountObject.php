@@ -4,7 +4,7 @@
 namespace AnthraxisBR\SwooleFW\CloudServices\AWS\IAM;
 
 
-class Account
+class AccountObject
 {
 
 }

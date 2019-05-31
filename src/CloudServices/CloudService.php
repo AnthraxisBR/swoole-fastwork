@@ -5,6 +5,7 @@ namespace AnthraxisBR\SwooleFW\CloudServices;
 
 
 use AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda\Lambda;
+use AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction\AzureFunction;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
 use Aws\Lambda\LambdaClient;
 
@@ -25,11 +26,18 @@ class CloudService
     public function setCloudFunctionClass()
     {
         if($this->cloudFunctionsTypes[strtolower($this->serviceProvider)] == GoogleCloudFunction::class){
-            $this->implemented = new $this->cloudFunctionsTypes[strtolower($this->serviceProvider)]();
-        }elseif ($this->cloudFunctionsTypes[strtolower($this->serviceProvider)] ==  Lambda::class){
-            $this->implemented = new $this->cloudFunctionsTypes[strtolower($this->serviceProvider)]([]);
+            $this->implemented = new $this->cloudFunctionsTypes[strtolower($this->serviceProvider)]($this);
         }
+        if ($this->cloudFunctionsTypes[strtolower($this->serviceProvider)] ==  Lambda::class){
+            $this->implemented = new $this->cloudFunctionsTypes[strtolower($this->serviceProvider)]($this);
+        }
+
+        if ($this->cloudFunctionsTypes[strtolower($this->serviceProvider)] ==  AzureFunction::class){
+            $this->implemented = new $this->cloudFunctionsTypes[strtolower($this->serviceProvider)]($this);
+        }
+
     }
+
 
     public function call($command, $args)
     {

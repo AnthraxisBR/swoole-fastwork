@@ -6,28 +6,27 @@ namespace App\CloudServices\CloundFunctions;
 
 use AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions;
 use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\RuntimeOptions;
+use App\CloudServices\IAM\SwooleAccount;
 
 class GetUrlCloudFunction extends CloudFunctions
 {
+
+    public $account = SwooleAccount::class;
     //public $application_name = 'projects/gabriel-baba1/locations/sa-east1';
 
     public $serviceProvider = 'AWS';//'GCP';
 
-    public $function_name = 'GetUrlCloudFunction';
-
     public $git = 'https://github.com/AnthraxisBR/get-url-cloud-function.git';
 
-    public $language = 'python';
+    public $locations = Regions::sa_east_1;
+    //\AnthraxisBR\SwooleFW\CloudServices\GCP\Regions\Regions::southamerica_east1;
 
-    /**
-     * Change if change Service
-     * @var array
-     */
-    public $locations = [\AnthraxisBR\SwooleFW\CloudServices\GCP\Regions\Regions::southamerica_east1];//[Regions::sa_east_1];
-
-    public $runtime = 'teste';
+    public $runtime = RuntimeOptions::runtime_aws_python_3_6;
 
     public $role = 'teste';
+
+    public $handler  = 'get_url_cloud_function';
 
     public function boot()
     {

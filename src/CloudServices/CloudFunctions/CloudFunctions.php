@@ -4,13 +4,16 @@
 namespace AnthraxisBR\SwooleFW\CloudServices\CloudFunctions;
 
 
+use AnthraxisBR\SwooleFW\CloudServices\AWS\Arn\Arn;
 use AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda\Lambda;
+use AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions;
 use AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction\AzureFunction;
 use AnthraxisBR\SwooleFW\CloudServices\CloudService;
 use AnthraxisBR\SwooleFW\CloudServices\CloudServicesCommandsInterface;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionClient;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionObject;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
+use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
 use Cz\Git\GitRepository;
 use PhpZip\ZipFile;
 
@@ -57,9 +60,33 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
     public $git = null;
 
     /**
+     * @var string
+     */
+    public $version = 'latest';
+
+
+    /**
      * @var bool
      */
     public $publish = false;
+
+
+    public $network;
+
+    public $labels;
+
+    public $max_instances;
+
+    public $enviromentVariables;
+
+    public $entryPoint;
+
+    public $https_trigger;
+
+    public $event_trigger;
+
+    public $handler  = 'cloud_function';
+
 
     /**
      * @var CloudFunctionInterface
@@ -76,6 +103,15 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
             'azure' => AzureFunction::class
         ];
 
+    public function __construct()
+    {
+        if(is_null($this->function_name)){
+            $this->function_name = 'GetUrlCloudFunction';
+        }
+
+        parent::__construct();
+    }
+
 
     public function getAWSFunctionArray()
     {
@@ -84,9 +120,9 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
             // Runtime is required
             'Runtime' => $this->runtime,
             // Role is required
-            'Role' => $this->role,
+            'Role' => $this->getRole(),
             // Handler is required
-            'Handler' => '$this->h',
+            'Handler' => $this->handler,
             // Code is required
             'Code' => $this->getFunctionCode()/*array(
                 'ZipFile' => '',
@@ -150,6 +186,29 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
         }
     }
 
+    public function getRole()
+    {
+        return (string) new Arn($this);
+    }
+
+    /**
+     * @throws AwsLambdaExceptions
+     * @throws \ReflectionException
+     */
+    public function validateRegion()
+    {
+        $region = $this->getRegion();
+
+        $reflection = new \ReflectionClass(Regions::class);
+
+        if($this->serviceProvider == 'AWS'){
+            if(!in_array($region, array_values($reflection->getConstants()))){
+                throw new AwsLambdaExceptions('Region specified in ' . get_class($this) . ' does not can be used with a AWS Lambda Function, see regions available for aws: AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions');
+            }
+        }elseif($this->serviceProvider == 'GCP'){
+
+        }
+    }
 
     function rrmdir($dir) {
         if (is_dir($dir)) {
@@ -185,6 +244,11 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
         //$CloudFunctionClient->application_name = (is_null($this->application_name) ? getenv('application_name'): $this->application_name); ;
     }
 
+    public function getFunctionName()
+    {
+        return $this->function_name;
+    }
+
     public function getApplicationName()
     {
         return $this->application_name;
@@ -195,49 +259,59 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
         return $this->locations[$index];
     }
 
+    public function getRegion()
+    {
+        return $this->locations;
+    }
+
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
     public function getRuntime()
     {
-        return '';
+        return $this->runtime;
     }
 
     public function getMemoryAvailable()
     {
-        return '';
+        return $this->memory_size;
     }
 
     public function getEntryPoint()
     {
-        return '';
+        return $this->handler;
     }
 
     public function getEnviromentVariables()
     {
-        return '';
+        return $this->enviromentVariables;
     }
 
     public function getEventTrigger()
     {
-        return '';
+        return $this->event_trigger;
     }
 
     public function getHttpsTrigger()
     {
-        return '';
+        return $this->https_trigger;
     }
 
     public function getLabels()
     {
-        return '';
+        return $this->labels;
     }
 
     public function getMaxInstances()
     {
-        return '';
+        return $this->max_instances;
     }
 
     public function getNetwork()
     {
-        return '';
+        return $this->network;
     }
 
     public function readCommand(string $command){
