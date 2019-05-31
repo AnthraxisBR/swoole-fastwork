@@ -43,7 +43,7 @@ class CloudServices
     public function __call($name, $arguments)
     {
         if(method_exists($this, $name)){
-            call_user_func_array($this->{$name}, $arguments);
+            return call_user_func_array($this->{$name}, $arguments);
 
         } else {
 

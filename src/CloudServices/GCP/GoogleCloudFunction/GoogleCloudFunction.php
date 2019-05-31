@@ -13,7 +13,7 @@ class GoogleCloudFunction extends CloudFunctionClient implements CloudFunctionIn
 
     public function createCloudFunction(CloudFunctions $cloudFunctions)
     {
-        return $this->create($cloudFunctions->getGoogleFunctionObject(), $cloudFunctions->getApplicationName());
+        return json_decode($this->create($cloudFunctions->getGoogleFunctionObject(), $cloudFunctions->getApplicationName())->getBody()->getContents());
     }
 
     public function callCloudFunction(CloudFunctions $CloudFunctions)

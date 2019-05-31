@@ -6,6 +6,7 @@ namespace AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda;
 
 use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctionInterface;
 use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
 
 class Lambda extends LambdaClient implements CloudFunctionInterface
 {
@@ -13,7 +14,15 @@ class Lambda extends LambdaClient implements CloudFunctionInterface
 
     public function createCloudFunction(CloudFunctions $CloudFunctions)
     {
-        return $this->client->createFunction($CloudFunctions->getAWSFunctionArray());
+        try {
+            $this->client->createFunction($CloudFunctions->getAWSFunctionArray());
+        } catch (\Exception $e){
+            try {
+                throw new AwsLambdaExceptions($e->getMessage());
+            } catch (AwsLambdaExceptions $e){
+                return $e->getMessage();
+            }
+        }
     }
 
     public function callCloudFunction(CloudFunctions $CloudFunctions)

@@ -6,6 +6,7 @@ namespace AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction;
 
 use AnthraxisBR\SwooleFW\CloudServices\GCP\Google;
 use AnthraxisBR\SwooleFW\http\Request;
+use AnthraxisBR\SwooleFW\http\Response;
 use AnthraxisBR\SwooleFW\server\Client;
 
 class CloudFunctionClient extends Google
@@ -19,9 +20,25 @@ class CloudFunctionClient extends Google
 
     public function __construct(array $config = array())
     {
-        $this->client = new Client();
+        try {
+            $client = new \Google_Client();
+            //$credentials = getenv('root_folder') . 'application/CloudServices/credentials.json';
+            //$client->setAuthConfig($credentials);
+            $client->useApplicationDefaultCredentials();
+
+            $client->addScope(\Google_Service_CloudFunctions::CLOUD_PLATFORM);
+            /*$client->addScope(\Google_Service_Drive::DRIVE_METADATA_READONLY);
+            $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php');
+            $client->setAccessType('offline');        // offline access
+            $client->setIncludeGrantedScopes(true);*/
+            //var_dump($client->fetchAccessTokenWithAssertion());
+            $this->client = $client->authorize();
+
+        } catch (\Exception $e){
+            var_dump($e->getMessage());
+        }
+
         parent::__construct($config);
-        var_dump('aa');
     }
 
     /**
@@ -34,11 +51,11 @@ class CloudFunctionClient extends Google
         return $this->get($url);
     }
 
-    public function create(CloudFunctionObject $cloudFunctionObject, string $application) : Request
+    public function create(CloudFunctionObject $cloudFunctionObject, string $application) : \GuzzleHttp\Psr7\Response
     {
         $url = $this::url . $application . '/functions';
-        $this->client->post($url, [
-            'json' => (string) $cloudFunctionObject
+        return $this->client->request('POST', $url, [
+            'json' =>  json_decode($cloudFunctionObject)
         ]);
     }
 

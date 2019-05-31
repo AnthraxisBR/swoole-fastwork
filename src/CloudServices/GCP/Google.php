@@ -35,6 +35,7 @@ class Google extends  \Google_Client
         $this->checkServiceAccountCredentialsFile();
 
         return true; // temporário
+
         if ($this->credential_file) {
             $this->setAuthConfig($this->credential_file);
         } elseif (getenv('GOOGLE_APPLICATION_CREDENTIALS')) {

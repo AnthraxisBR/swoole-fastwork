@@ -9,9 +9,9 @@ use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
 
 class GetUrlCloudFunction extends CloudFunctions
 {
-    public $application_name = 'projects/gabriel-baba1/locations/sa-east1';
+    //public $application_name = 'projects/gabriel-baba1/locations/sa-east1';
 
-    public $serviceProvider = 'GCP';//'AWS';
+    public $serviceProvider = 'AWS';//'GCP';
 
     public $function_name = 'GetUrlCloudFunction';
 

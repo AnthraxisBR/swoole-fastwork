@@ -108,6 +108,8 @@ class CloudFunctionObject
 
     public function __toString()
     {
-        return \GuzzleHttp\json_encode($this);
+        return json_encode($this);
     }
+
+
 }
