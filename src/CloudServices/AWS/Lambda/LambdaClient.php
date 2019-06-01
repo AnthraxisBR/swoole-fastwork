@@ -3,6 +3,7 @@
 
 namespace AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda;
 
+use AnthraxisBR\SwooleFW\CloudServices\AWS\ClientsConfigTrait;
 use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
 use AnthraxisBR\SwooleFW\CloudServices\CloudServices;
 use Aws\Lambda\LambdaClient as LambdaClientAws;
@@ -10,6 +11,7 @@ use Aws\Lambda\LambdaClient as LambdaClientAws;
 class LambdaClient
 {
 
+    use ClientsConfigTrait;
     /**
      * @var LambdaClientAws
      */
@@ -22,18 +24,10 @@ class LambdaClient
 
         $this->checkCloudFunctionBeforeInstantiateLambdaClient($object);
 
-        $client_config = [
-            'version' => $object->getVersion(),
-            'region' => $object->getRegion()
-        ];
+        $this->setConfigFromCloudFunction($object);
 
-        $this->client = new LambdaClientAws($client_config);
+        $this->client = new LambdaClientAws($this->config);
 
-    }
-
-    public function checkCloudFunctionBeforeInstantiateLambdaClient(CloudFunctions $object)
-    {
-        $object->validateRegion();
     }
 
 }

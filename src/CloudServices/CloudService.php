@@ -4,27 +4,65 @@
 namespace AnthraxisBR\SwooleFW\CloudServices;
 
 
+use AnthraxisBR\SwooleFW\CloudServices\AWS\ApiGateway\ApiGateway;
 use AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda\Lambda;
 use AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction\AzureFunction;
+use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\SwooleFW\CloudServices\Endpoints\Endpoints;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
-use Aws\Lambda\LambdaClient;
 
+
+/**
+ * That class is base for cloud services classes
+ * Class CloudService
+ * @package AnthraxisBR\SwooleFW\CloudServices
+ */
 class CloudService
 {
 
     public $request;
 
+    /**
+     * @var ApiGateway|GoogleCloudFunction|Lambda|AzureFunction
+     */
     public $implemented;
 
 
     public function __construct()
     {
-        $this->setCloudFunctionClass();
+        if (isset($this->cloudFunctionsTypes)) {
+            $this->setCloudFunctionClass();
+        }
+        if (isset($this->endpointsTypes)) {
+            $this->setEndpointsClass();
+        }
 
     }
 
-    public function setCloudFunctionClass()
+    /**
+     * Define instance class function when Cloud Service id Enpoints
+     */
+    public function setEndpointsClass()
     {
+        /**
+         * @see Endpoints
+         *      ->public->endpointsTypes
+         */
+        if($this->endpointsTypes[strtolower($this->serviceProvider)] == ApiGateway::class){
+            $this->implemented = new $this->endpointsTypes[strtolower($this->serviceProvider)]();
+        }
+
+    }
+
+    /**
+     * Define instance class function when Cloud Service id Cloud Function
+     */
+    public function setCloudFunctionClass() : void
+    {
+        /**
+         * @see CloudFunctions
+         *      ->public->cloudFunctionsTypes
+         */
         if($this->cloudFunctionsTypes[strtolower($this->serviceProvider)] == GoogleCloudFunction::class){
             $this->implemented = new $this->cloudFunctionsTypes[strtolower($this->serviceProvider)]();
         }
@@ -45,7 +83,6 @@ class CloudService
 
         }
         return call_user_func_array([$this->implemented,$command], [$this]);
-        //return $this->implemented->{$command}();
     }
 
 }

@@ -7,7 +7,7 @@ namespace AnthraxisBR\SwooleFW\CloudServices\ObjectStorage;
 use AnthraxisBR\SwooleFW\CloudServices\CloudService;
 use AnthraxisBR\SwooleFW\CloudServices\CloudServicesCommandsInterface;
 
-class ObjectStorage extends CloudService implements CloudServicesCommandsInterface
+class   ObjectStorage extends CloudService implements CloudServicesCommandsInterface
 {
 
     public $original;
