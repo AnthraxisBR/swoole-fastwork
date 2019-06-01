@@ -4,7 +4,7 @@
 namespace AnthraxisBR\SwooleFW\Exceptions;
 
 
-class AwsRegionsExceptions
+class AwsRegionsExceptions extends BaseException
 {
 
 }

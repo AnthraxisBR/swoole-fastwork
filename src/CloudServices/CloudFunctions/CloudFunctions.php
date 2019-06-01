@@ -14,6 +14,7 @@ use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionObje
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
 use AnthraxisBR\SwooleFW\CloudServices\IAM\AccountService;
 use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
+use AnthraxisBR\SwooleFW\Exceptions\BaseException;
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;
 use PhpZip\ZipFile;
@@ -225,7 +226,7 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
 
         if($this->serviceProvider == 'AWS'){
             if(!in_array($region, array_values($reflection->getConstants()))){
-                throw new AwsLambdaExceptions('Region specified in ' . get_class($this) . ' does not can be used with a AWS Lambda Function, see regions available for aws: AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions');
+                throw new BaseException('Region specified in ' . get_class($this) . ' does not can be used with a AWS Lambda Function, see regions available for aws: AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions');
             }
         }elseif($this->serviceProvider == 'GCP'){
 

@@ -4,7 +4,7 @@
 namespace AnthraxisBR\SwooleFW\Exceptions;
 
 
-class AwsLambdaExceptions extends BaseException
+class ApiGatewayExceptions extends BaseException
 {
     public function __construct($message = "")
     {

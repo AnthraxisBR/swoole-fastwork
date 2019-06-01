@@ -4,7 +4,16 @@
 namespace App\CloudServices\Endpoints;
 
 
-class GetUrlEndpoint
+use AnthraxisBR\SwooleFW\CloudServices\Endpoints\Endpoints;
+
+class GetUrlEndpoint extends Endpoints
 {
+    public $name = '';
+
+    public $protocolType = '';
+
+    public $RouteSelectionExpression = '';
+
+    public $version = '';
 
 }
