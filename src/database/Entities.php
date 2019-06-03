@@ -29,7 +29,6 @@ class Entities
     {
         $this->connect = new Connect();
         $this->em = $this->connect->getEntityManager();
-
     }
 
     public function em()

@@ -9,5 +9,6 @@ azure:
   AccountName: AccountName
   AccountKey: AccountKey
 google:
+  credentials_file:
   projectId: google-project-id
   KeyFile: /folder/google-credentials

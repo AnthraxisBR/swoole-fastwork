@@ -4,13 +4,18 @@
 namespace AnthraxisBR\SwooleFW\CloudServices\CloudFunctions;
 
 
+use AnthraxisBR\SwooleFW\CloudServices\AWS\Arn\Arn;
 use AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda\Lambda;
+use AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions;
 use AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction\AzureFunction;
 use AnthraxisBR\SwooleFW\CloudServices\CloudService;
 use AnthraxisBR\SwooleFW\CloudServices\CloudServicesCommandsInterface;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionClient;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionObject;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
+use AnthraxisBR\SwooleFW\CloudServices\IAM\AccountService;
+use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
+use AnthraxisBR\SwooleFW\Exceptions\BaseException;
+use Cz\Git\GitException;
 use Cz\Git\GitRepository;
 use PhpZip\ZipFile;
 
@@ -57,9 +62,40 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
     public $git = null;
 
     /**
+     * @var string
+     */
+    public $version = 'latest';
+
+
+    /**
      * @var bool
      */
     public $publish = false;
+
+
+    public $network;
+
+    public $labels;
+
+    public $max_instances;
+
+    public $enviromentVariables;
+
+    public $entryPoint;
+
+    public $https_trigger;
+
+    public $event_trigger;
+
+    public $handler  = 'cloud_function';
+
+    public $function_version = null;
+    public $alias_name = null;
+
+    /**
+     * @var AccountService
+     */
+    public $account = null;
 
     /**
      * @var CloudFunctionInterface
@@ -76,31 +112,40 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
             'azure' => AzureFunction::class
         ];
 
+    public function __construct()
+    {
+        if(is_null($this->function_name)){
+            $this->function_name = 'GetUrlCloudFunction';
+        }
+
+        parent::__construct();
+    }
+
 
     public function getAWSFunctionArray()
     {
         return [
-            'FunctionName' => $this->function_name,
-            // Runtime is required
-            'Runtime' => $this->runtime,
-            // Role is required
-            'Role' => $this->role,
-            // Handler is required
-            'Handler' => '$this->h',
-            // Code is required
+            'FunctionName' => $this->getFunctionName(),
+            'Runtime' => $this->getRuntime(),
+            'Role' => $this->getRole(),
+            'Handler' => $this->handler,
             'Code' => $this->getFunctionCode()/*array(
                 'ZipFile' => '',
                 'S3Bucket' => 'string',
                 'S3Key' => 'string',
                 'S3ObjectVersion' => 'string',
             )*/,
-            'Description' => 'string',
-            'Timeout' => 20,
-            'MemorySize' => 512,
-            'Publish' => false,
+            'Description' => $this->getDescription(),
+            'Timeout' => $this->getTimeout(),
+            'MemorySize' => $this->getMemoryAvailable(),
+            'Publish' => $this->getPublish(),
         ];
     }
 
+    /**
+     * @return array
+     * @throws \Cz\Git\GitException
+     */
     public function getFunctionCode()
     {
         if(!is_null($this->git)){
@@ -144,12 +189,49 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
                     ->close();
 
                 return [ 'ZipFile' =>$location . '/'. $this->function_name . '.zip' ];
+            }catch (GitException $e){
+                throw new \Exception($e->getMessage());
             }catch (\Exception $e){
                 var_dump($e->getMessage());
+                throw new \Exception("Not identified error on generate code to CloudFunction");
             }
         }
     }
 
+    public function getPublish() : bool
+    {
+        return (bool) $this->publish;
+    }
+
+
+    public function getDescription() : string
+    {
+        return (string) $this->description;
+    }
+
+    public function getRole()
+    {
+        return (string) new Arn($this);
+    }
+
+    /**
+     * @throws AwsLambdaExceptions
+     * @throws \ReflectionException
+     */
+    public function validateRegion()
+    {
+        $region = $this->getRegion();
+
+        $reflection = new \ReflectionClass(Regions::class);
+
+        if($this->serviceProvider == 'AWS'){
+            if(!in_array($region, array_values($reflection->getConstants()))){
+                throw new BaseException('Region specified in ' . get_class($this) . ' does not can be used with a AWS Lambda Function, see regions available for aws: AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions');
+            }
+        }elseif($this->serviceProvider == 'GCP'){
+
+        }
+    }
 
     function rrmdir($dir) {
         if (is_dir($dir)) {
@@ -170,8 +252,8 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
     {
 
         $CloudFunctionClient = new CloudFunctionObject();
-        $CloudFunctionClient->name = $this->function_name;
-        $CloudFunctionClient->description = $this->description;
+        $CloudFunctionClient->name = $this->getFunctionName();
+        $CloudFunctionClient->description = $this->getDescription();
         $CloudFunctionClient->runtime = $this->getRuntime();
         $CloudFunctionClient->availableMemoryMb = $this->getMemoryAvailable();
         $CloudFunctionClient->entryPoint = $this->getEntryPoint();
@@ -185,59 +267,115 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
         //$CloudFunctionClient->application_name = (is_null($this->application_name) ? getenv('application_name'): $this->application_name); ;
     }
 
-    public function getApplicationName()
+    public function getTimeout() : int
     {
-        return $this->application_name;
+        return (int) $this->timeout;
     }
 
-    public function getLocation($index)
+    public function getAccountId()
     {
-        return $this->locations[$index];
+        return (new $this->account())->id;
+    }
+    public function getAccount()
+    {
+        return new $this->account();
     }
 
-    public function getRuntime()
+    public function hasFunctionVersion() : bool
     {
-        return '';
+        return (bool) !is_null($this->function_version );
     }
 
-    public function getMemoryAvailable()
+    public function getFunctionVersion() : string
     {
-        return '';
+        return (string) $this->function_version;
+    }
+
+    public function hasAliasName() : bool
+    {
+        return (bool) !is_null($this->alias_name );
+    }
+
+    public function getAliasName() : string
+    {
+        return (string) $this->alias_name;
+    }
+
+
+    public function getFunctionName() : string
+    {
+        return (string) $this->function_name;
+    }
+
+    /**
+     * arn:aws:lambda:sa-east-1:123456789:function:GetUrlCloudFunction"
+     * arn:aws:lambda:region:account-id:function:function-name
+     * arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+ -
+     * @return string
+     */
+    public function getApplicationName() : string
+    {
+        return (string)  $this->application_name;
+    }
+
+    public function getLocation($index): string
+    {
+        return (string) $this->locations[$index];
+    }
+
+    public function getRegion(): string
+    {
+        return (string) $this->locations;
+    }
+
+    public function getVersion(): string
+    {
+        return (string) $this->version;
+    }
+
+    public function getRuntime(): string
+    {
+        return (string) $this->runtime;
+    }
+
+    public function getMemoryAvailable(): int
+    {
+        return (int) $this->memory_size;
     }
 
     public function getEntryPoint()
     {
-        return '';
+        return $this->handler;
     }
 
     public function getEnviromentVariables()
     {
-        return '';
+        return $this->enviromentVariables;
     }
 
     public function getEventTrigger()
     {
-        return '';
+        return $this->event_trigger;
     }
 
     public function getHttpsTrigger()
     {
-        return '';
+        return $this->https_trigger;
     }
 
     public function getLabels()
     {
-        return '';
+        return $this->labels;
     }
 
     public function getMaxInstances()
     {
-        return '';
+        return $this->max_instances;
     }
 
     public function getNetwork()
     {
-        return '';
+        return $this->network;
     }
 
     public function readCommand(string $command){

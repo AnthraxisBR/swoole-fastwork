@@ -35,7 +35,7 @@ class CloudFunctionClient extends Google
             $this->client = $client->authorize();
 
         } catch (\Exception $e){
-            var_dump($e->getMessage());
+            throw new \Exception($e->getMessage());
         }
 
         parent::__construct($config);

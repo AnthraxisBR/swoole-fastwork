@@ -18,7 +18,9 @@
         "czproject/git-php": "dev-master",
         "nelexa/zip": "dev-master",
         "google/apiclient": "^2.0",
-        "nette/php-generator": "^3.2@dev"
+        "nette/php-generator": "^3.2@dev",
+        "kamermans/guzzle-oauth2-subscriber": "dev-master",
+        "tightenco/collect": "dev-master"
     },
     "authors": [
         {

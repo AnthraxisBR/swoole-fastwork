@@ -28,19 +28,19 @@ class Blobs extends Azure implements FwObjectStorageInterface
         $this->client = $this->getConnectionService();
     }
 
-    public function setBody($content)
+    public function setBody(string $content) : void
     {
-        $this->content = $content;
+        $this->content = (string) $content;
     }
 
     public function setFilename($name)
     {
-        $this->name = $name;
+        $this->name = (string) $name;
     }
 
     public function setTarget($container)
     {
-        $this->container = $container;
+        $this->container = (string) $container;
     }
 
 
@@ -105,13 +105,20 @@ class Blobs extends Azure implements FwObjectStorageInterface
         }
     }
 
+    /**
+     * @return BlobRestProxy
+     */
     public function getClient()
     {
         return $this->client;
     }
 
+    /**
+     * @param string $foldername
+     * @return mixed|void
+     */
     public function createFolder(string $foldername)
     {
-
+        return $this->client->createContainer($foldername);
     }
 }

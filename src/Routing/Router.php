@@ -216,8 +216,13 @@ class Router
 
         } catch (\Exception $e)
         {
-            var_dump($e->getMessage());
+            $this->errorResponse($e);
         }
+    }
+
+    public function errorResponse(\Exception $e){
+
+        $this->response = [ 'message' => $e->getMessage()];
     }
 
     /**
