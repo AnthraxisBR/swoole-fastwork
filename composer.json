@@ -17,7 +17,9 @@
         "filp/whoops": "^2.2@dev",
         "czproject/git-php": "dev-master",
         "nelexa/zip": "dev-master",
-        "google/apiclient": "^2.0"
+        "google/apiclient": "^2.0",
+        "kamermans/guzzle-oauth2-subscriber": "dev-master",
+        "tightenco/collect": "dev-master"
     },
     "authors": [
         {
