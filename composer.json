@@ -28,7 +28,6 @@
             "email": "gabrielmouraodemelo@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "AnthraxisBR\\SwooleFW\\": "src/",
