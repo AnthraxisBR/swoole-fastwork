@@ -28,7 +28,7 @@ class GoogleCloudDoc
 
         $object = $this->getAllObjects();
 
-        $path = getenv('root_folder') . '/src/CloudServices/GCP/Sdk/';
+        $path = /*getenv('root_folder') .*/ '/home/gabriel/PhpstormProjects/swoole-fw//src/CloudServices/GCP/Sdk/';
 
         $namespace = 'AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk';
 
@@ -44,6 +44,9 @@ class GoogleCloudDoc
 
         $namespace = new \Nette\PhpGenerator\PhpNamespace($namespace);
         $class = $namespace->addClass($classname);
+
+        $class->addComment('Auto generated class from google-docs-sdk-generator from AnthraxisBR');
+
         $class->addExtend(\AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient::class);
 
         $index = 0;
@@ -63,10 +66,9 @@ class GoogleCloudDoc
 
 
             if($methods_arr->pageMethod == 'GET'){
-                $url = $methods_arr->urlRequest;
-                $body .= '$this->setUrl(\'' . $url . '\');' . PHP_EOL;
-                $body .= '$this->prepareUrl();' . PHP_EOL;
-                $body .= 'return $this->get($this->getUrl());';
+
+                $body .= $this->buildBody($methods_arr, $body, $methods, $index);
+                $body .= 'return $this->get($url);';
             }
 
             if($methods_arr->pageMethod == 'POST'){
@@ -75,10 +77,9 @@ class GoogleCloudDoc
 
                 $methods[$index]->addParameter($param);
 
-                $url = $methods_arr->urlRequest;
-                $body .= '$this->setUrl(\'' . $url . '\');' . PHP_EOL;
-                $body .= '$this->prepareUrl();' . PHP_EOL;
-                $body .= 'return $this->post($this->getUrl(), $' . $param . '->getJson());';
+                $body .= $this->buildBody($methods_arr, $body, $methods, $index);
+
+                $body .= 'return $this->post($url, $' . $param . '->getJson());';
             }
 
             if($methods_arr->pageMethod == 'PATCH'){
@@ -87,35 +88,20 @@ class GoogleCloudDoc
 
                 $methods[$index]->addParameter($param);
 
-                $url = $methods_arr->urlRequest;
-                $body .= '$this->setUrl(\'' . $url . '\');' . PHP_EOL;
-                $body .= '$this->prepareUrl();' . PHP_EOL;
-                $body .= 'return $this->patch($this->getUrl(), $' . $param . '->getJson());';
+                $body .= $this->buildBody($methods_arr, $body, $methods, $index);
+
+                $body .= 'return $this->patch($url, $' . $param . '->getJson());';
             }
 
             if($methods_arr->pageMethod == 'DELETE'){
 
-                $param = 'data';
+                $body .= $this->buildBody($methods_arr, $body, $methods, $index);
 
-                $methods[$index]->addParameter($param);
-
-                $url = $methods_arr->urlRequest;
-                $body .= '$this->setUrl(\'' . $url . '\');' . PHP_EOL;
-                $body .= '$this->prepareUrl();' . PHP_EOL;
-                $body .= 'return $this->delete($this->getUrl());';
+                $body .= 'return $this->delete($url);';
             }
 
             $methods[$index]->addBody($body);
 
-            if(isset($methods_arr->item->queryParameters)){
-
-                foreach ($methods_arr->item->queryParameters as $parameter => $queryParameters){
-                    //$m->addBody();
-                    $methods[$index]->addParameter($parameter);
-                    $methods[$index]->addComment($queryParameters->text);
-
-                }
-            }
 
 
             $index += 1;
@@ -130,6 +116,53 @@ class GoogleCloudDoc
 
         fwrite($file, (string) $base);
 
+    }
+
+    public function buildBody($methods_arr, $body, $methods, $index)
+    {
+
+        $url = $methods_arr->urlRequest;
+
+        $body .= '$args = [];' . PHP_EOL;
+
+        $url_exp = explode('/', $url);
+        foreach ($url_exp as $exp){
+            preg_match_all('/(?<={)[^"]+(?=})/', $exp, $matches);
+            foreach ($matches as $match){
+                if(isset($match[0])){
+                    $body .= '$args[] = "{' . $match[0] . '}";'  . PHP_EOL;
+                }
+            }
+        }
+
+        $body .= '$url = $this->replaceUri(\'' . $url . '\', $args);' . PHP_EOL;
+
+        $body .= '$queryArgs = [];' . PHP_EOL;
+
+        if(isset($methods_arr->item->queryParameters)){
+
+            foreach ($methods_arr->item->queryParameters as $parameter => $queryParameters){
+                //$m->addBody();
+                $type = $queryParameters->type;
+
+                if(strpos($type, 'number') !== false){
+                    $type = 'int';
+                }
+                $type = str_replace('(int64 format)','', $type);
+                $methods[$index]->addParameter($parameter)->setTypeHint($type);;
+                $methods[$index]->addComment($queryParameters->text);
+                $body .= '$queryArgs[] = $' . $parameter .';' . PHP_EOL;
+            }
+        }
+
+
+
+
+        $body .= '$url = $this->parseArgs($url, $queryArgs);' . PHP_EOL;
+
+        $body .= '$url = $this->prepareUrl($url);' . PHP_EOL;
+
+        return $body;
     }
 
     public function getAllObjects()
@@ -176,3 +209,33 @@ class GoogleCloudDoc
     }
 }
 
+function readFilename($filename){
+
+    $filename_exp = explode('/',$filename);
+    $filename = $filename_exp[count($filename_exp) - 1];
+    $filename = explode('.', $filename);
+    $filename = $filename[0];
+
+    $arr = preg_split('/(?=[A-Z])/',$filename);
+    if($arr[0] == ''){
+        unset($arr[0]);
+        $arr = array_values($arr);
+    }
+    return $arr;
+}
+
+$chacklist = [];
+foreach (glob("/home/gabriel/PhpstormProjects/swoole-fw/repositories/*.json") as $filename) {
+    $arr = readFilename($filename);
+    if(!in_array($arr[0], $chacklist)){
+
+        $chacklist[] = $arr[0];
+
+        $name = implode('',$arr);
+
+        $g = new GoogleCloudDoc('/home/gabriel/PhpstormProjects/swoole-fw/repositories/' . $name . '.json');
+
+        $g->generateClasses();
+    }
+
+}

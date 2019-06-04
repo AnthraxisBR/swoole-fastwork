@@ -1,12 +1,12 @@
 <?php 
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk\Addresses;
+namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk\Autoscalers;
 
 /**
  * Auto generated class from google-docs-sdk-generator from AnthraxisBR
  */
-class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
+class Autoscalers extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 {
 	/**
 	 * The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)
@@ -18,7 +18,7 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 	{
 		$args = [];
 		$args[] = "{project}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/aggregated/addresses', $args);
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/aggregated/autoscalers', $args);
 		$queryArgs = [];
 		$queryArgs[] = $maxResults;
 		$queryArgs[] = $pageToken;
@@ -37,9 +37,9 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 	{
 		$args = [];
 		$args[] = "{project}";
-		$args[] = "{region}";
+		$args[] = "{zone}";
 		$args[] = "{resourceId}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/addresses/{resourceId}', $args);
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/autoscalers/{resourceId}', $args);
 		$queryArgs = [];
 		$queryArgs[] = $requestId;
 		$url = $this->parseArgs($url, $queryArgs);
@@ -52,9 +52,9 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 	{
 		$args = [];
 		$args[] = "{project}";
-		$args[] = "{region}";
+		$args[] = "{zone}";
 		$args[] = "{resourceId}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/addresses/{resourceId}', $args);
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/autoscalers/{resourceId}', $args);
 		$queryArgs = [];
 		$url = $this->parseArgs($url, $queryArgs);
 		$url = $this->prepareUrl($url);
@@ -69,8 +69,8 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 	{
 		$args = [];
 		$args[] = "{project}";
-		$args[] = "{region}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/addresses', $args);
+		$args[] = "{zone}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/autoscalers', $args);
 		$queryArgs = [];
 		$queryArgs[] = $requestId;
 		$url = $this->parseArgs($url, $queryArgs);
@@ -89,8 +89,8 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 	{
 		$args = [];
 		$args[] = "{project}";
-		$args[] = "{region}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/addresses', $args);
+		$args[] = "{zone}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/autoscalers', $args);
 		$queryArgs = [];
 		$queryArgs[] = $maxResults;
 		$queryArgs[] = $pageToken;
@@ -99,5 +99,29 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 		$url = $this->parseArgs($url, $queryArgs);
 		$url = $this->prepareUrl($url);
 		return $this->get($url);
+	}
+
+
+	/**
+	 * An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+	 * Name of the autoscaler to patch.Authorization requires one or more of the following Google IAM permissions on the specified resource autoscaler:
+	 */
+	public function Patch($data, string $requestId, string $autoscaler)
+	{
+		$args = [];
+		$args[] = "{project}";
+		$args[] = "{zone}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/autoscalers', $args);
+		$queryArgs = [];
+		$queryArgs[] = $requestId;
+		$queryArgs[] = $autoscaler;
+		$url = $this->parseArgs($url, $queryArgs);
+		$url = $this->prepareUrl($url);
+		return $this->patch($url, $data->getJson());
+	}
+
+
+	public function Update()
+	{
 	}
 }

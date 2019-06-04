@@ -73,6 +73,14 @@ class FwGoogleClient extends Client
         return $uri;
     }
 
+    public function setUrl($url){
+        $this->url = $url;
+    }
+    public function prepareUrl()
+    {
+        $this->setUrl($this->parseArgs($this->url, $this->uri_args));
+    }
+
     public function parseArgs($url_str = null, array  $args)
     {
         $url = '';

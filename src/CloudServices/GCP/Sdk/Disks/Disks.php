@@ -1,12 +1,12 @@
 <?php 
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk\Addresses;
+namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk\Disks;
 
 /**
  * Auto generated class from google-docs-sdk-generator from AnthraxisBR
  */
-class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
+class Disks extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 {
 	/**
 	 * The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)
@@ -18,7 +18,7 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 	{
 		$args = [];
 		$args[] = "{project}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/aggregated/addresses', $args);
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/aggregated/disks', $args);
 		$queryArgs = [];
 		$queryArgs[] = $maxResults;
 		$queryArgs[] = $pageToken;
@@ -31,15 +31,35 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 
 
 	/**
+	 * [Input Only] Specifies to create an application consistent snapshot by informing the OS to prepare for the snapshot process. Currently only supported on Windows instances using the Volume Shadow Copy Service (VSS).
+	 * An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+	 */
+	public function CreateSnapshot($data, \boolean $guestFlush, string $requestId)
+	{
+		$args = [];
+		$args[] = "{project}";
+		$args[] = "{zone}";
+		$args[] = "{resourceId}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks/{resourceId}/createSnapshot', $args);
+		$queryArgs = [];
+		$queryArgs[] = $guestFlush;
+		$queryArgs[] = $requestId;
+		$url = $this->parseArgs($url, $queryArgs);
+		$url = $this->prepareUrl($url);
+		return $this->post($url, $data->getJson());
+	}
+
+
+	/**
 	 * An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
 	 */
 	public function Delete(string $requestId)
 	{
 		$args = [];
 		$args[] = "{project}";
-		$args[] = "{region}";
+		$args[] = "{zone}";
 		$args[] = "{resourceId}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/addresses/{resourceId}', $args);
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks/{resourceId}', $args);
 		$queryArgs = [];
 		$queryArgs[] = $requestId;
 		$url = $this->parseArgs($url, $queryArgs);
@@ -52,9 +72,23 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 	{
 		$args = [];
 		$args[] = "{project}";
-		$args[] = "{region}";
+		$args[] = "{zone}";
 		$args[] = "{resourceId}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/addresses/{resourceId}', $args);
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks/{resourceId}', $args);
+		$queryArgs = [];
+		$url = $this->parseArgs($url, $queryArgs);
+		$url = $this->prepareUrl($url);
+		return $this->get($url);
+	}
+
+
+	public function GetIamPolicy()
+	{
+		$args = [];
+		$args[] = "{project}";
+		$args[] = "{zone}";
+		$args[] = "{resourceId}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks/{resourceId}/getIamPolicy', $args);
 		$queryArgs = [];
 		$url = $this->parseArgs($url, $queryArgs);
 		$url = $this->prepareUrl($url);
@@ -63,15 +97,17 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 
 
 	/**
+	 * Optional. Source image to restore onto a disk.
 	 * An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
 	 */
-	public function Insert($data, string $requestId)
+	public function Insert($data, string $sourceImage, string $requestId)
 	{
 		$args = [];
 		$args[] = "{project}";
-		$args[] = "{region}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/addresses', $args);
+		$args[] = "{zone}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks', $args);
 		$queryArgs = [];
+		$queryArgs[] = $sourceImage;
 		$queryArgs[] = $requestId;
 		$url = $this->parseArgs($url, $queryArgs);
 		$url = $this->prepareUrl($url);
@@ -89,8 +125,8 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 	{
 		$args = [];
 		$args[] = "{project}";
-		$args[] = "{region}";
-		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/addresses', $args);
+		$args[] = "{zone}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks', $args);
 		$queryArgs = [];
 		$queryArgs[] = $maxResults;
 		$queryArgs[] = $pageToken;
@@ -99,5 +135,69 @@ class Addresses extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
 		$url = $this->parseArgs($url, $queryArgs);
 		$url = $this->prepareUrl($url);
 		return $this->get($url);
+	}
+
+
+	/**
+	 * An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+	 */
+	public function Resize($data, string $requestId)
+	{
+		$args = [];
+		$args[] = "{project}";
+		$args[] = "{zone}";
+		$args[] = "{resourceId}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks/{resourceId}/resize', $args);
+		$queryArgs = [];
+		$queryArgs[] = $requestId;
+		$url = $this->parseArgs($url, $queryArgs);
+		$url = $this->prepareUrl($url);
+		return $this->post($url, $data->getJson());
+	}
+
+
+	public function SetIamPolicy($data)
+	{
+		$args = [];
+		$args[] = "{project}";
+		$args[] = "{zone}";
+		$args[] = "{resourceId}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks/{resourceId}/setIamPolicy', $args);
+		$queryArgs = [];
+		$url = $this->parseArgs($url, $queryArgs);
+		$url = $this->prepareUrl($url);
+		return $this->post($url, $data->getJson());
+	}
+
+
+	/**
+	 * An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+	 */
+	public function SetLabels($data, string $requestId)
+	{
+		$args = [];
+		$args[] = "{project}";
+		$args[] = "{zone}";
+		$args[] = "{resourceId}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks/{resourceId}/setLabels', $args);
+		$queryArgs = [];
+		$queryArgs[] = $requestId;
+		$url = $this->parseArgs($url, $queryArgs);
+		$url = $this->prepareUrl($url);
+		return $this->post($url, $data->getJson());
+	}
+
+
+	public function TestIamPermissions($data)
+	{
+		$args = [];
+		$args[] = "{project}";
+		$args[] = "{zone}";
+		$args[] = "{resourceId}";
+		$url = $this->replaceUri('https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/disks/{resourceId}/testIamPermissions', $args);
+		$queryArgs = [];
+		$url = $this->parseArgs($url, $queryArgs);
+		$url = $this->prepareUrl($url);
+		return $this->post($url, $data->getJson());
 	}
 }
