@@ -9,7 +9,7 @@ class ComputeEngine
 
     public function __construct()
     {
-        $c = GoogleCompute
+        //$c = GoogleCompute
     }
 
 }
