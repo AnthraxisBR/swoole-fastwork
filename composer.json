@@ -35,6 +35,12 @@
             "App\\": "application/",
             "database\\" : "database/",
             "tests\\" : "tests/"
+        },
+        "psr-0": {
+            "AnthraxisBR\\SwooleFW\\": "src/",
+            "App\\": "application/",
+            "database\\" : "database/",
+            "tests\\" : "tests/"
         }
     }
 }
