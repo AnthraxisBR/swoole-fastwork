@@ -1,12 +1,38 @@
 **Swoole Fast Work**
 
-Wiki: https://github.com/AnthraxisBR/swoole-fastwork/wiki
+(Incompleta)
+
+Wiki: 
+
+https://github.com/AnthraxisBR/swoole-fastwork/wiki
 
 
 **Integrações**
+
 https://github.com/Azure/azure-storage-php
+
 https://cloud.google.com/php/getting-started/tutorial-app?hl=pt-br
+
 https://aws.amazon.com/pt/sdk-for-php/
+
+**Resumo**
+
+O FastWork, é uma aglomerado de ferramentas integradas, com possível unificadas em objetos, que opera com Swoole server.
+
+A lista de ferramentas embutidas são:
+ 
+ 1. ORM Doctrine
+ 2. Roteamento
+ 3. GraphQL
+ 4. JSONRPC (ainda não)
+ 5. SOAP (ainda não)
+ 5. SDK Prória de integração com Google Cloud
+ 6. SDK Extendida de integração com AWS
+ 7. SDK Extendida de integração com Azure
+ 8. Service Providers
+ 9. Filas (Queues/Tasks)
+ 10. Unificador de CloudServices (Classes que representam serviços em qualquer uma das provedoras AWS, GCP e Azure) (Em andamento, ainda integrando as SDKs, mas o 'Cloud Function' functiona)
+  
 
 **Iniciando**
 
