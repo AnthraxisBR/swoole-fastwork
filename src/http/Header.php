@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\server;
+namespace AnthraxisBR\SwooleFW\Server;
 
 
 class Header

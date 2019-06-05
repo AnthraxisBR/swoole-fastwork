@@ -8,6 +8,7 @@ use AnthraxisBR\SwooleFW\actions\Actions;
 use AnthraxisBR\SwooleFW\CloudServices\CloudServices;
 use AnthraxisBR\SwooleFW\http\Request;
 use App\CloudServices\CloundFunctions\GetUrlCloudFunction;
+use App\CloudServices\CloundFunctions\GetUrlCloudFunctionGCP;
 use App\CloudServices\Exemplo;
 
 
@@ -16,7 +17,10 @@ class CloudServicesAction extends Actions
     public function createCloudFunction(CloudServices $CloudServices)
     {
 
-        $CloudServices->setService( new GetUrlCloudFunction() );
+
+
+
+        $CloudServices->setService( new GetUrlCloudFunctionGCP() );
 
         return  $CloudServices->createCloudFunction();
 

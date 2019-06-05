@@ -4,8 +4,6 @@
         "vlucas/phpdotenv": "^3.3@dev",
         "guzzlehttp/guzzle": "^6.3@dev",
         "symfony/yaml": "^4.3@dev",
-        "doctrine/orm-sw": "dev-master",
-        "doctrine/dbal-two": "dev-master",
         "webonyx/graphql-php": "dev-master",
         "league/oauth2-server": "dev-master",
         "aws/aws-sdk-php": "^3.0@dev",
@@ -14,22 +12,30 @@
         "microsoft/azure-storage-queue": "*",
         "microsoft/azure-storage-file": "*",
         "google/cloud": "dev-master",
+        "google/apiclient": "^2.0",
         "filp/whoops": "^2.2@dev",
         "czproject/git-php": "dev-master",
         "nelexa/zip": "dev-master",
-        "google/apiclient": "^2.0",
         "nette/php-generator": "^3.2@dev",
         "kamermans/guzzle-oauth2-subscriber": "dev-master",
-        "tightenco/collect": "dev-master"
+        "doctrine/orm-two": "2.6.1"
+    },
+    "require-dev" : {
+        "tightenco/collect": "^5.8.19",
+        "swlib/swpdo": "dev-master"
     },
     "repositories" : [
         {
-            "type": "path",
-            "url": "/home/bitflix/PhpstormProjects/orm"
+            "type": "vcs",
+            "url": "https://github.com/swlib/swpdo"
         },
         {
-            "type": "path",
-            "url": "/home/bitflix/PhpstormProjects/dbal"
+            "type": "vcs",
+            "url": "https://github.com/AnthraxisBR/orm"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/AnthraxisBR/dbal"
         }
     ],
     "authors": [
@@ -51,6 +57,5 @@
             "database\\" : "database/",
             "tests\\" : "tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

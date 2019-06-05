@@ -1,11 +1,12 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Serverr;
+namespace AnthraxisBR\SwooleFW\Server;
 
 
 use AnthraxisBR\SwooleFW\Application;
 use AnthraxisBR\SwooleFW\http\Request;
+use AnthraxisBR\SwooleFW\Server\ConfigObjects\WorkersConfig;
 use GabrielMourao\SwooleFW\http\Response;
 
 class HttpServer extends \swoole_http_server
@@ -66,11 +67,13 @@ class HttpServer extends \swoole_http_server
     {
         $this->config = $config;
         if($this->hasWorkerEnabled()){
-            $this->worker_num = isset($this->config['worker']['worker_num']) ? $this->config['worker']['worker_num'] : 1;
-            $this->task_worker_num = isset($this->config['worker']['task_worker_num']) ? $this->config['worker']['task_worker_num'] : 1;
-            $this->task_ipc_mode = isset($this->config['worker']['task_ipc_mode']) ? $this->config['worker']['task_ipc_mode'] : null;
-            $this->message_queue_key = isset($this->config['worker']['message_queue_key']) ? $this->config['worker']['message_queue_key'] : null;
-            $this->task_tmpdir = isset($this->config['worker']['task_tmpdir']) ? $this->config['worker']['task_tmpdir'] : null;
+            $workerConfig = new WorkersConfig();
+
+            $this->worker_num = $workerConfig->getWorkerNum();
+            $this->task_worker_num = $workerConfig->getTaskWorkerNum();
+            $this->task_ipc_mode = $workerConfig->getTaskIpcMode();
+            $this->message_queue_key = $workerConfig->getMessageQueueKey();
+            $this->task_tmpdir = $workerConfig->getTaskTmpdir();
 
             $workers_config = [];
             $workers_config['worker_num'] = $this->worker_num;
@@ -83,7 +86,7 @@ class HttpServer extends \swoole_http_server
                 $workers_config['message_queue_key'] = $this->message_queue_key;
             }
             if(!is_null($this->task_tmpdir)){
-                $workers_config['task_tmpdirtask_worker_num'] = $this->task_tmpdir;
+                $workers_config['task_tmpdir'] = $this->task_tmpdir;
             }
             $this->set($workers_config);
 

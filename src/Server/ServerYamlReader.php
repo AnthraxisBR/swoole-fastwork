@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Serverr;
+namespace AnthraxisBR\SwooleFW\Server;
 
 use AnthraxisBR\SwooleFW\Application;
 use Symfony\Component\Yaml\Yaml;
@@ -51,7 +51,7 @@ class ServerYamlReader
     {
 
         foreach (self::$yaml_file['server'] as $server => $item) {
-            $str_class = '\AnthraxisBR\SwooleFW\server\\' . ucfirst($server) . 'Server';
+            $str_class = '\AnthraxisBR\SwooleFW\Server\\' . ucfirst($server) . 'Server';
             self::$instances[] = new $str_class($app, $item);
         }
 

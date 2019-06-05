@@ -19,6 +19,7 @@ class UsersAction extends Actions
     public function index(UsersEntity $UsersEntity)
     {
         return $UsersEntity->all();
+
     }
 
     public function get_user(UsersEntity $UsersEntity, int $id )

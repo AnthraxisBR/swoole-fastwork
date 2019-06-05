@@ -34,6 +34,17 @@ class FwGoogleClient extends Client
 
     protected function auth()
     {
+        $httpclient = new \Swoole\Coroutine\Http\Client('0.0.0.0', 9599);
+        $httpclient->setHeaders(['Host' => "api.mp.qq.com"]);
+        $httpclient->set([ 'timeout' => 1]);
+        $httpclient->setDefer();
+        $httpclient->get('/test');
+
+        $http_res  = $httpclient->recv();
+
+        var_dump($http_res);
+        exit();
+
         $this->credentials = new Credentials();
 
         $reauth_config = [

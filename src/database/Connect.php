@@ -44,6 +44,8 @@ class Connect
         $this->setPaths();
         $this->setDefault();
         $this->connect();
+        /*"phpunit/phpunit": "^8.2@dev",*/
+
     }
 
     public function getEntityManager() : EntityManager
@@ -65,13 +67,13 @@ class Connect
 
     public function connect() : void
     {
+
         $driver = new AnnotationDriver(new AnnotationReader(), $this->paths);
 
 
         $this->config = Setup::createAnnotationMetadataConfiguration($this->paths, $this->dev_mode);
 
         $this->config->setMetadataDriverImpl($driver);
-
         $this->entity_manager = EntityManager::create([
             'driver'   => $this->driver,
             'user'     => $this->user,
@@ -80,6 +82,8 @@ class Connect
             'password' => $this->password,
             'dbname'   => $this->dbname
         ], $this->config);
+
+
     }
 
     private function setDefault() : void

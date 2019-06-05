@@ -7,7 +7,7 @@ namespace AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction;
 use AnthraxisBR\SwooleFW\CloudServices\GCP\Google;
 use AnthraxisBR\SwooleFW\http\Request;
 use AnthraxisBR\SwooleFW\http\Response;
-use AnthraxisBR\SwooleFW\server\Client;
+use AnthraxisBR\SwooleFW\Server\Client;
 
 class CloudFunctionClient extends Google
 {
@@ -20,6 +20,7 @@ class CloudFunctionClient extends Google
 
     public function __construct(array $config = array())
     {
+
         try {
             $client = new \Google_Client();
             //$credentials = getenv('root_folder') . 'application/CloudServices/credentials.json';

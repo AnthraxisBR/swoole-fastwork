@@ -1,9 +1,9 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\Serverr;
+namespace AnthraxisBR\SwooleFW\Server;
 
 use AnthraxisBR\SwooleFW\Application;
-use AnthraxisBR\SwooleFW\Serverr\ServerYamlReader;
+use AnthraxisBR\SwooleFW\Server\ServerYamlReader;
 
 /**
  * Class Server
