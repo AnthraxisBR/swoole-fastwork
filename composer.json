@@ -4,8 +4,8 @@
         "vlucas/phpdotenv": "^3.3@dev",
         "guzzlehttp/guzzle": "^6.3@dev",
         "symfony/yaml": "^4.3@dev",
-        "doctrine/orm": "^2.6@dev",
-        "phpunit/phpunit": "^8.2@dev",
+        "doctrine/orm-sw": "dev-master",
+        "doctrine/dbal-two": "dev-master",
         "webonyx/graphql-php": "dev-master",
         "league/oauth2-server": "dev-master",
         "aws/aws-sdk-php": "^3.0@dev",
@@ -22,6 +22,16 @@
         "kamermans/guzzle-oauth2-subscriber": "dev-master",
         "tightenco/collect": "dev-master"
     },
+    "repositories" : [
+        {
+            "type": "path",
+            "url": "/home/bitflix/PhpstormProjects/orm"
+        },
+        {
+            "type": "path",
+            "url": "/home/bitflix/PhpstormProjects/dbal"
+        }
+    ],
     "authors": [
         {
             "name": "Gabriel Melo",
@@ -41,5 +51,6 @@
             "database\\" : "database/",
             "tests\\" : "tests/"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }

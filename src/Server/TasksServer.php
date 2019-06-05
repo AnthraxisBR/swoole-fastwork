@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\server;
+namespace AnthraxisBR\SwooleFW\Serverr;
 
 
 use AnthraxisBR\SwooleFW\Application;

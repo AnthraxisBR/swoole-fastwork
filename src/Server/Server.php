@@ -1,25 +1,35 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\server;
+namespace AnthraxisBR\SwooleFW\Serverr;
 
 use AnthraxisBR\SwooleFW\Application;
-use AnthraxisBR\SwooleFW\server\ServerYamlReader;
+use AnthraxisBR\SwooleFW\Serverr\ServerYamlReader;
 
+/**
+ * Class Server
+ * @package AnthraxisBR\SwooleFW\server
+ */
 class Server
 {
 
-    public $config;
+    /**
+     * @var array
+     */
+    public $config = [];
 
+    /**
+     * Server constructor.
+     * @param Application $app
+     */
     public function __construct(Application $app)
     {
-
-        $this->config($app);
+        $this->configure($app);
 
         $this->run();
     }
 
     /**
-     *
+     * Runs servers
      */
     public function run() :void
     {
@@ -33,14 +43,17 @@ class Server
     }
 
     /**
+     * Defines server application config from file
      * @param Application $app
      */
-    public function config(Application $app): void
+    public function configure(Application $app): void
     {
         $this->setConfig(ServerYamlReader::getConfig($app));
     }
 
     /**
+     * Get extra attr configs from file .yaml
+     * Extra config is any config value that doesnt belongs to server class
      * @return array
      */
     public function extra_config() : array
@@ -49,6 +62,7 @@ class Server
     }
 
     /**
+     * Defines array of configs of server instance class
      * @param array $config
      */
     public function setConfig(array $config) : void
@@ -57,6 +71,7 @@ class Server
     }
 
     /**
+     * Returns array of configs in server instance class
      * @return array
      */
     public function getConfig() : array

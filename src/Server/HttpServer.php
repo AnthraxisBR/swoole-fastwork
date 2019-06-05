@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\server;
+namespace AnthraxisBR\SwooleFW\Serverr;
 
 
 use AnthraxisBR\SwooleFW\Application;
@@ -44,16 +44,22 @@ class HttpServer extends \swoole_http_server
             echo "Swoole http server is started at http://" . $this->host . ":" . $this->port ."\n";
         });
 
+
+        $this->onRequest();
+    }
+
+    public function onRequest()
+    {
         $this->on("request", function ($request, $response) use (&$app){
-            $response = $app->appendConfig(
-                    $this,
-                    new Request($request),
-                    new \AnthraxisBR\SwooleFW\http\Response($response)
+
+            $response = $this->app->appendConfig(
+                $this,
+                new Request($request),
+                new \AnthraxisBR\SwooleFW\http\Response($response)
             )->run();
 
             $response->swoole()->end($response->getResponse());
         });
-
     }
 
     public function implements_config($config)
