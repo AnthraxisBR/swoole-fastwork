@@ -1,6 +1,6 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\http;
+namespace AnthraxisBR\SwooleFW\Http;
 
 use GuzzleHttp\Psr7\Response as ResponseBase;
 use Swoole\Http\Response as SwooleResponse;
@@ -12,7 +12,7 @@ class Response extends ResponseBase
     public $swoole_response;
 
     public function __construct(
-        SwooleResponse $response,
+        SwooleResponse $response = null,
         $status = 200,
         array $headers = [],
         $body = null,

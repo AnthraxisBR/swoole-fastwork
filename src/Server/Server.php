@@ -37,6 +37,7 @@ class Server
          * $config is one of Swoole server class
          */
         foreach ($this->getConfig() as $config){
+            /* @var $config SwooleServer */
             $config->implements_config($this->extra_config());
             $config->start();
         }

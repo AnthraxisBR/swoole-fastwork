@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\http;
+namespace AnthraxisBR\SwooleFW\Http;
 
 
 class Body

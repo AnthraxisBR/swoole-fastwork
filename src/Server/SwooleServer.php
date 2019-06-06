@@ -1,0 +1,343 @@
+<?php
+
+
+namespace AnthraxisBR\SwooleFW\Server;
+
+
+use AnthraxisBR\SwooleFW\Application;
+use AnthraxisBR\SwooleFW\Http\Request;
+use AnthraxisBR\SwooleFW\Server\ConfigObjects\WorkersConfig;
+use GabrielMourao\SwooleFW\Http\Response;
+
+class SwooleServer extends \swoole_http_server
+{
+
+    public $host;
+
+    public $port;
+
+    public $config;
+
+    public $workers_config;
+
+    public $worker;
+
+    public $worker_num;
+
+    public $task_worker_num;
+
+    public $app;
+
+    public $task_ipc_mode;
+
+    public $message_queue_key;
+
+    public $task_tmpdir;
+
+    public function __construct(Application $app, array $config)
+    {
+        $this->host = $config['host'];
+        $this->port = $config['port'];
+
+        $this->app = $app;
+
+        parent::__construct($this->host, $this->port);
+
+        $this->on('start', function ($server) {
+            echo "Swoole http server is started at http://" . $this->host . ":" . $this->port ."\n";
+        });
+
+
+        $this->onRequest();
+    }
+
+    public function onRequest()
+    {
+        $this->on("request", function ($request, $response) use (&$app){
+
+            $response = $this->app->appendConfig(
+                $this,
+                new Request($request),
+                new \AnthraxisBR\SwooleFW\Http\Response($response)
+            )->run();
+
+            $response->swoole()->end($response->getResponse());
+        });
+    }
+
+    public function implements_config($config)
+    {
+        $this->config = $config;
+
+        if($this->hasWorkerEnabled()){
+
+            $this->setAllWorkersConfigs();
+
+            $this->set($this->getWorkersConfig());
+
+            $this->bindTaskEvents();
+        }
+    }
+
+    public function bindTaskEvents()
+    {
+
+
+        $this->onTask();
+
+        $this->onWorkerStart();
+
+        $this->onWorkerStop();
+    }
+
+    public function onTask()
+    {
+
+        $this->on('Task', function (\swoole_server $serv, $task_id, $from_id, $data) {
+            echo "#{$serv->worker_id}\tonTask: [PID={$serv->worker_pid}]: task_id=$task_id, data_len=".strlen($data).".".PHP_EOL;
+            $this->app->runSignedTask($serv, $task_id, $from_id, $data);
+            $serv->finish($this->app->taskResponse);
+            echo 'concluído';
+        });
+
+    }
+
+    public function onWorkerStart()
+    {
+
+
+        $this->on('workerStart', function(\swoole_server $serv, $worker_id) {
+            global $argv;
+            if ($serv->taskworker)
+            {
+                \swoole_set_process_name("php {$argv[0]}: task_worker");
+            }
+            else
+            {
+                \swoole_set_process_name("php {$argv[0]}: worker");
+            }
+        });
+
+    }
+
+
+    public function onWorkerStop()
+    {
+
+        $this->on('workerStop', function (\swoole_server $serv, $id) {
+            echo "stop\n";
+            var_dump($id);
+        });
+    }
+
+    private function setAllWorkersConfigs()
+    {
+        $workerConfig = new WorkersConfig();
+
+        $this->worker_num = $workerConfig->getWorkerNum();
+        $this->task_worker_num = $workerConfig->getTaskWorkerNum();
+        $this->task_ipc_mode = $workerConfig->getTaskIpcMode();
+        $this->message_queue_key = $workerConfig->getMessageQueueKey();
+        $this->task_tmpdir = $workerConfig->getTaskTmpdir();
+
+
+        $workers_config = [];
+        $workers_config['worker_num'] = $this->worker_num;
+        $workers_config['task_worker_num'] = $this->task_worker_num;
+
+        if(!is_null($this->task_ipc_mode)){
+            $workers_config['task_ipc_mode'] = $this->task_ipc_mode;
+        }
+        if(!is_null($this->message_queue_key)){
+            $workers_config['message_queue_key'] = $this->message_queue_key;
+        }
+        if(!is_null($this->task_tmpdir)){
+            $workers_config['task_tmpdir'] = $this->task_tmpdir;
+        }
+
+        $this->setWorkersConfig($workers_config);
+    }
+
+    private function hasWorkerEnabled()
+    {
+        return isset($this->config['worker']);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * @param mixed $host
+     */
+    public function setHost($host): void
+    {
+        $this->host = $host;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPort()
+    {
+        return $this->port;
+    }
+
+    /**
+     * @param mixed $port
+     */
+    public function setPort($port): void
+    {
+        $this->port = $port;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param mixed $config
+     */
+    public function setConfig($config): void
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWorkersConfig()
+    {
+        return $this->workers_config;
+    }
+
+    /**
+     * @param mixed $workers_config
+     */
+    public function setWorkersConfig($workers_config): void
+    {
+        $this->workers_config = $workers_config;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWorker()
+    {
+        return $this->worker;
+    }
+
+    /**
+     * @param mixed $worker
+     */
+    public function setWorker($worker): void
+    {
+        $this->worker = $worker;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWorkerNum()
+    {
+        return $this->worker_num;
+    }
+
+    /**
+     * @param mixed $worker_num
+     */
+    public function setWorkerNum($worker_num): void
+    {
+        $this->worker_num = $worker_num;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTaskWorkerNum()
+    {
+        return $this->task_worker_num;
+    }
+
+    /**
+     * @param mixed $task_worker_num
+     */
+    public function setTaskWorkerNum($task_worker_num): void
+    {
+        $this->task_worker_num = $task_worker_num;
+    }
+
+    /**
+     * @return Application
+     */
+    public function getApp(): Application
+    {
+        return $this->app;
+    }
+
+    /**
+     * @param Application $app
+     */
+    public function setApp(Application $app): void
+    {
+        $this->app = $app;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTaskIpcMode()
+    {
+        return $this->task_ipc_mode;
+    }
+
+    /**
+     * @param mixed $task_ipc_mode
+     */
+    public function setTaskIpcMode($task_ipc_mode): void
+    {
+        $this->task_ipc_mode = $task_ipc_mode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMessageQueueKey()
+    {
+        return $this->message_queue_key;
+    }
+
+    /**
+     * @param mixed $message_queue_key
+     */
+    public function setMessageQueueKey($message_queue_key): void
+    {
+        $this->message_queue_key = $message_queue_key;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTaskTmpdir()
+    {
+        return $this->task_tmpdir;
+    }
+
+    /**
+     * @param mixed $task_tmpdir
+     */
+    public function setTaskTmpdir($task_tmpdir): void
+    {
+        $this->task_tmpdir = $task_tmpdir;
+    }
+
+
+}

@@ -80,7 +80,7 @@ class Application
     public function run()
     {
         if($this->isHttpProtocol()){
-            return $this->servers['HttpServer']->process();
+            return $this->servers['SwooleServer']->process();
         }
     }
 
@@ -93,6 +93,7 @@ class Application
     }
 
     /**
+     * Check if request has http protocol
      * @return bool
      */
     public function isHttpProtocol() : bool

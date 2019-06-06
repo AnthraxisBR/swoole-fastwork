@@ -28,7 +28,7 @@ class  Actions
      * Receive some provided class
      * @param $provider
      */
-    public function appendProvided($provider) : void
+    public function appendProvided(object $provider) : void
     {
         $this->providers[$provider->getName()] = $provider;
     }

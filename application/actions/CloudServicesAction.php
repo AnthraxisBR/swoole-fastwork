@@ -17,9 +17,6 @@ class CloudServicesAction extends Actions
     public function createCloudFunction(CloudServices $CloudServices)
     {
 
-
-
-
         $CloudServices->setService( new GetUrlCloudFunctionGCP() );
 
         return  $CloudServices->createCloudFunction();

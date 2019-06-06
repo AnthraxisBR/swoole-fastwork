@@ -14,7 +14,7 @@ class GetUrlCloudFunctionGCP extends CloudFunctions
 
     public $serviceProvider = 'GCP';//'GCP';
 
-    public $git = 'https://github.com/AnthraxisBR/get-url-cloud-function.git';
+    public $git = 'https://reqres.in/api/users';//'https://github.com/AnthraxisBR/get-url-cloud-function.git';
 
     public $locations = Regions::sa_east_1;
 

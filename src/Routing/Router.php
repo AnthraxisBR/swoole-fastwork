@@ -100,6 +100,12 @@ class Router
      */
     private $function;
 
+    public $server;
+
+    /**
+     * @var Req
+     */
+    public $request;
     /**
      * Router constructor.
      * @param Wrapper $wrapper
@@ -109,21 +115,32 @@ class Router
 
 
         $this->response = new \stdClass();
-        $this->wrapper = $wrapper;
 
+        $this->mountFromWrapper($wrapper);
 
         $this->build();
     }
+
+    /**
+     * @param Wrapper $wrapper
+     */
+    public function mountFromWrapper(Wrapper $wrapper) : void
+    {
+        $this->response = $wrapper->getResponse();
+        $this->server = $wrapper->getServer();
+        $this->request = $wrapper->getRequest();
+    }
+
 
     /**
      *
      */
     public function build() : void
     {
-        $this->method = $this->wrapper->getRequestMethod();
-        $this->uri = $this->wrapper->getRequestUri();
-        $this->remote_addr = $this->wrapper->getRequestRemoteAddr();
-        $this->protocol = $this->wrapper->getRequestServerProtocol();
+        $this->method = $this->request->getRequestMethod();
+        $this->uri = $this->request->getRequestUri();
+        $this->remote_addr = $this->request->getRequestRemoteAddr();
+        $this->protocol = $this->request->getRequestServerProtocol();
 
         $this->setProviders();
 
@@ -210,7 +227,14 @@ class Router
         /**
          * Call action
          */
+        $this->callActionClassFunction();
+    }
 
+    /**
+     *
+     */
+    public function callActionClassFunction() : void
+    {
         try {
             $this->response = call_user_func_array([$this->application,$this->function],$this->providers);
 
@@ -220,8 +244,10 @@ class Router
         }
     }
 
+    /**
+     * @param \Exception $e
+     */
     public function errorResponse(\Exception $e){
-
         $this->response = [ 'message' => $e->getMessage()];
     }
 
@@ -244,16 +270,34 @@ class Router
              * Some providers cannot be used without an entity instance
              */
             if(isset($this->application->providers['entity'])){
-                $this->application->appendProvided($this->providers['action_providers'][$ref]->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest(), $entity = $this->application->providers['entity']));
+                $this->application->appendProvided(
+                    $this->providers['action_providers'][$ref]->getInstance(
+                        $route = $this,
+                        $swoole_request = $this->getRequest(),
+                        $entity = $this->application->providers['entity']
+                    )
+                );
             }else{
-                $this->application->appendProvided($this->providers['action_providers'][$ref]->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest()));
+                $this->application->appendProvided(
+                    $this->providers['action_providers'][$ref]->getInstance(
+                        $route = $this,
+                        $swoole_request = $this->getRequest()
+                    )
+                );
             }
         }
         /**
          * Applying fixed providers, can be mandatory
          */
         foreach ($this->fixedProviders() as $provider){
-            $this->application->appendFixedProvided($provider->getInstance($route = $this, $swoole_request = $this->wrapper->getRequest(), null, true));
+            $this->application->appendFixedProvided(
+                $provider->getInstance(
+                    $route = $this,
+                    $swoole_request = $this->getRequest(),
+                    null,
+                    true
+                )
+            );
         }
 
         $fixed_providers = $this->application->providers['fixed'];
@@ -265,6 +309,12 @@ class Router
         unset($this->application->providers);
 
         $this->application->providers = $fixed_providers;
+
+    }
+
+    public function getRequest() : Request
+    {
+        return $this->request;
     }
 
     /**
@@ -328,5 +378,204 @@ class Router
     public function getResponse()
     {
         return json_encode($this->response);
+    }
+    /**
+     * @return string
+     */
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param string $method
+     */
+    public function setMethod(string $method): void
+    {
+        $this->method = $method;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUri(): string
+    {
+        return $this->uri;
+    }
+
+    /**
+     * @param string $uri
+     */
+    public function setUri(string $uri): void
+    {
+        $this->uri = $uri;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRemoteAddr(): string
+    {
+        return $this->remote_addr;
+    }
+
+    /**
+     * @param string $remote_addr
+     */
+    public function setRemoteAddr(string $remote_addr): void
+    {
+        $this->remote_addr = $remote_addr;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProtocol(): string
+    {
+        return $this->protocol;
+    }
+
+    /**
+     * @param string $protocol
+     */
+    public function setProtocol(string $protocol): void
+    {
+        $this->protocol = $protocol;
+    }
+
+    /**
+     * @return Actions
+     */
+    public function getApplication(): Actions
+    {
+        return $this->application;
+    }
+
+    /**
+     * @param Actions $application
+     */
+    public function setApplication(Actions $application): void
+    {
+        $this->application = $application;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * @param array $parameters
+     */
+    public function setParameters(array $parameters): void
+    {
+        $this->parameters = $parameters;
+    }
+
+    /**
+     * @return array
+     */
+    public function getProviders(): array
+    {
+        return $this->providers;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuery(): string
+    {
+        return $this->query;
+    }
+
+    /**
+     * @param string $query
+     */
+    public function setQuery(string $query): void
+    {
+        $this->query = $query;
+    }
+
+    /**
+     * @return Wrapper
+     */
+    public function getWrapper(): Wrapper
+    {
+        return $this->wrapper;
+    }
+
+    /**
+     * @param Wrapper $wrapper
+     */
+    public function setWrapper(Wrapper $wrapper): void
+    {
+        $this->wrapper = $wrapper;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoute(): array
+    {
+        return $this->route;
+    }
+
+    /**
+     * @param array $route
+     */
+    public function setRoute(array $route): void
+    {
+        $this->route = $route;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInvokableFunction(): string
+    {
+        return $this->invokable_function;
+    }
+
+    /**
+     * @param string $invokable_function
+     */
+    public function setInvokableFunction(string $invokable_function): void
+    {
+        $this->invokable_function = $invokable_function;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClassname(): string
+    {
+        return $this->classname;
+    }
+
+    /**
+     * @param string $classname
+     */
+    public function setClassname(string $classname): void
+    {
+        $this->classname = $classname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFunction(): string
+    {
+        return $this->function;
+    }
+
+    /**
+     * @param string $function
+     */
+    public function setFunction(string $function): void
+    {
+        $this->function = $function;
     }
 }

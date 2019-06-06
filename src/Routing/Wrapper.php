@@ -10,7 +10,6 @@ use AnthraxisBR\SwooleFW\http\Response;
 
 class Wrapper
 {
-
     /**
      * @var Request
      */
@@ -47,61 +46,13 @@ class Wrapper
 
     }
 
-    /**
-     * @return object
-     */
-    public function getPostBody() : object
-    {
-        return (object) json_decode($this->getRequest()->rawContent());
-    }
-
-    /**
-     * @return array
-     */
-    public function getHeaders() : array
-    {
-        return (array) $this->getRequest()->headers;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestMethod() : string
-    {
-        return (string) $this->getRequest()->server['request_method'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestServerProtocol() : string
-    {
-        return (string) $this->getRequest()->server['server_protocol'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestRemoteAddr() : string
-    {
-        return (string) $this->getRequest()->server['remote_addr'];
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getRequestUri() : string
-    {
-        return (string) $this->getRequest()->server['request_uri'];
-    }
 
     /**
      * @return \Swoole\Http\Request
      */
-    public function getRequest() : \Swoole\Http\Request
+    public function getRequest() : Request
     {
-        return  $this->request->swoole_request;
+        return  $this->request;
     }
 
     /**
@@ -120,4 +71,54 @@ class Wrapper
         return $this->response;
 
     }
+
+    /**
+     * @return Response
+     */
+    public function getResponse(): Response
+    {
+        return $this->response;
+    }
+
+    /**
+     * @param Response $response
+     */
+    public function setResponse(Response $response): void
+    {
+        $this->response = $response;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoute(): string
+    {
+        return $this->route;
+    }
+
+    /**
+     * @param string $route
+     */
+    public function setRoute(string $route): void
+    {
+        $this->route = $route;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServer()
+    {
+        return $this->server;
+    }
+
+    /**
+     * @param mixed $server
+     */
+    public function setServer($server): void
+    {
+        $this->server = $server;
+    }
+
+
 }

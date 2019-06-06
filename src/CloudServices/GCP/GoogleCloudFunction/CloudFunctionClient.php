@@ -5,8 +5,8 @@ namespace AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction;
 
 
 use AnthraxisBR\SwooleFW\CloudServices\GCP\Google;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\http\Response;
+use AnthraxisBR\SwooleFW\Http\Request;
+use AnthraxisBR\SwooleFW\Http\Response;
 use AnthraxisBR\SwooleFW\Server\Client;
 
 class CloudFunctionClient extends Google
@@ -20,7 +20,7 @@ class CloudFunctionClient extends Google
 
     public function __construct(array $config = array())
     {
-
+/*
         try {
             $client = new \Google_Client();
             //$credentials = getenv('root_folder') . 'application/CloudServices/credentials.json';
@@ -31,13 +31,13 @@ class CloudFunctionClient extends Google
             /*$client->addScope(\Google_Service_Drive::DRIVE_METADATA_READONLY);
             $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php');
             $client->setAccessType('offline');        // offline access
-            $client->setIncludeGrantedScopes(true);*/
+            $client->setIncludeGrantedScopes(true);
             //var_dump($client->fetchAccessTokenWithAssertion());
             $this->client = $client->authorize();
 
         } catch (\Exception $e){
             throw new \Exception($e->getMessage());
-        }
+        }*/
 
         parent::__construct($config);
     }
@@ -54,9 +54,19 @@ class CloudFunctionClient extends Google
 
     public function create(CloudFunctionObject $cloudFunctionObject, string $application) : \GuzzleHttp\Psr7\Response
     {
+        $client = new \AnthraxisBR\SwooleFW\Http\Client();
+
         $url = $this::url . $application . '/functions';
-        return $this->client->request('POST', $url, [
-            'json' =>  json_decode($cloudFunctionObject)
+
+        $client->constructCoroutinesAdapter(new Request(
+            $request = null,
+            $method = 'post',
+            $uri = $url,
+            $body = (array) $cloudFunctionObject
+        ));
+
+        return $client->request('POST', $url, [
+            'json' =>json_decode($cloudFunctionObject)
         ]);
     }
 
