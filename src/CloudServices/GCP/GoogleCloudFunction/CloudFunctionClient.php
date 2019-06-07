@@ -58,7 +58,7 @@ class CloudFunctionClient extends Google
 
         $url = $this::url . $application . '/functions';
 
-        $client->constructCoroutinesAdapter(new Request(
+        $client->constructSaberAdapt(new Request(
             $request = null,
             $method = 'post',
             $uri = $url,

@@ -23,7 +23,7 @@ class Server
      */
     public function __construct(Application $app)
     {
-        $this->configure($app);
+        $this->prepare($app);
 
         $this->run();
     }
@@ -36,10 +36,10 @@ class Server
         /**
          * $config is one of Swoole server class
          */
-        foreach ($this->getConfig() as $config){
+        foreach ($this->getApplication() as $application){
             /* @var $config SwooleServer */
-            $config->implements_config($this->extra_config());
-            $config->start();
+            $application->configure(array_merge($this->getConfig(),$this->extra_config()));
+            $application->start();
         }
     }
 
@@ -47,9 +47,19 @@ class Server
      * Defines server application config from file
      * @param Application $app
      */
-    public function configure(Application $app): void
+    public function prepare(Application $app): void
     {
-        $this->setConfig(ServerYamlReader::getConfig($app));
+        $this->setApplication(ServerYamlReader::getConfig($app));
+        $this->setConfig(ServerYamlReader::getConfigs($app));
+    }
+
+    public function setApplication($application)
+    {
+        $this->application = $application;
+    }
+    public function getApplication()
+    {
+        return $this->application;
     }
 
     /**

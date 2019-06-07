@@ -13,6 +13,7 @@ class ServerYamlReader
     public static $yaml_file = [];
 
     public static $instances = [];
+
     public static function getExtraConfig()
     {
         try {
@@ -26,6 +27,21 @@ class ServerYamlReader
         unset(self::$yaml_file['server']);
 
         return self::$yaml_file;
+    }
+
+    public static function getConfigs(Application $app)
+    {
+        try {
+            $config = getenv('root_folder') . 'config/server.yml';
+        }catch (\Exception $e){
+            $config = getenv('root_folder') . 'config/server.yaml';
+        }
+
+        return Yaml::parseFile($config);
+
+        $result = self::parseConfig($app);
+
+        return $result;
     }
 
     public static function getConfig(Application $app)

@@ -23,7 +23,9 @@
     "require-dev" : {
         "tightenco/collect": "^5.8.19",
         "swlib/swpdo-two": "1.0.1",
-        "doctrine/orm-two": "2.6.1"
+        "swlib/saber": "dev-master",
+        "doctrine/orm-two": "2.6.1",
+        "eaglewu/swoole-ide-helper": "dev-master"
     },
     "repositories" : [
         {
@@ -37,6 +39,10 @@
         {
             "type": "vcs",
             "url": "/home/gabriel/PhpstormProjects/dbal"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/AnthraxisBR/saber"
         }
     ],
     "authors": [
@@ -58,5 +64,7 @@
             "database\\" : "database/",
             "tests\\" : "tests/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

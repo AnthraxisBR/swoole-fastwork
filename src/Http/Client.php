@@ -13,7 +13,7 @@ class Client extends \GuzzleHttp\Client
     {
     }
 
-    public function constructCoroutinesAdapter(Request $request)
+    public function constructSaberAdapt(Request $request)
     {
 
         $handler = new HttpClientAdapter($request);

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace AnthraxisBR\SwooleFW\Http;
 
 
@@ -8,42 +7,36 @@ use AnthraxisBR\SwooleFW\Exceptions\MethodNotAllowed;
 use GuzzleHttp\Promise\FulfilledPromise;
 use phpWhois\Whois;
 use Psr\Http\Message\RequestInterface;
+use Swlib\Http\Exception\RequestException;
+use Swlib\SaberGM;
 
 class HttpClientAdapter
 {
 
+    private $client;
+
     public function __invoke(RequestInterface $request, array $options)
     {
-        $domain = "https://reqres.in";
 
-    var_dump($result);
-        $http_client = new \Swoole\Coroutine\Http\Client($domain, 80);
-        $http_client->get('/users');
-        var_dump($http_client->body);
-        // websocket
-        var_dump($http_client->recv()->data);
+        $method = $request->getMethod();
 
-        /*$method = 'get';//$request->getMethod();
-        var_dump(get_class($cli));
+        $this->client = new SaberGM();
+
         try{
-            var_dump((string) $request->getUri());
-            $uri = 'https://reqres.in/api/users'; //(string) $request->getUri()
-            $response = $cli->{strtolower($method)}($uri);
-        }catch (\Exception $e){
-            throw new MethodNotAllowed($e->getMessage());
-        }
-        var_dump(get_class($response));
-var_dump($cli->recv());
-        $cli->close();
-*/
-        if(is_null($cli->headers)){
-            $headers = [];
-        }else{
-            $headers = $cli->headers;
-        }
 
-        return new FulfilledPromise(
-            new Response(null, $cli->statusCode, $headers, $cli->body)
-        );
+            $uri = (string) $request->getUri();
+
+            /* @var $response \Swlib\Http\Response */
+            $response = $this->client->patch($uri);
+
+            return new FulfilledPromise(
+                new \GuzzleHttp\Psr7\Response($response->getStatusCode(),$response->getHeaders(),$response->getBody())
+            );
+
+        }catch (RequestException $e){
+            throw new \AnthraxisBR\SwooleFW\Exceptions\RequestException($e->getMessage());
+        }catch (\Exception $e){
+            throw new MethodNotAllowed([$e->getMessage()], $method);
+        }
     }
 }

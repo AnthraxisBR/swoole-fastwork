@@ -3,10 +3,10 @@ server:
     host: 127.0.0.1
     port: 8101
     config:
-      ssl_cert_file: null
+      ssl_cert_file: '/etc/ssl/certs/swoole-selfsigned.crt'
+      ssl_key_file: '/etc/ssl/private/swoole-selfsigned.key'
       ssl_ciphers: null
       ssl_method: null,
-      ssl_key_file: null
       open_http2_protocol: false
       open_http_protocol: true
       max_request: 10

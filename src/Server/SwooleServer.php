@@ -34,6 +34,8 @@ class SwooleServer extends \swoole_http_server
 
     public $task_tmpdir;
 
+    public $server_config = [];
+
     public function __construct(Application $app, array $config)
     {
         $this->host = $config['host'];
@@ -73,10 +75,40 @@ class SwooleServer extends \swoole_http_server
 
             $this->setAllWorkersConfigs();
 
-            $this->set($this->getWorkersConfig());
 
             $this->bindTaskEvents();
         }
+
+        if($this->hasServerConfigs()){
+            $swoole = $this->config['server']['swoole'];
+
+            $configs = $swoole['config'];
+
+            $this->server_config['ssl_cert_file'] = $configs['ssl_cert_file'];
+            $this->server_config['ssl_key_file'] = $configs['ssl_key_file'];
+
+        }
+
+
+        $this->set($this->getConfigs());
+    }
+
+    public function hasServerConfigs()
+    {
+        return isset($this->config['server']);
+    }
+
+    public function getConfigs()
+    {
+        return array_merge(
+            $this->getWorkersConfig(),
+            $this->getServerConfig()
+        );
+    }
+
+    public function getServerConfig()
+    {
+        return $this->server_config;
     }
 
     public function bindTaskEvents()
@@ -128,6 +160,11 @@ class SwooleServer extends \swoole_http_server
             echo "stop\n";
             var_dump($id);
         });
+    }
+
+    public function configure($configs)
+    {
+        $this->implements_config($configs);
     }
 
     private function setAllWorkersConfigs()
