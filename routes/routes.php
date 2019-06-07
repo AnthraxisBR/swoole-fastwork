@@ -30,7 +30,11 @@ $routes = Route::implements(
 
         (new Get())
             ->name('\cloud')
-            ->action('CloudServices@createCloudFunction')
+            ->action('CloudServices@createCloudFunction'),
+
+        (new Get())
+            ->name('\async')
+            ->action('Async@asyncCall')
     ]
 );
 

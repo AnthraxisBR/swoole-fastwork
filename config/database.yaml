@@ -3,7 +3,7 @@ databases:
   default:
     host: '127.0.0.1'
     port: '9906'
-    driver: 'sw_pdo_mysql'
+    driver: 'pdo_mysql'
     user: 'swoole'
     password: 'swoole'
     dbname: 'swoole'

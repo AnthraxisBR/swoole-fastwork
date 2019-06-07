@@ -43,7 +43,7 @@ class BaseProvider
                     if (is_a($class, Entities::class, true)) {
                         $inst = new $class();
                     }elseif(is_a($class, TasksManager::class, true)){
-                        $inst = new $class($router->wrapper->server);
+                        $inst = new $class($router);
                     }else{
                         $inst = new $class($router);
                     }

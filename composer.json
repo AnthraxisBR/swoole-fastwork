@@ -22,9 +22,11 @@
     },
     "require-dev" : {
         "tightenco/collect": "^5.8.19",
-        "swlib/swpdo-two": "1.0.1",
+        "swlib/swpdo-two": "dev-master#1.0.1",
         "swlib/saber": "dev-master",
-        "doctrine/orm-two": "2.6.1",
+        "swlib/http": "dev-master",
+        "swlib/util": "dev-master",
+        "doctrine/orm": "^2.6.1",
         "eaglewu/swoole-ide-helper": "dev-master"
     },
     "repositories" : [
@@ -35,10 +37,6 @@
         {
             "type": "vcs",
             "url": "/home/gabriel/PhpstormProjects/orm"
-        },
-        {
-            "type": "vcs",
-            "url": "/home/gabriel/PhpstormProjects/dbal"
         },
         {
             "type": "git",
@@ -64,7 +62,5 @@
             "database\\" : "database/",
             "tests\\" : "tests/"
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }

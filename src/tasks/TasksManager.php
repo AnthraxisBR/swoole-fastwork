@@ -33,13 +33,29 @@ class TasksManager
     {
 
     }
+
+    public function asyncFunction()
+    {
+
+        \Swoole\Async::dnsLookup("localhost", function ($domainName, $ip) {
+            sleep(1);
+            echo 1;
+            sleep(2);
+            echo 2;
+            sleep(3);
+            echo 3;
+        });
+    }
     public function asyncCall($class, $function, $args, $callback)
     {
 
-        $this->server->task($task, -1, function ($serv, $task_id, $data) use( &$response)
-        {
-
-            $response .= $task_id;
+        \Swoole\Async::dnsLookup("localhost", function ($domainName, $ip) {
+            sleep(1);
+            echo 1;
+            sleep(2);
+            echo 2;
+            sleep(3);
+            echo 3;
         });
     }
     public function startTask($data, $headers = [], $server = [])
