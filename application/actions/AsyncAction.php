@@ -5,6 +5,7 @@ namespace App\actions;
 
 
 use AnthraxisBR\SwooleFW\actions\Actions;
+use AnthraxisBR\SwooleFW\Async\AsyncResponse;
 use AnthraxisBR\SwooleFW\Async\Promisse;
 use AnthraxisBR\SwooleFW\http\Request;
 use AnthraxisBR\SwooleFW\tasks\TasksManager;
@@ -14,26 +15,19 @@ class Teste {
 
     public function sum($a, $b)
     {
+        sleep(1);
+        var_dump('sum');
         return $a + $b;
     }
 }
 
 class AsyncAction extends Actions
 {
-    public function asyncCall(TasksManager $tasksManager, Users $users)
+    public function asyncCall()
     {
-        (new Promisse( function($body){
+        return (new Promisse( function(AsyncResponse $response){
+                return $response->resp(Teste::sum(1,2));
+        }))->exec();
 
-                $teste = new Teste();
-
-                sleep(1);
-                echo $teste->sum(1,6);
-                sleep(1);
-                echo $teste->sum(6, 8);
-                sleep(1);
-                echo $teste->sum(1, 8);
-        }));
-
-        return "sendo assíncrono";
     }
 }
