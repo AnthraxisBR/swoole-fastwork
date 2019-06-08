@@ -11,6 +11,7 @@ namespace AnthraxisBR\SwooleFW;
  */
 use AnthraxisBR\SwooleFW\builder\Builder;
 use AnthraxisBR\SwooleFW\http\Request;
+use AnthraxisBR\SwooleFW\Server\ServersCollections;
 use AnthraxisBR\SwooleFW\tasks\Tasks;
 
 class Application
@@ -20,11 +21,19 @@ class Application
 
     public $response;
 
-    public $servers = [];
+    /**
+     * @var
+     */
+    public $servers;
 
     public $taskResponse;
 
     private $protocol;
+
+    public function __construct()
+    {
+        $this->servers = new ServersCollections();
+    }
 
     /**
      * Irá receber a instancia de server, e as instancia da requeste resposne do Swoole
@@ -45,7 +54,7 @@ class Application
         /**
          * Set server instances on attribute 'SERVER', it will be used to run the server
          */
-        $this->servers[$this->getServerId($server)] = Builder::wrapper($server, $request, $response);
+        $this->servers->setNewServer(Builder::wrapper($server, $request, $response), $this->getServerId($server));
 
         return $this;
     }
@@ -70,7 +79,9 @@ class Application
      */
     public function runSignedTask($serv, $task_id, $from_id, $data) : void
     {
-        $this->taskResponse = Tasks::run($serv, $task_id, $from_id, $data);
+        if(!is_int($data)){
+            $this->taskResponse = Tasks::run($serv, $task_id, $from_id, $data);
+        }
     }
 
     /**
@@ -79,9 +90,9 @@ class Application
      */
     public function run()
     {
-        if($this->isHttpProtocol()){
-            return $this->servers['SwooleServer']->process();
-        }
+        return $this->servers->map(function($server){
+            return $server->process();
+        });
     }
 
     /**

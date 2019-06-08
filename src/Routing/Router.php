@@ -236,12 +236,63 @@ class Router
     public function callActionClassFunction() : void
     {
         try {
-            $this->response = call_user_func_array([$this->application,$this->function],$this->providers);
+            $this->application->setServer($this->server);
+
+            $this->checkUrlParams();
+
+            $args = array_merge($this->providers, $this->url_params);
+
+            $this->response = call_user_func_array([$this->application,$this->function],$args);
 
         } catch (\Exception $e)
         {
             $this->errorResponse($e);
         }
+    }
+
+    public function checkUrlParams()
+    {
+        $uri = str_replace('/api','', $this->uri);
+        $uri = str_replace('/','\\', $uri);
+
+        $uri_2 = $this->route->uri;
+
+        $exp_1 = array_values(array_filter(explode('\\',$uri),function($str){ return $str != ''; }));
+        $exp_2 = array_values(array_filter(explode('\\',$uri_2),function($str){ return $str != ''; }));
+
+        $isset = [];
+        for($i = 0; $i < count($exp_1); $i++){
+            if(isset($exp_1[$i]) and isset($exp_2[$i])){
+
+                if($exp_1[$i] == $exp_2[$i]){
+
+                }else{
+                    if($exp_1[$i - 1] == $exp_2[$i - 1]){
+                        $i -= 1;
+                    }
+                    $type = $this->url_params[$i]->getType()->getName();
+
+                    if(ctype_digit($exp_1[$i + 1])){
+                        $exp_1[$i + 1] = (int) $exp_1[$i + 1];
+                    }
+
+                    $type_arg = gettype($exp_1[$i + 1]);
+                    if($type_arg == 'integer'){
+                        $type_arg = 'int';
+                    }
+                    if($type_arg == $type){
+                        $this->url_params[$i] = $exp_1[$i + 1];
+                    }
+
+                    if($exp_1[$i] == $exp_2[$i]){
+                        $i += 1;
+                    }
+                }
+            }else{
+                break;
+            }
+        }
+
     }
 
     /**
@@ -259,21 +310,34 @@ class Router
         /**
          * Appending providers from action function parameters
          */
+        $this->url_params = [];
+        $runned = [];
+        $ref = '';
         foreach ($this->parameters as $param){
 
             /**
              * Use a reference provided inside all provided classes
              */
-            $ref = $param->getClass()->name::getInjectReference();
+            if(!is_null($param->getClass())){
+                $ref = $param->getClass()->name::getInjectReference();
+            }else{
+                $this->url_params[] = $param;
+            }
 
             /**
              * Some providers cannot be used without an entity instance
              */
+            if(in_array($ref,$runned)){
+                continue;
+            }
+
+            $runned[] = $ref;
+
             if(isset($this->application->providers['entity'])){
                 $this->application->appendProvided(
                     $this->providers['action_providers'][$ref]->getInstance(
                         $route = $this,
-                        $swoole_request = $this->getRequest(),
+                        $swoole_request = $this->getRequest()->swoole_request,
                         $entity = $this->application->providers['entity']
                     )
                 );
@@ -281,7 +345,7 @@ class Router
                 $this->application->appendProvided(
                     $this->providers['action_providers'][$ref]->getInstance(
                         $route = $this,
-                        $swoole_request = $this->getRequest()
+                        $swoole_request = $this->getRequest()->swoole_request
                     )
                 );
             }
@@ -290,6 +354,7 @@ class Router
          * Applying fixed providers, can be mandatory
          */
         foreach ($this->fixedProviders() as $provider){
+
             $this->application->appendFixedProvided(
                 $provider->getInstance(
                     $route = $this,
@@ -351,7 +416,7 @@ class Router
      */
     public function hasGraphQLQueryBody()
     {
-        return isset($this->wrapper->getPostBody()->query);
+        return isset($this->getRequest()->getData()->query);
     }
 
     /**
@@ -362,6 +427,7 @@ class Router
     protected function getParametersFromInvokableClassFunction($invokable_function)
     {
         $exp = explode('@',$invokable_function);
+
         $this->classname = $exp[0] . 'Action';
 
         if(is_null($this->function)){

@@ -10,6 +10,12 @@ use AnthraxisBR\SwooleFW\tasks\TasksManager;
 class TasksAction extends Actions
 {
 
+    public function createMultipleUsers(TasksManager $TasksManager, Request $request)
+    {
+        $TasksManager->signature('Users@createMultipleUsers');
+        return $TasksManager->startTask($request->getData(),$request->getHeaders(),$request->getServerJson());
+    }
+
     public function create(TasksManager $TasksManager, Request $request)
     {
         $TasksManager->signature('Users@insertUser');

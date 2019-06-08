@@ -19,11 +19,14 @@ class BaseProvider
     {
         $class = null;
         foreach ($router->parameters as $item){
-            $name = $item->getClass()->name;
-            $reflector = new \ReflectionClass($name);
-            if($reflector->isSubclassOf($this->object_reference) || is_a($name ,$this->object_reference,true)){
-                $class = $item->getClass()->name;
-                break;
+
+            if(!is_null($item->getClass())) {
+                $name = $item->getClass()->name;
+                $reflector = new \ReflectionClass($name);
+                if ($reflector->isSubclassOf($this->object_reference) || is_a($name, $this->object_reference, true)) {
+                    $class = $item->getClass()->name;
+                    break;
+                }
             }
         }
         if($fixed === true) {

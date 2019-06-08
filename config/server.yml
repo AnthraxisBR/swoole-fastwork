@@ -1,7 +1,7 @@
 server:
   swoole:
     host: 127.0.0.1
-    port: 8101
+    port: 8102
     config:
       ssl_cert_file: '/etc/ssl/certs/swoole-selfsigned.crt'
       ssl_key_file: '/etc/ssl/private/swoole-selfsigned.key'
@@ -17,7 +17,7 @@ server:
       log_file: null #'/data/log/swoole.log'
       log_level: 1
       timeout: 2.5
-      poll_thread_num: 2
+      poll_thread_num: 4
       max_conn: 10000
       buffer_output_size: 32 * 1024 * 1024 # byte in unit
       chroot: null #'/data/server/'

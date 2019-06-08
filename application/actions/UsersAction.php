@@ -34,7 +34,10 @@ class UsersAction extends Actions
 
     public function store(Request $request, UsersEntity $UsersEntity)
     {
-        return $UsersEntity->create($request->getData());
+        $start = microtime(true);
+        $rs = $UsersEntity->create($request->getData());
+        echo "Time: " . (microtime(true) - $start);
+        return $rs;
     }
 
     public function getResponse()

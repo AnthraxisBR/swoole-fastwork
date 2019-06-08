@@ -5,6 +5,7 @@ namespace AnthraxisBR\SwooleFW\tasks;
 
 
 use AnthraxisBR\SwooleFW\CloudServices\CloudService;
+use AnthraxisBR\SwooleFW\Routing\Router;
 use AnthraxisBR\SwooleFW\traits\Injection;
 
 class TasksManager
@@ -19,9 +20,13 @@ class TasksManager
 
     public $signature;
 
-    public function __construct($server)
+    /**
+     * TasksManager constructor.
+     * @param Router|null $router
+     */
+    public function __construct(Router $router = null)
     {
-        $this->server = $server;
+        $this->server = $router->server;
     }
 
     public function signature($signature)
@@ -71,7 +76,7 @@ class TasksManager
         ];
 
         try {
-            $this->server->task(json_encode($pack), -1, function ($serv, $task_id, $data) use( &$response)
+            $this->server->task($pack, -1, function ($serv, $task_id, $data) use( &$response)
             {
 
                 $response .= $task_id;

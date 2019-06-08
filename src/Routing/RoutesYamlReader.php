@@ -123,12 +123,12 @@ class RoutesYamlReader
                 if(strpos($uri_arg_str,':')){
                     $type = $this->getUriArgType($uri_arg_str);
 
-                    if(Type::{$type}($arr[$index])){
+                    try {
+                        Type::{$type}($arr[$index]);
                         $mount[] = $exp_route[$index];
-                    }else{
-                        /**
-                         * TODO: iniciar criação dos excpetions e dos tratamentos
-                         */
+                    }catch (\TypeError $e){
+                        //$mount[] = $arr[$index];
+
                     }
                 }else{
                     if($arr[$index] == $uri_arg_str){

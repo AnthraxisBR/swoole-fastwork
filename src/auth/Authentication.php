@@ -45,9 +45,9 @@ class Authentication
 
     public function boot()
     {
-        if(count($this->request->getHeader('Authorization')) > 1){
+        /*if(count($this->request->getHeader('Authorization')) > 1){
 
-        }
+        }*/
     }
 
     public function build(Request $request)

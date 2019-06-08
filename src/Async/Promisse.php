@@ -25,9 +25,7 @@ class Promisse
 
         $ref = $this;
 
-        $assync = new \Swoole\Async();
-
-        $assync->dnsLookup("localhost", function ($domainName, $ip) use (&$ref) {
+        \Swoole\Async::dnsLookup("localhost", function ($domainName, $ip) use (&$ref) {
            // $this->result = call_user_func_array($this->closure, $this->args);
             try{
                 $closure = $ref->closure;

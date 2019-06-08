@@ -28,11 +28,15 @@ $routes = Route::implements(
             ->name('\tasks')
             ->action('Tasks@create'),
 
+        (new Post())
+            ->name('\tasks\create-multiple-users')
+            ->action('Tasks@createMultipleUsers'),
+
         (new Get())
             ->name('\cloud')
             ->action('CloudServices@createCloudFunction'),
 
-        (new Get())
+        (new Post())
             ->name('\async')
             ->action('Async@asyncCall')
     ]

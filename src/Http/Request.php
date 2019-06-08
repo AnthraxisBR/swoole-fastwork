@@ -78,7 +78,7 @@ class Request extends RequestBase
      */
     public function getHeaders() : array
     {
-        return (array) $this->getSwooleRequest()->headers;
+        return (array) $this->getSwooleRequest()->header;
     }
 
     /**
