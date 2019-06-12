@@ -1,13 +1,13 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\GoogleCloudFunction;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\GCP\Google;
-use AnthraxisBR\SwooleFW\Http\Request;
-use AnthraxisBR\SwooleFW\Http\Response;
-use AnthraxisBR\SwooleFW\Server\Client;
+use AnthraxisBR\FastWork\CloudServices\GCP\Google;
+use AnthraxisBR\FastWork\Http\Request;
+use AnthraxisBR\FastWork\Http\Response;
+use AnthraxisBR\FastWork\Server\Client;
 
 class CloudFunctionClient extends Google
 {
@@ -54,7 +54,7 @@ class CloudFunctionClient extends Google
 
     public function create(CloudFunctionObject $cloudFunctionObject, string $application) : \GuzzleHttp\Psr7\Response
     {
-        $client = new \AnthraxisBR\SwooleFW\Http\Client();
+        $client = new \AnthraxisBR\FastWork\Http\Client();
 
         $url = $this::url . $application . '/functions';
 

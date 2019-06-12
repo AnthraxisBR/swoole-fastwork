@@ -1,6 +1,6 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\providers;
+namespace AnthraxisBR\FastWork\providers;
 
 use Symfony\Component\Yaml\Yaml;
 

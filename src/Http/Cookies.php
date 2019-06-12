@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Server;
+namespace AnthraxisBR\FastWork\Server;
 
 
 class Cookies

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP;
+namespace AnthraxisBR\FastWork\CloudServices\GCP;
 
 
-use AnthraxisBR\SwooleFW\Exceptions\GoogleExceptions;
+use AnthraxisBR\FastWork\Exceptions\GoogleExceptions;
 use function GuzzleHttp\Psr7\str;
 
 class Google extends  \Google_Client

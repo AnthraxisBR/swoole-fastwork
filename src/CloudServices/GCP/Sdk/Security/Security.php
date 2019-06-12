@@ -1,12 +1,12 @@
 <?php 
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk\Security;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\Sdk\Security;
 
 /**
  * Auto generated class from google-docs-sdk-generator from AnthraxisBR
  */
-class Security extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
+class Security extends \AnthraxisBR\FastWork\CloudServices\GCP\FwGoogleClient
 {
 	public function PoliciesAddRule($data)
 	{

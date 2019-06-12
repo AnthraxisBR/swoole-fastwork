@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\System;
+namespace AnthraxisBR\FastWork\System;
 
 
 class Zip

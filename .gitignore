@@ -7,3 +7,4 @@ composer.lock
 private.key
 *.zip
 repositories/*
+*.log

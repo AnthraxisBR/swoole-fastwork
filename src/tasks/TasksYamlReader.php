@@ -1,9 +1,9 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Server;
+namespace AnthraxisBR\FastWork\Server;
 
-use AnthraxisBR\SwooleFW\Application;
+use AnthraxisBR\FastWork\Application;
 use Symfony\Component\Yaml\Yaml;
 
 
@@ -33,7 +33,7 @@ class TasksYamlReader
     {
 
         foreach (self::$yaml_file['server'] as $server => $item) {
-            $str_class = '\AnthraxisBR\SwooleFW\server\\' . ucfirst($server) . 'Server';
+            $str_class = '\AnthraxisBR\FastWork\server\\' . ucfirst($server) . 'Server';
             self::$instances[] = new $str_class($app, $item);
         }
 

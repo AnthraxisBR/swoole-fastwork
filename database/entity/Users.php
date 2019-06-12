@@ -5,31 +5,31 @@ namespace database\entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use AnthraxisBR\SwooleFW\database\Entities;
+use AnthraxisBR\FastWork\database\Entities;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-    /**
-     * @ORM\Table(name="users")
-     * @ORM\Entity
-     */
-    class Users extends Entities
-    {
-        /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
-        public $id;
+/**
+ * @ORM\Table(name="users")
+ * @ORM\Entity
+ */
+class Users extends Entities
+{
+    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
+    public $id;
 
-        /** @ORM\Column(type="string",length=250) */
-        public $name;
+    /** @ORM\Column(type="string",length=250) */
+    public $name;
 
-        /** @ORM\Column(type="string",length=250) */
-        public $password;
+    /** @ORM\Column(type="string",length=250) */
+    public $password;
 
-        /** @ORM\Column(type="string", length=250) */
-        public $email = null;
+    /** @ORM\Column(type="string", length=250) */
+    public $email = null;
 
 
-        public function getName() : string { return $this->name; }
-        public function getPassword() : string { return $this->password; }
-        public function getEmail() : string { return $this->email; }
+    public function getName() : string { return $this->name; }
+    public function getPassword() : string { return $this->password; }
+    public function getEmail() : string { return $this->email; }
 
     public static function loadMetadata(ClassMetadata $metadata)
     {

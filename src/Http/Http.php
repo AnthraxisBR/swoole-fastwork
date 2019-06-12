@@ -1,6 +1,6 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\Http;
+namespace AnthraxisBR\FastWork\Http;
 
 use \GuzzleHttp\Psr7\Request;
 

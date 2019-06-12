@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\ComputeEngine\ComputeEngineInstances;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\ComputeEngine\ComputeEngineInstances;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\GCP\IAM\Modes;
+use AnthraxisBR\FastWork\CloudServices\GCP\IAM\Modes;
 use Google\Cloud\Datastore\V1\CommitRequest\Mode;
 
 class AttachDisk

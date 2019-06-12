@@ -1,7 +1,7 @@
 <?php
 include "vendor/autoload.php";
 
-$conn = new \AnthraxisBR\SwooleFW\database\Connect();
+$conn = new \AnthraxisBR\FastWork\database\Connect();
 
 //$conn->changePath();
 

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\GoogleCloudFunction;
 
 
 class CloudFunctionStatusObject

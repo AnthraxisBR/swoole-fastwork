@@ -1,10 +1,10 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\actions;
+namespace AnthraxisBR\FastWork\actions;
 
-use AnthraxisBR\SwooleFW\database\Entitites;
-use AnthraxisBR\SwooleFW\providers\BaseProvider;
-use AnthraxisBR\SwooleFW\tasks\TasksManager;
+use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\providers\BaseProvider;
+use AnthraxisBR\FastWork\tasks\TasksManager;
 
 class  Actions
 {
@@ -15,9 +15,15 @@ class  Actions
 
     public $providers = [];
 
+    public $server;
+
     public function __construct()
     {
 
+    }
+    public function taskWaitMulti($data)
+    {
+        return $this->getServer()->taskWaitMulti($data);
     }
 
     public function async(TasksManager $taskManager, $class, $function, $args, $callback)
@@ -45,5 +51,72 @@ class  Actions
             $this->providers['fixed'][$provider->name]->routes = $provider->routes;
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @param mixed $response
+     */
+    public function setResponse($response): void
+    {
+        $this->response = $response;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConn()
+    {
+        return $this->conn;
+    }
+
+    /**
+     * @param mixed $conn
+     */
+    public function setConn($conn): void
+    {
+        $this->conn = $conn;
+    }
+
+    /**
+     * @return array
+     */
+    public function getProviders(): array
+    {
+        return $this->providers;
+    }
+
+    /**
+     * @param array $providers
+     */
+    public function setProviders(array $providers): void
+    {
+        $this->providers = $providers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServer()
+    {
+        return $this->server;
+    }
+
+    /**
+     * @param mixed $server
+     */
+    public function setServer($server): void
+    {
+        $this->server = $server;
+    }
+
+
+
 
 }

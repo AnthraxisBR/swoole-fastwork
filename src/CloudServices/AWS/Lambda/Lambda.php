@@ -1,12 +1,12 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\Lambda;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctionInterface;
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
-use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctionInterface;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\Exceptions\AwsLambdaExceptions;
 use Aws\Lambda\Exception\LambdaException;
 
 class Lambda extends LambdaClient implements CloudFunctionInterface

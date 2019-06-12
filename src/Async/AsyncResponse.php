@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Async;
+namespace AnthraxisBR\FastWork\Async;
 
 
 class AsyncResponse

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\S3;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\S3;
 
 
 class StorageClass

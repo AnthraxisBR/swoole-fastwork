@@ -1,10 +1,10 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\providers;
+namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\SwooleFW\database\Entities;
-use AnthraxisBR\SwooleFW\providers\BaseProvider;
+use AnthraxisBR\FastWork\database\Entities;
+use AnthraxisBR\FastWork\providers\BaseProvider;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -17,7 +17,7 @@ class EntitiesProvider extends BaseProvider
 
     public function __construct()
     {
-        $this->object_reference = 'AnthraxisBR\SwooleFW\database\Entities';
+        $this->object_reference = 'AnthraxisBR\FastWork\database\Entities';
         $this->name = 'entity';
 /*
 

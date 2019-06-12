@@ -3,8 +3,8 @@
 namespace App\CloudServices;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\S3\Bucket;
-use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\ObjectStorage;
+use AnthraxisBR\FastWork\CloudServices\AWS\S3\Bucket;
+use AnthraxisBR\FastWork\CloudServices\ObjectStorage\ObjectStorage;
 
 class Exemplo extends ObjectStorage
 {

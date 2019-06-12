@@ -1,12 +1,12 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction;
+namespace AnthraxisBR\FastWork\CloudServices\Azure\AzureFunction;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctionInterface;
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
-use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctionInterface;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\Exceptions\AwsLambdaExceptions;
 use Aws\Lambda\Exception\LambdaException;
 
 class AzureFunction extends AzureFunctionClient implements CloudFunctionInterface

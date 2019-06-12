@@ -1,13 +1,13 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\S3;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\S3;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\ACL;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\Storage\StorageClient;
-use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\FwObjectStorageInterface;
-use AnthraxisBR\SwooleFW\Defining\Required;
+use AnthraxisBR\FastWork\CloudServices\AWS\ACL;
+use AnthraxisBR\FastWork\CloudServices\GCP\Storage\StorageClient;
+use AnthraxisBR\FastWork\CloudServices\ObjectStorage\FwObjectStorageInterface;
+use AnthraxisBR\FastWork\Defining\Required;
 use Psr\Http\Message\StreamInterface;
 
 

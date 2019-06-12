@@ -6,7 +6,7 @@
  * Time: 11:22
  */
 
-namespace AnthraxisBR\SwooleFW\traits;
+namespace AnthraxisBR\FastWork\traits;
 
 
 trait ObjectIdentity

@@ -4,30 +4,26 @@
 namespace App\actions;
 
 
-use AnthraxisBR\SwooleFW\actions\Actions;
-use AnthraxisBR\SwooleFW\Async\AsyncResponse;
-use AnthraxisBR\SwooleFW\Async\Promisse;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\tasks\TasksManager;
+use AnthraxisBR\FastWork\actions\Actions;
+use AnthraxisBR\FastWork\Async\AsyncResponse;
+use AnthraxisBR\FastWork\Async\Promisse;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\tasks\TasksManager;
 use database\entity\Users;
 
-class Teste {
-
-    public function sum($a, $b)
-    {
-        sleep(1);
-        var_dump('sum');
-        return $a + $b;
-    }
-}
 
 class AsyncAction extends Actions
 {
-    public function asyncCall()
+    public function asyncCall(TasksManager $tasksManager, Users $users, Request $request)
     {
-        return (new Promisse( function(AsyncResponse $response){
+
+        $data = $users->willCreate($tasksManager, $request);
+
+        $this->taskWaitMulti($data);
+
+ /*       return (new Promisse( function(AsyncResponse $response){
                 return $response->resp(Teste::sum(1,2));
-        }))->exec();
+        }))->exec();*/
 
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\ComputeEngine;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\ComputeEngine;
 
 
 class ComputeEngine

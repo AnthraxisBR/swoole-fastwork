@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP;
+namespace AnthraxisBR\FastWork\CloudServices\GCP;
 
 
 use Symfony\Component\Yaml\Yaml;

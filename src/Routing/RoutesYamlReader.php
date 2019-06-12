@@ -1,18 +1,18 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Routing;
+namespace AnthraxisBR\FastWork\Routing;
 
 
-use AnthraxisBR\SwooleFW\Defining\Type;
-use AnthraxisBR\SwooleFW\traits\UrlTreatmentTrait;
+use AnthraxisBR\FastWork\Defining\Type;
+use AnthraxisBR\FastWork\traits\UrlTreatmentTrait;
 use Symfony\Component\Yaml\Yaml;
 use tests\src\routes\RoutesYamlReaderTest;
 
 
 /**
  * Class RoutesYamlReader
- * @package AnthraxisBR\SwooleFW\Routing
+ * @package AnthraxisBR\FastWork\Routing
  */
 class RoutesYamlReader
 {
@@ -98,9 +98,12 @@ class RoutesYamlReader
         }
 
         if(!isset($arr[$index])){
+            var_dump($mount);
             return $this->getRouteArray($routes, $mount);
         }
 
+        $r = 0;
+        $indexed = [];
         foreach ($routes as $route => $config){
 
             /**
@@ -113,30 +116,38 @@ class RoutesYamlReader
              * Check iteration level
              */
             if(count($exp_route) == count($arr)){
+
+                /*-if($r == count($arr) - 1){
+                    $mount = [];
+                }*/
                 /**
                  * get str of this part uf uri
                  */
                 $uri_arg_str = $exp_route[$index];
+
                 /**
                  * Check if has :, if has :, is a attr $uri_agr_str
                  */
                 if(strpos($uri_arg_str,':')){
                     $type = $this->getUriArgType($uri_arg_str);
 
-                    if(Type::{$type}($arr[$index])){
+                    try {
+                        Type::{$type}($arr[$index]);
                         $mount[] = $exp_route[$index];
-                    }else{
-                        /**
-                         * TODO: iniciar criação dos excpetions e dos tratamentos
-                         */
+                        $indexed[] = $exp_route[$index];
+                    }catch (\TypeError $e){
+                        //$mount[] = $arr[$index];
+
                     }
                 }else{
-                    if($arr[$index] == $uri_arg_str){
+                    if($arr[$index] == $uri_arg_str and !in_array($exp_route[$index], $indexed)){
                         $mount[] = $exp_route[$index];
+                        $indexed[] = $exp_route[$index];
                     }
                 }
 
             }
+            $r += 1;
         }
         $index += 1;
 
@@ -147,6 +158,14 @@ class RoutesYamlReader
     {
 
         if(count($uri_arr) > 1){
+
+            if($uri_arr[0] == 'http:'){
+                unset($uri_arr[0]);
+                unset($uri_arr[1]);
+                unset($uri_arr[2]);
+                $uri_arr = array_values($uri_arr);
+            }
+
             $this->prefix = $this->getUriPrefix($uri_arr);
 
             unset($uri_arr[0]);
@@ -204,6 +223,7 @@ class RoutesYamlReader
      */
     private function getRouteFromPrefix() : array
     {
+        $this->prefix = str_replace(':','',$this->prefix);
         return (array) $this->routes[$this->prefix];
     }
 

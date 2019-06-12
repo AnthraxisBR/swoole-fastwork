@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Http;
+namespace AnthraxisBR\FastWork\Http;
 
 
 class Server

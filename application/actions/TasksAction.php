@@ -2,13 +2,19 @@
 
 namespace App\actions;
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudServices;
-use AnthraxisBR\SwooleFW\actions\Actions;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\tasks\TasksManager;
+use AnthraxisBR\FastWork\CloudServices\CloudServices;
+use AnthraxisBR\FastWork\actions\Actions;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\tasks\TasksManager;
 
 class TasksAction extends Actions
 {
+
+    public function createMultipleUsers(TasksManager $TasksManager, Request $request)
+    {
+        $TasksManager->signature('Users@createMultipleUsers');
+        return $TasksManager->startTask($request->getData(),$request->getHeaders(),$request->getServerJson());
+    }
 
     public function create(TasksManager $TasksManager, Request $request)
     {

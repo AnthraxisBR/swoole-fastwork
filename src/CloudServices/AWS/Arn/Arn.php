@@ -1,11 +1,11 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\Arn;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\Arn;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
-use AnthraxisBR\SwooleFW\CloudServices\CloudService;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\CloudService;
 
 class Arn
 {

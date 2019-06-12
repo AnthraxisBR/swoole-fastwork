@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Regions;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\Regions;
 
 
 class Regions

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices;
+namespace AnthraxisBR\FastWork\CloudServices;
 
 use Symfony\Component\Yaml\Yaml;
 

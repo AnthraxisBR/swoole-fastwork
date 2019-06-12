@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Exceptions;
+namespace AnthraxisBR\FastWork\Exceptions;
 
 
 class AwsRegionsExceptions extends BaseException

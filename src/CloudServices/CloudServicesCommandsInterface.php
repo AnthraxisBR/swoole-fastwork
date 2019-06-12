@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices;
+namespace AnthraxisBR\FastWork\CloudServices;
 
 
 interface CloudServicesCommandsInterface

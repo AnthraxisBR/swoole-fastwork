@@ -1,14 +1,14 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\Endpoints;
+namespace AnthraxisBR\FastWork\CloudServices\Endpoints;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\ApiGateway\ApiGateway;
-use AnthraxisBR\SwooleFW\CloudServices\AWS\ApiGateway\RouteExpression;
-use AnthraxisBR\SwooleFW\CloudServices\CloudService;
-use AnthraxisBR\SwooleFW\CloudServices\CloudServicesCommandsInterface;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\Enpoints\GoogleEndpoints;
+use AnthraxisBR\FastWork\CloudServices\AWS\ApiGateway\ApiGateway;
+use AnthraxisBR\FastWork\CloudServices\AWS\ApiGateway\RouteExpression;
+use AnthraxisBR\FastWork\CloudServices\CloudService;
+use AnthraxisBR\FastWork\CloudServices\CloudServicesCommandsInterface;
+use AnthraxisBR\FastWork\CloudServices\GCP\Enpoints\GoogleEndpoints;
 use Google\Api\Endpoint;
 use function GuzzleHttp\Psr7\str;
 

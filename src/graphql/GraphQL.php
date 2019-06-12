@@ -6,11 +6,11 @@
  * Time: 11:13
  */
 
-namespace AnthraxisBR\SwooleFW\graphql;
+namespace AnthraxisBR\FastWork\graphql;
 
 
-use AnthraxisBR\SwooleFW\database\Entities;
-use AnthraxisBR\SwooleFW\traits\Injection;
+use AnthraxisBR\FastWork\database\Entities;
+use AnthraxisBR\FastWork\traits\Injection;
 use GraphQL\Executor\ExecutionResult;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;

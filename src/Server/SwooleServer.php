@@ -1,15 +1,15 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Server;
+namespace AnthraxisBR\FastWork\Server;
 
 
-use AnthraxisBR\SwooleFW\Application;
-use AnthraxisBR\SwooleFW\Http\Request;
-use AnthraxisBR\SwooleFW\Server\ConfigObjects\WorkersConfig;
-use GabrielMourao\SwooleFW\Http\Response;
+use AnthraxisBR\FastWork\Application;
+use AnthraxisBR\FastWork\Http\Request;
+use AnthraxisBR\FastWork\Server\ConfigObjects\WorkersConfig;
+use GabrielMourao\FastWork\Http\Response;
 
-class SwooleServer extends \swoole_http_server
+class SwooleServer extends \Swoole\Http\Server implements FwServerInterface
 {
 
     public $host;
@@ -60,10 +60,10 @@ class SwooleServer extends \swoole_http_server
             $response = $this->app->appendConfig(
                 $this,
                 new Request($request),
-                new \AnthraxisBR\SwooleFW\Http\Response($response)
+                new \AnthraxisBR\FastWork\Http\Response($response)
             )->run();
 
-            $response->swoole()->end($response->getResponse());
+            $response->get('SwooleServer')->swoole()->end($response->get('SwooleServer')->getResponse());
         });
     }
 
@@ -86,7 +86,9 @@ class SwooleServer extends \swoole_http_server
 
             $this->server_config['ssl_cert_file'] = $configs['ssl_cert_file'];
             $this->server_config['ssl_key_file'] = $configs['ssl_key_file'];
-
+            $this->server_config['poll_thread_num'] = $configs['poll_thread_num'];
+            $this->server_config['max_request'] = $configs['max_request'];
+            $this->server_config['max_conn'] = $configs['max_conn'];
         }
 
 
@@ -126,10 +128,14 @@ class SwooleServer extends \swoole_http_server
     {
 
         $this->on('Task', function (\swoole_server $serv, $task_id, $from_id, $data) {
-            echo "#{$serv->worker_id}\tonTask: [PID={$serv->worker_pid}]: task_id=$task_id, data_len=".strlen($data).".".PHP_EOL;
-            $this->app->runSignedTask($serv, $task_id, $from_id, $data);
-            $serv->finish($this->app->taskResponse);
-            echo 'concluído';
+            $start = microtime(true);
+            echo "#{$serv->worker_id}\tonTask: [PID={$serv->worker_pid}]: task_id=$task_id, data_len=".strlen(json_encode($data)).".".PHP_EOL;
+            if(!is_int($data) and !is_null($data)){
+                $this->app->runSignedTask($serv, $task_id, $from_id, $data);
+                $serv->finish($this->app->taskResponse);
+            }
+            $serv->finish('concluido');
+            echo "#Execution time: " . (microtime(true) - $start) . ' milliseconds' .PHP_EOL;
         });
 
     }
@@ -167,7 +173,7 @@ class SwooleServer extends \swoole_http_server
         $this->implements_config($configs);
     }
 
-    private function setAllWorkersConfigs()
+    public function setAllWorkersConfigs()
     {
         $workerConfig = new WorkersConfig();
 
@@ -195,7 +201,7 @@ class SwooleServer extends \swoole_http_server
         $this->setWorkersConfig($workers_config);
     }
 
-    private function hasWorkerEnabled()
+    public function hasWorkerEnabled()
     {
         return isset($this->config['worker']);
     }

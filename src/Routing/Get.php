@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Routing;
+namespace AnthraxisBR\FastWork\Routing;
 
 
 class Get extends Route

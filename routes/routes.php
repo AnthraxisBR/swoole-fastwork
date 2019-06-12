@@ -3,10 +3,10 @@
 //include "../application/bootstrap.php";
 
 
-use AnthraxisBR\SwooleFW\Routing\Route;
-use AnthraxisBR\SwooleFW\Routing\Post;
-use AnthraxisBR\SwooleFW\Routing\Multiple;
-use AnthraxisBR\SwooleFW\Routing\Get;
+use AnthraxisBR\FastWork\Routing\Route;
+use AnthraxisBR\FastWork\Routing\Post;
+use AnthraxisBR\FastWork\Routing\Multiple;
+use AnthraxisBR\FastWork\Routing\Get;
 
 
 $routes = Route::implements(
@@ -19,6 +19,11 @@ $routes = Route::implements(
             ->actionGet('Users@index')
             ->graphqlEnabled(true),
 
+        (new Post())
+            ->name('\users\coroutines')
+            ->action('Users@insertUserCoroutine'),
+            //->graphqlEnabled(true),
+
         (new Get())
             ->name('\users\<int:id>')
             ->args(['id'])
@@ -28,11 +33,15 @@ $routes = Route::implements(
             ->name('\tasks')
             ->action('Tasks@create'),
 
+        (new Post())
+            ->name('\tasks\create-multiple-users')
+            ->action('Tasks@createMultipleUsers'),
+
         (new Get())
             ->name('\cloud')
             ->action('CloudServices@createCloudFunction'),
 
-        (new Get())
+        (new Post())
             ->name('\async')
             ->action('Async@asyncCall')
     ]

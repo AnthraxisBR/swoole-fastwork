@@ -1,9 +1,9 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\Http;
+namespace AnthraxisBR\FastWork\Http;
 
 
-use AnthraxisBR\SwooleFW\Exceptions\MethodNotAllowed;
+use AnthraxisBR\FastWork\Exceptions\MethodNotAllowed;
 use GuzzleHttp\Promise\FulfilledPromise;
 use phpWhois\Whois;
 use Psr\Http\Message\RequestInterface;
@@ -34,7 +34,7 @@ class HttpClientAdapter
             );
 
         }catch (RequestException $e){
-            throw new \AnthraxisBR\SwooleFW\Exceptions\RequestException($e->getMessage());
+            throw new \AnthraxisBR\FastWork\Exceptions\RequestException($e->getMessage());
         }catch (\Exception $e){
             throw new MethodNotAllowed([$e->getMessage()], $method);
         }

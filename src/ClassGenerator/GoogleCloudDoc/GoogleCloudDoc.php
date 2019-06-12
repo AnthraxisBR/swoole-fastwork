@@ -30,7 +30,7 @@ class GoogleCloudDoc
 
         $path = /*getenv('root_folder') .*/ '/home/gabriel/PhpstormProjects/swoole-fw//src/CloudServices/GCP/Sdk/';
 
-        $namespace = 'AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk';
+        $namespace = 'AnthraxisBR\FastWork\CloudServices\GCP\Sdk';
 
         $folder = $object['classname'];
 
@@ -47,7 +47,7 @@ class GoogleCloudDoc
 
         $class->addComment('Auto generated class from google-docs-sdk-generator from AnthraxisBR');
 
-        $class->addExtend(\AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient::class);
+        $class->addExtend(\AnthraxisBR\FastWork\CloudServices\GCP\FwGoogleClient::class);
 
         $index = 0;
         $methods = [];

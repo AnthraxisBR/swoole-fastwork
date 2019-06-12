@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Server\ConfigObjects;
+namespace AnthraxisBR\FastWork\Server\ConfigObjects;
 
 
-use AnthraxisBR\SwooleFW\Server\ServerYamlReader;
+use AnthraxisBR\FastWork\Server\ServerYamlReader;
 
 class WorkersConfig
 {

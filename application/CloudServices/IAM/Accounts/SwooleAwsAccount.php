@@ -4,7 +4,7 @@
 namespace App\CloudServices\IAM\Accounts;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\IAM\AccountService;
+use AnthraxisBR\FastWork\CloudServices\IAM\AccountService;
 
 /**
  * Representing AWS account using an class object

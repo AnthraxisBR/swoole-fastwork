@@ -1,20 +1,20 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\CloudFunctions;
+namespace AnthraxisBR\FastWork\CloudServices\CloudFunctions;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\Arn\Arn;
-use AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda\Lambda;
-use AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions;
-use AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction\AzureFunction;
-use AnthraxisBR\SwooleFW\CloudServices\CloudService;
-use AnthraxisBR\SwooleFW\CloudServices\CloudServicesCommandsInterface;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\CloudFunctionObject;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
-use AnthraxisBR\SwooleFW\CloudServices\IAM\AccountService;
-use AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions;
-use AnthraxisBR\SwooleFW\Exceptions\BaseException;
+use AnthraxisBR\FastWork\CloudServices\AWS\Arn\Arn;
+use AnthraxisBR\FastWork\CloudServices\AWS\Lambda\Lambda;
+use AnthraxisBR\FastWork\CloudServices\AWS\Regions\Regions;
+use AnthraxisBR\FastWork\CloudServices\Azure\AzureFunction\AzureFunction;
+use AnthraxisBR\FastWork\CloudServices\CloudService;
+use AnthraxisBR\FastWork\CloudServices\CloudServicesCommandsInterface;
+use AnthraxisBR\FastWork\CloudServices\GCP\GoogleCloudFunction\CloudFunctionObject;
+use AnthraxisBR\FastWork\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
+use AnthraxisBR\FastWork\CloudServices\IAM\AccountService;
+use AnthraxisBR\FastWork\Exceptions\AwsLambdaExceptions;
+use AnthraxisBR\FastWork\Exceptions\BaseException;
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;
 use PhpZip\ZipFile;
@@ -226,7 +226,7 @@ class CloudFunctions extends CloudService implements CloudServicesCommandsInterf
 
         if($this->serviceProvider == 'AWS'){
             if(!in_array($region, array_values($reflection->getConstants()))){
-                throw new BaseException('Region specified in ' . get_class($this) . ' does not can be used with a AWS Lambda Function, see regions available for aws: AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions');
+                throw new BaseException('Region specified in ' . get_class($this) . ' does not can be used with a AWS Lambda Function, see regions available for aws: AnthraxisBR\FastWork\CloudServices\AWS\Regions\Regions');
             }
         }elseif($this->serviceProvider == 'GCP'){
 

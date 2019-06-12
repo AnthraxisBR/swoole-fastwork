@@ -9,8 +9,8 @@
 namespace database\graphql\Users;
 
 
-use AnthraxisBR\SwooleFW\graphql\FwObjectType;
-use AnthraxisBR\SwooleFW\graphql\GraphQL;
+use AnthraxisBR\FastWork\graphql\FwObjectType;
+use AnthraxisBR\FastWork\graphql\GraphQL;
 use mysql_xdevapi\Exception;
 
 /**

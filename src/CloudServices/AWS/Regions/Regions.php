@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\Regions;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\Regions;
 
 
 class Regions

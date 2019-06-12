@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\IAM;
+namespace AnthraxisBR\FastWork\CloudServices\IAM;
 
 
 class IAMRoleBase

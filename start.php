@@ -2,6 +2,6 @@
 
 include "app.php";
 
-use AnthraxisBR\SwooleFW\Server\Server;
+use AnthraxisBR\FastWork\Server\Server;
 
 $http = new Server($app);

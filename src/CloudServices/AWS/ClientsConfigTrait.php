@@ -1,17 +1,17 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS;
+namespace AnthraxisBR\FastWork\CloudServices\AWS;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
 
 trait ClientsConfigTrait
 {
 
     /**
      * @param CloudFunctions $object
-     * @throws \AnthraxisBR\SwooleFW\Exceptions\AwsLambdaExceptions
+     * @throws \AnthraxisBR\FastWork\Exceptions\AwsLambdaExceptions
      * @throws \ReflectionException
      */
     public function checkCloudFunctionBeforeInstantiateLambdaClient(CloudFunctions $object)

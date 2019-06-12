@@ -1,11 +1,11 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\ObjectStorage;
+namespace AnthraxisBR\FastWork\CloudServices\ObjectStorage;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudService;
-use AnthraxisBR\SwooleFW\CloudServices\CloudServicesCommandsInterface;
+use AnthraxisBR\FastWork\CloudServices\CloudService;
+use AnthraxisBR\FastWork\CloudServices\CloudServicesCommandsInterface;
 
 class   ObjectStorage extends CloudService implements CloudServicesCommandsInterface
 {

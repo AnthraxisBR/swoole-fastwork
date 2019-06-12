@@ -6,9 +6,9 @@
  * Time: 11:13
  */
 
-namespace AnthraxisBR\SwooleFW\graphql;
+namespace AnthraxisBR\FastWork\graphql;
 
-use AnthraxisBR\SwooleFW\database\Entities;
+use AnthraxisBR\FastWork\database\Entities;
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;

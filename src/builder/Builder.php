@@ -1,13 +1,13 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\builder;
+namespace AnthraxisBR\FastWork\builder;
 
 
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\http\Response;
-use AnthraxisBR\SwooleFW\Routing\Router;
-use AnthraxisBR\SwooleFW\Routing\Wrapper;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\http\Response;
+use AnthraxisBR\FastWork\Routing\Router;
+use AnthraxisBR\FastWork\Routing\Wrapper;
 
 class Builder
 {
@@ -29,7 +29,7 @@ class Builder
      * @param Response $response
      * @return Wrapper
      */
-    public static function wrapper($server, Request $request, Response $response) : Wrapper
+    public static function wrapper($server, $request, Response $response) : Wrapper
     {
         return new Wrapper($server, $request, $response);
     }

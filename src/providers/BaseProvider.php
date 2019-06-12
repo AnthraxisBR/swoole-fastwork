@@ -1,29 +1,32 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\providers;
+namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\SwooleFW\database\Entities;
-use AnthraxisBR\SwooleFW\graphql\GraphQL;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\Routing\Router;
-use AnthraxisBR\SwooleFW\tasks\TasksManager;
+use AnthraxisBR\FastWork\database\Entities;
+use AnthraxisBR\FastWork\graphql\GraphQL;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Routing\Router;
+use AnthraxisBR\FastWork\tasks\TasksManager;
 use mysql_xdevapi\Exception;
 
 class BaseProvider
 {
 
 
-    public function getInstance(Router $router, $swoole_request, $entity = null, $fixed = false)
+    public function getInstance(Router $router, $swoole_request = null, $entity = null, $fixed = false)
     {
         $class = null;
         foreach ($router->parameters as $item){
-            $name = $item->getClass()->name;
-            $reflector = new \ReflectionClass($name);
-            if($reflector->isSubclassOf($this->object_reference) || is_a($name ,$this->object_reference,true)){
-                $class = $item->getClass()->name;
-                break;
+
+            if(!is_null($item->getClass())) {
+                $name = $item->getClass()->name;
+                $reflector = new \ReflectionClass($name);
+                if ($reflector->isSubclassOf($this->object_reference) || is_a($name, $this->object_reference, true)) {
+                    $class = $item->getClass()->name;
+                    break;
+                }
             }
         }
         if($fixed === true) {

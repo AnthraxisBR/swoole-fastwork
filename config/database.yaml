@@ -7,3 +7,5 @@ databases:
     user: 'swoole'
     password: 'swoole'
     dbname: 'swoole'
+    options:
+      1000: true

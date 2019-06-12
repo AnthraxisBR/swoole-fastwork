@@ -4,7 +4,7 @@
 namespace App\CloudServices\IAM\Roles;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\IAM\Role;
+use AnthraxisBR\FastWork\CloudServices\AWS\IAM\Role;
 use App\CloudServices\IAM\Accounts\SwooleAwsAccount;
 
 class LambdaBasicExecution extends Role

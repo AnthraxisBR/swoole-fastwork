@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\S3;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\S3;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudServicesYamlReader;
+use AnthraxisBR\FastWork\CloudServices\CloudServicesYamlReader;
 use Aws\S3\S3Client;
 
 class S3 extends S3Client

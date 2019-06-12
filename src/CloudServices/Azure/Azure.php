@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\Azure;
+namespace AnthraxisBR\FastWork\CloudServices\Azure;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudServicesYamlReader;
+use AnthraxisBR\FastWork\CloudServices\CloudServicesYamlReader;
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 
 class Azure

@@ -6,14 +6,14 @@
  * Time: 11:16
  */
 
-namespace AnthraxisBR\SwooleFW\graphql;
+namespace AnthraxisBR\FastWork\graphql;
 
 
-use AnthraxisBR\SwooleFW\actions\Actions;
-use AnthraxisBR\SwooleFW\database\Entities;
-use AnthraxisBR\SwooleFW\Exceptions\DatabaseExceptions;
-use AnthraxisBR\SwooleFW\Exceptions\ItemNotFoundException;
-use AnthraxisBR\SwooleFW\traits\ObjectIdentity;
+use AnthraxisBR\FastWork\actions\Actions;
+use AnthraxisBR\FastWork\database\Entities;
+use AnthraxisBR\FastWork\Exceptions\DatabaseExceptions;
+use AnthraxisBR\FastWork\Exceptions\ItemNotFoundException;
+use AnthraxisBR\FastWork\traits\ObjectIdentity;
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\Type;
 

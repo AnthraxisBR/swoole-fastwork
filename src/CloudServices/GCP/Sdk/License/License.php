@@ -1,12 +1,12 @@
 <?php 
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk\License;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\Sdk\License;
 
 /**
  * Auto generated class from google-docs-sdk-generator from AnthraxisBR
  */
-class License extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
+class License extends \AnthraxisBR\FastWork\CloudServices\GCP\FwGoogleClient
 {
 	public function CodesGet()
 	{

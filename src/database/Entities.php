@@ -1,13 +1,15 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\database;
+namespace AnthraxisBR\FastWork\database;
 
 
-use AnthraxisBR\SwooleFW\Exceptions\DatabaseExceptions;
-use AnthraxisBR\SwooleFW\Exceptions\ItemNotFoundException;
+use AnthraxisBR\FastWork\Exceptions\DatabaseExceptions;
+use AnthraxisBR\FastWork\Exceptions\ItemNotFoundException;
+use AnthraxisBR\FastWork\Http\Request;
+use AnthraxisBR\FastWork\tasks\TasksManager;
 use Doctrine\ORM\ORMException;
-use AnthraxisBR\SwooleFW\traits\Injection;
+use AnthraxisBR\FastWork\traits\Injection;
 use mysql_xdevapi\Exception;
 use Whoops\Handler\JsonResponseHandler;
 use Whoops\Run;
@@ -41,8 +43,33 @@ class Entities
         return $this->em->getRepository(get_class($this))->findAll();
     }
 
+    public function willCreate(TasksManager $tasksManager, Request $data){
+        return [[
+                'entity' => $this,
+                'signature' => 'EntitiesDefault@createMultipleEntities',
+                'data' => $data->getData(),
+                'headers' => $data->getHeaders()
+            ]];
+
+            $tasksManager->signature();
+            return $tasksManager->startTask($request->getData(),$request->getHeaders(),$request->getServerJson());
+            echo 'creating';
+            //return $this->create($data);
+
+    }
+
+    public function createAll($data)
+    {
+        $rs = [];
+        foreach ($data as $item){
+            $rs[] = $this->create($item);
+        }
+        return $rs;
+    }
+
     public function create($data)
     {
+
         if(is_object($data)){
             $object = $this->getObject($data);
             $this->em->persist($object);

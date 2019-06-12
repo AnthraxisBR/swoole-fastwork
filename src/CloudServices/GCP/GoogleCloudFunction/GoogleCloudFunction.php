@@ -1,11 +1,11 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\GoogleCloudFunction;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctionInterface;
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctionInterface;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
 
 class GoogleCloudFunction extends CloudFunctionClient implements CloudFunctionInterface
 {

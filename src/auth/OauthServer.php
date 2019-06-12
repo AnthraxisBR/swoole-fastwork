@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\auth;
+namespace AnthraxisBR\FastWork\auth;
 
 
 use League\OAuth2\Server\ResourceServer;

@@ -1,11 +1,11 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\tasks;
+namespace AnthraxisBR\FastWork\tasks;
 
 
-use AnthraxisBR\SwooleFW\Application;
-use AnthraxisBR\SwooleFW\database\Connect;
+use AnthraxisBR\FastWork\Application;
+use AnthraxisBR\FastWork\database\Connect;
 
 class TasksReceiver extends Application
 {
