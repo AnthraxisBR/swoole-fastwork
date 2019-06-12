@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Enpoints;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\Enpoints;
 
 
 class GoogleEndpoints

@@ -1,11 +1,11 @@
 
 action_providers:
-  entities: 'AnthraxisBR\SwooleFW\providers\EntitiesProvider'
-  graphql: 'AnthraxisBR\SwooleFW\providers\GraphQLProvider'
-  request: 'AnthraxisBR\SwooleFW\providers\RequestProvider'
-  tasks: 'AnthraxisBR\SwooleFW\providers\TasksProvider'
-  cloud_services: 'AnthraxisBR\SwooleFW\providers\CloudServicesProvider'
+  entities: 'AnthraxisBR\FastWork\providers\EntitiesProvider'
+  graphql: 'AnthraxisBR\FastWork\providers\GraphQLProvider'
+  request: 'AnthraxisBR\FastWork\providers\RequestProvider'
+  tasks: 'AnthraxisBR\FastWork\providers\TasksProvider'
+  cloud_services: 'AnthraxisBR\FastWork\providers\CloudServicesProvider'
 fixed_providers:
     auth:
-      provider: AnthraxisBR\SwooleFW\providers\AuthProvider
+      provider: AnthraxisBR\FastWork\providers\AuthProvider
       routes: [Users]

@@ -1,12 +1,12 @@
 <?php 
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk\Zones;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\Sdk\Zones;
 
 /**
  * Auto generated class from google-docs-sdk-generator from AnthraxisBR
  */
-class Zones extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
+class Zones extends \AnthraxisBR\FastWork\CloudServices\GCP\FwGoogleClient
 {
 	public function Get()
 	{

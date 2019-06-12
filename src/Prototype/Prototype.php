@@ -1,5 +1,5 @@
 <?php
-namespace AnthraxisBR\SwooleFW\Prototype;
+namespace AnthraxisBR\FastWork\Prototype;
 
 
 abstract class Prototype

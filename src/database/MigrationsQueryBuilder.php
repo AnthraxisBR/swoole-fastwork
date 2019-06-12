@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\database;
+namespace AnthraxisBR\FastWork\database;
 
 
 class MigrationsQueryBuilder

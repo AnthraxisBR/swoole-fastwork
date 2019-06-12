@@ -1,14 +1,14 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices;
+namespace AnthraxisBR\FastWork\CloudServices;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\S3\Bucket;
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
-use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\ObjectStorage;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\traits\Injection;
+use AnthraxisBR\FastWork\CloudServices\AWS\S3\Bucket;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\ObjectStorage\ObjectStorage;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\traits\Injection;
 
 /**
  * @method CloudFunctions createCloudFunction(){
@@ -16,7 +16,7 @@ use AnthraxisBR\SwooleFW\traits\Injection;
  * }
  *
  * Class CloudServices
- * @package AnthraxisBR\SwooleFW\CloudServices
+ * @package AnthraxisBR\FastWork\CloudServices
  */
 class CloudServices
 {

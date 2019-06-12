@@ -1,7 +1,7 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\Http;
-use AnthraxisBR\SwooleFW\traits\Injection;
+namespace AnthraxisBR\FastWork\Http;
+use AnthraxisBR\FastWork\traits\Injection;
 use GuzzleHttp\Psr7\Request as RequestBase;
 use Swoole\Http\Request as SwooleRequest;
 
@@ -48,7 +48,6 @@ class Request extends RequestBase
                 explode('/', $request->server['server_protocol'][1])
             );
         }
-
 
         parent::__construct(
             $method,

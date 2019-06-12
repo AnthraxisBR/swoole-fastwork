@@ -1,10 +1,10 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\actions;
+namespace AnthraxisBR\FastWork\actions;
 
-use AnthraxisBR\SwooleFW\database\Entitites;
-use AnthraxisBR\SwooleFW\providers\BaseProvider;
-use AnthraxisBR\SwooleFW\tasks\TasksManager;
+use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\providers\BaseProvider;
+use AnthraxisBR\FastWork\tasks\TasksManager;
 
 class  Actions
 {

@@ -4,8 +4,8 @@
 namespace App\tasks;
 
 
-use AnthraxisBR\SwooleFW\database\Entities;
-use AnthraxisBR\SwooleFW\tasks\TasksReceiver;
+use AnthraxisBR\FastWork\database\Entities;
+use AnthraxisBR\FastWork\tasks\TasksReceiver;
 
 class EntitiesDefault extends  TasksReceiver
 {

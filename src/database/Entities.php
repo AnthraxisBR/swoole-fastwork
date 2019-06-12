@@ -1,15 +1,15 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\database;
+namespace AnthraxisBR\FastWork\database;
 
 
-use AnthraxisBR\SwooleFW\Exceptions\DatabaseExceptions;
-use AnthraxisBR\SwooleFW\Exceptions\ItemNotFoundException;
-use AnthraxisBR\SwooleFW\Http\Request;
-use AnthraxisBR\SwooleFW\tasks\TasksManager;
+use AnthraxisBR\FastWork\Exceptions\DatabaseExceptions;
+use AnthraxisBR\FastWork\Exceptions\ItemNotFoundException;
+use AnthraxisBR\FastWork\Http\Request;
+use AnthraxisBR\FastWork\tasks\TasksManager;
 use Doctrine\ORM\ORMException;
-use AnthraxisBR\SwooleFW\traits\Injection;
+use AnthraxisBR\FastWork\traits\Injection;
 use mysql_xdevapi\Exception;
 use Whoops\Handler\JsonResponseHandler;
 use Whoops\Run;
@@ -31,7 +31,6 @@ class Entities
     {
         $this->connect = new Connect();
         $this->em = $this->connect->getEntityManager();
-
     }
 
     public function em()

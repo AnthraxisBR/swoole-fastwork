@@ -1,17 +1,17 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\Routing;
+namespace AnthraxisBR\FastWork\Routing;
 
 
-use AnthraxisBR\SwooleFW\actions\Actions;
-use AnthraxisBR\SwooleFW\Application;
-use AnthraxisBR\SwooleFW\database\Entitites;
-use AnthraxisBR\SwooleFW\Exceptions\MethodNotAllowed;
-use AnthraxisBR\SwooleFW\graphql\GraphQL;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\providers\Providers;
-use AnthraxisBR\SwooleFW\graphql\GraphQLYamlReader;
-use AnthraxisBR\SwooleFW\traits\UrlTreatmentTrait;
+use AnthraxisBR\FastWork\actions\Actions;
+use AnthraxisBR\FastWork\Application;
+use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\Exceptions\MethodNotAllowed;
+use AnthraxisBR\FastWork\graphql\GraphQL;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\providers\Providers;
+use AnthraxisBR\FastWork\graphql\GraphQLYamlReader;
+use AnthraxisBR\FastWork\traits\UrlTreatmentTrait;
 use Illuminate\Support\Str;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -21,7 +21,7 @@ use Whoops\Run;
 
 /**
  * Class Router
- * @package AnthraxisBR\SwooleFW\Routing
+ * @package AnthraxisBR\FastWork\Routing
  */
 class Router
 {
@@ -137,10 +137,17 @@ class Router
      */
     public function build() : void
     {
-        $this->method = $this->request->getRequestMethod();
-        $this->uri = $this->request->getRequestUri();
-        $this->remote_addr = $this->request->getRequestRemoteAddr();
-        $this->protocol = $this->request->getRequestServerProtocol();
+        if($this->request instanceof \Symfony\Component\HttpFoundation\Request){
+            $this->method = $this->request->getMethod();
+            $this->uri = $this->request->getUri();
+            //$this->remote_addr = $this->request->getS();
+            //$this->protocol = $this->request->getRequestServerProtocol();
+        }else{
+            $this->method = $this->request->getRequestMethod();
+            $this->uri = $this->request->getRequestUri();
+            $this->remote_addr = $this->request->getRequestRemoteAddr();
+            $this->protocol = $this->request->getRequestServerProtocol();
+        }
 
         $this->setProviders();
 
@@ -210,6 +217,7 @@ class Router
         }
 
         $RoutesYaml = new RoutesYamlReader();
+
         $this->route = $RoutesYaml->getRoute($uri_exp);
     }
 
@@ -243,9 +251,9 @@ class Router
             $args = array_merge($this->providers, $this->url_params);
 
             $this->response = call_user_func_array([$this->application,$this->function],$args);
-
         } catch (\Exception $e)
         {
+            var_dump($e->getMessage());
             $this->errorResponse($e);
         }
     }
@@ -260,7 +268,15 @@ class Router
         $exp_1 = array_values(array_filter(explode('\\',$uri),function($str){ return $str != ''; }));
         $exp_2 = array_values(array_filter(explode('\\',$uri_2),function($str){ return $str != ''; }));
 
+
+        if($exp_1[0] == 'http:'){
+            unset($exp_1[0]);
+            unset($exp_1[1]);
+            $exp_1 = array_values($exp_1);
+        }
+
         $isset = [];
+
         for($i = 0; $i < count($exp_1); $i++){
             if(isset($exp_1[$i]) and isset($exp_2[$i])){
 
@@ -334,20 +350,39 @@ class Router
             $runned[] = $ref;
 
             if(isset($this->application->providers['entity'])){
-                $this->application->appendProvided(
-                    $this->providers['action_providers'][$ref]->getInstance(
-                        $route = $this,
-                        $swoole_request = $this->getRequest()->swoole_request,
-                        $entity = $this->application->providers['entity']
-                    )
-                );
+
+                if(isset($this->getRequest()->swoole_request)) {
+                    $this->application->appendProvided(
+                        $this->providers['action_providers'][$ref]->getInstance(
+                            $route = $this,
+                            $swoole_request = $this->getRequest()->swoole_request,
+                            $entity = $this->application->providers['entity']
+                        )
+                    );
+                }else{
+
+                    $this->application->appendProvided(
+                        $this->providers['action_providers'][$ref]->getInstance(
+                            $route = $this
+                        )
+                    );
+                }
             }else{
-                $this->application->appendProvided(
-                    $this->providers['action_providers'][$ref]->getInstance(
-                        $route = $this,
-                        $swoole_request = $this->getRequest()->swoole_request
-                    )
-                );
+                if(isset($this->getRequest()->swoole_request)){
+
+                    $this->application->appendProvided(
+                        $this->providers['action_providers'][$ref]->getInstance(
+                            $route = $this,
+                            $swoole_request = $this->getRequest()->swoole_request
+                        )
+                    );
+                }else{
+                    $this->application->appendProvided(
+                        $this->providers['action_providers'][$ref]->getInstance(
+                            $route = $this
+                        )
+                    );
+                }
             }
         }
         /**
@@ -377,7 +412,7 @@ class Router
 
     }
 
-    public function getRequest() : Request
+    public function getRequest()
     {
         return $this->request;
     }

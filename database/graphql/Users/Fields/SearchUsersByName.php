@@ -10,9 +10,9 @@ namespace database\graphql\Users\Fields;
 
 use database\entity\Users;
 use GraphQL\Type\Definition\Type;
-use AnthraxisBR\SwooleFW\Exceptions\DatabaseExceptions;
-use AnthraxisBR\SwooleFW\Exceptions\ItemNotFoundException;
-use AnthraxisBR\SwooleFW\graphql\FwField;
+use AnthraxisBR\FastWork\Exceptions\DatabaseExceptions;
+use AnthraxisBR\FastWork\Exceptions\ItemNotFoundException;
+use AnthraxisBR\FastWork\graphql\FwField;
 use GraphQL\Type\Definition\NonNull;
 use Exception;
 

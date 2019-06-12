@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\CloudFunctions;
+namespace AnthraxisBR\FastWork\CloudServices\CloudFunctions;
 
 
 class RuntimeOptions

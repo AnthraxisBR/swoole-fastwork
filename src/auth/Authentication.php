@@ -1,10 +1,10 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\auth;
+namespace AnthraxisBR\FastWork\auth;
 
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\Routing\Router;
-use AnthraxisBR\SwooleFW\traits\Injection;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Routing\Router;
+use AnthraxisBR\FastWork\traits\Injection;
 
 class Authentication
 {
@@ -50,7 +50,7 @@ class Authentication
         }*/
     }
 
-    public function build(Request $request)
+    public function build($request)
     {
         return;
         $this->parseRequest($request);

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction;
+namespace AnthraxisBR\FastWork\CloudServices\Azure\AzureFunction;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
 
 class AzureFunctionClient
 {

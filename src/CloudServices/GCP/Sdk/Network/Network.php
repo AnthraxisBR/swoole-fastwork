@@ -1,12 +1,12 @@
 <?php 
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk\Network;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\Sdk\Network;
 
 /**
  * Auto generated class from google-docs-sdk-generator from AnthraxisBR
  */
-class Network extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
+class Network extends \AnthraxisBR\FastWork\CloudServices\GCP\FwGoogleClient
 {
 	/**
 	 * The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)

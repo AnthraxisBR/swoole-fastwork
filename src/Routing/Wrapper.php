@@ -1,12 +1,12 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Routing;
+namespace AnthraxisBR\FastWork\Routing;
 
-use AnthraxisBR\SwooleFW\builder\Builder;
-use AnthraxisBR\SwooleFW\Exceptions\MethodNotAllowed;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\http\Response;
+use AnthraxisBR\FastWork\builder\Builder;
+use AnthraxisBR\FastWork\Exceptions\MethodNotAllowed;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\http\Response;
 
 class Wrapper
 {
@@ -36,7 +36,7 @@ class Wrapper
      * @param Request $request
      * @param Response $response
      */
-    public function __construct($server, Request $request, Response $response)
+    public function __construct($server, $request, Response $response)
     {
         $this->server = $server;
 
@@ -50,7 +50,7 @@ class Wrapper
     /**
      * @return \Swoole\Http\Request
      */
-    public function getRequest() : Request
+    public function getRequest()
     {
         return  $this->request;
     }
@@ -67,7 +67,11 @@ class Wrapper
         }catch (\Exception $e){
             $this->response->setBody($e->getMessage());
         }
-        $this->response->swoole_response->header('Content-Type', 'application/json');
+        if(isset($this->response->swoole_response)){
+            $this->response->swoole_response->header('Content-Type', 'application/json');
+        }else{
+            $this->response->withAddedHeader('Content-Type', 'application/json');
+        }
         return $this->response;
 
     }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\Endpoints;
+namespace AnthraxisBR\FastWork\CloudServices\Endpoints;
 
 /**
  * Interface representing functions of Enpoints tool on aws, Azure e GCP
@@ -10,7 +10,7 @@ namespace AnthraxisBR\SwooleFW\CloudServices\Endpoints;
  *    Azure :
  *
  * Interface FwEndpointsInterface
- * @package AnthraxisBR\SwooleFW\CloudServices\Endpoints
+ * @package AnthraxisBR\FastWork\CloudServices\Endpoints
  */
 interface FwEndpointsInterface
 {

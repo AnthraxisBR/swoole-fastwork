@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\ResourceManager\Projects;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\ResourceManager\Projects;
 
 
 class ProjectsClient

@@ -4,9 +4,9 @@
 namespace App\CloudServices\CloundFunctions;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\Regions\Regions;
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\RuntimeOptions;
+use AnthraxisBR\FastWork\CloudServices\AWS\Regions\Regions;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\RuntimeOptions;
 use App\CloudServices\IAM\Roles\LambdaBasicExecution;
 
 class GetUrlCloudFunction extends CloudFunctions

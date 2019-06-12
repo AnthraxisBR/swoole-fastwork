@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\ApiGateway;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\ApiGateway;
 
 
 class RouteExpression

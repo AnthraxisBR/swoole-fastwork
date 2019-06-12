@@ -4,11 +4,11 @@
 namespace App\actions;
 
 
-use AnthraxisBR\SwooleFW\actions\Actions;
-use AnthraxisBR\SwooleFW\Async\AsyncResponse;
-use AnthraxisBR\SwooleFW\Async\Promisse;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\tasks\TasksManager;
+use AnthraxisBR\FastWork\actions\Actions;
+use AnthraxisBR\FastWork\Async\AsyncResponse;
+use AnthraxisBR\FastWork\Async\Promisse;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\tasks\TasksManager;
 use database\entity\Users;
 
 

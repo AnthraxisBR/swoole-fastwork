@@ -1,14 +1,14 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\ObjectStorage;
+namespace AnthraxisBR\FastWork\CloudServices\ObjectStorage;
 
 
 /**
  * This class represents and ObjectStorage to FastWork
  * It will be representend by service providers in their respectives object instance
  * Interface FwObjectStorageInterface
- * @package AnthraxisBR\SwooleFW\CloudServices\ObjectStorage
+ * @package AnthraxisBR\FastWork\CloudServices\ObjectStorage
  */
 interface FwObjectStorageInterface
 {

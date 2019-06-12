@@ -1,11 +1,11 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Storage;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\Storage;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\FwObjectStorageInterface;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\Google;
+use AnthraxisBR\FastWork\CloudServices\ObjectStorage\FwObjectStorageInterface;
+use AnthraxisBR\FastWork\CloudServices\GCP\Google;
 
 
 class Bucket implements FwObjectStorageInterface

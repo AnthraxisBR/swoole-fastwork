@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\IAM;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\IAM;
 
 
 class AccountObject

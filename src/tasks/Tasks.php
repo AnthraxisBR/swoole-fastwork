@@ -1,10 +1,10 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\tasks;
+namespace AnthraxisBR\FastWork\tasks;
 
 
-use AnthraxisBR\SwooleFW\database\Entities;
-use AnthraxisBR\SwooleFW\http\Request;
+use AnthraxisBR\FastWork\database\Entities;
+use AnthraxisBR\FastWork\http\Request;
 use ReflectionMethod;
 
 class Tasks

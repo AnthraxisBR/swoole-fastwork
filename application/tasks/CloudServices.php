@@ -4,8 +4,8 @@
 namespace App\tasks;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\ObjectStorage;
-use AnthraxisBR\SwooleFW\tasks\TasksReceiver;
+use AnthraxisBR\FastWork\CloudServices\ObjectStorage\ObjectStorage;
+use AnthraxisBR\FastWork\tasks\TasksReceiver;
 
 class CloudServices extends TasksReceiver
 {

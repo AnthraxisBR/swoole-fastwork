@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\traits;
+namespace AnthraxisBR\FastWork\traits;
 
 
 trait Injection

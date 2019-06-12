@@ -1,12 +1,12 @@
 <?php 
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Sdk\Zone;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\Sdk\Zone;
 
 /**
  * Auto generated class from google-docs-sdk-generator from AnthraxisBR
  */
-class Zone extends \AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient
+class Zone extends \AnthraxisBR\FastWork\CloudServices\GCP\FwGoogleClient
 {
 	public function OperationsDelete()
 	{

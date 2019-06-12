@@ -1,10 +1,10 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\providers;
+namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\SwooleFW\database\Entitites;
-use AnthraxisBR\SwooleFW\providers\BaseProvider;
+use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\providers\BaseProvider;
 
 class RequestProvider extends BaseProvider
 {
@@ -14,7 +14,7 @@ class RequestProvider extends BaseProvider
 
     public function __construct()
     {
-        $this->object_reference = 'AnthraxisBR\SwooleFW\http\Request';
+        $this->object_reference = 'AnthraxisBR\FastWork\http\Request';
         $this->name = 'request';
     }
 

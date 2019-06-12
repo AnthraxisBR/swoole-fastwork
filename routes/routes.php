@@ -3,10 +3,10 @@
 //include "../application/bootstrap.php";
 
 
-use AnthraxisBR\SwooleFW\Routing\Route;
-use AnthraxisBR\SwooleFW\Routing\Post;
-use AnthraxisBR\SwooleFW\Routing\Multiple;
-use AnthraxisBR\SwooleFW\Routing\Get;
+use AnthraxisBR\FastWork\Routing\Route;
+use AnthraxisBR\FastWork\Routing\Post;
+use AnthraxisBR\FastWork\Routing\Multiple;
+use AnthraxisBR\FastWork\Routing\Get;
 
 
 $routes = Route::implements(
@@ -18,6 +18,11 @@ $routes = Route::implements(
             ->actionPost('Users@store')
             ->actionGet('Users@index')
             ->graphqlEnabled(true),
+
+        (new Post())
+            ->name('\users\coroutines')
+            ->action('Users@insertUserCoroutine'),
+            //->graphqlEnabled(true),
 
         (new Get())
             ->name('\users\<int:id>')

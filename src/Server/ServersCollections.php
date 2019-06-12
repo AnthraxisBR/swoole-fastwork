@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Server;
+namespace AnthraxisBR\FastWork\Server;
 
 
-use AnthraxisBR\SwooleFW\Routing\Wrapper;
+use AnthraxisBR\FastWork\Routing\Wrapper;
 use Tightenco\Collect\Support\Collection;
 
 class ServersCollections extends Collection

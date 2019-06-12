@@ -1,12 +1,12 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Server;
+namespace AnthraxisBR\FastWork\Server;
 
 
-use AnthraxisBR\SwooleFW\Application;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\http\Response;
+use AnthraxisBR\FastWork\Application;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\http\Response;
 
 class TasksServer extends \swoole_server
 {

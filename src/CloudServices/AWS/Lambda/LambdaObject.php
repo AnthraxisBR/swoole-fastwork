@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\Lambda;
 
 
 class LambdaObject

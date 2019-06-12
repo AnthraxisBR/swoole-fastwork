@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS;
+namespace AnthraxisBR\FastWork\CloudServices\AWS;
 
 
 class ACL

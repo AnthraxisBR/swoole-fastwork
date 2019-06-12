@@ -1,13 +1,13 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\ComputeEngine;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\ComputeEngine;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\GCP\ComputeEngine\ComputeEngineInstances\AddAccessConfig;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\ComputeEngine\ComputeEngineInstances\AggregatedList;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\ComputeEngine\ComputeEngineInstances\AttachDisk;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\FwGoogleClient;
+use AnthraxisBR\FastWork\CloudServices\GCP\ComputeEngine\ComputeEngineInstances\AddAccessConfig;
+use AnthraxisBR\FastWork\CloudServices\GCP\ComputeEngine\ComputeEngineInstances\AggregatedList;
+use AnthraxisBR\FastWork\CloudServices\GCP\ComputeEngine\ComputeEngineInstances\AttachDisk;
+use AnthraxisBR\FastWork\CloudServices\GCP\FwGoogleClient;
 use function foo\func;
 
 class ComputeEngineInstancesClient extends FwGoogleClient

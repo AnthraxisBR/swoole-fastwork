@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\graphql;
+namespace AnthraxisBR\FastWork\graphql;
 
 
 class TypeRegistryBase

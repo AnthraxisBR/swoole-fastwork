@@ -4,7 +4,7 @@
 namespace App\CloudServices\Endpoints;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\Endpoints\Endpoints;
+use AnthraxisBR\FastWork\CloudServices\Endpoints\Endpoints;
 
 class GetUrlEndpoint extends Endpoints
 {

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Async;
+namespace AnthraxisBR\FastWork\Async;
 
 
-use AnthraxisBR\SwooleFW\Prototype\Prototype;
+use AnthraxisBR\FastWork\Prototype\Prototype;
 
 class Async extends Prototype
 {

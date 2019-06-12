@@ -1,11 +1,11 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\providers;
+namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\SwooleFW\database\Entitites;
-use AnthraxisBR\SwooleFW\providers\BaseProvider;
-use AnthraxisBR\SwooleFW\traits\Injection;
+use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\providers\BaseProvider;
+use AnthraxisBR\FastWork\traits\Injection;
 
 class TasksProvider extends BaseProvider
 {
@@ -16,7 +16,7 @@ class TasksProvider extends BaseProvider
 
     public function __construct()
     {
-        $this->object_reference = 'AnthraxisBR\SwooleFW\tasks\TasksManager';
+        $this->object_reference = 'AnthraxisBR\FastWork\tasks\TasksManager';
         $this->name = 'tasks';
     }
 

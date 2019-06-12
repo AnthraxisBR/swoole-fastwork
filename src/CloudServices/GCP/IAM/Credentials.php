@@ -1,6 +1,6 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\IAM;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\IAM;
 
 include '../../../../vendor/autoload.php';
 

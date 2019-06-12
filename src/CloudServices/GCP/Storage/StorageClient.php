@@ -1,9 +1,9 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\Storage;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\Storage;
 
-use AnthraxisBR\SwooleFW\CloudServices\GCP\GCPAuthHelper;
+use AnthraxisBR\FastWork\CloudServices\GCP\GCPAuthHelper;
 use Google\Cloud\Storage\StorageClient as GoogleStorageClient;
 
 class StorageClient extends GoogleStorageClient

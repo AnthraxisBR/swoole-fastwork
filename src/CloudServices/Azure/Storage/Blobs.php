@@ -1,11 +1,11 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\Azure\Storage;
+namespace AnthraxisBR\FastWork\CloudServices\Azure\Storage;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\Azure\Azure;
-use AnthraxisBR\SwooleFW\CloudServices\ObjectStorage\FwObjectStorageInterface;
+use AnthraxisBR\FastWork\CloudServices\Azure\Azure;
+use AnthraxisBR\FastWork\CloudServices\ObjectStorage\FwObjectStorageInterface;
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
 

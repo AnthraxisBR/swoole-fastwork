@@ -1,21 +1,21 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices;
+namespace AnthraxisBR\FastWork\CloudServices;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\ApiGateway\ApiGateway;
-use AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda\Lambda;
-use AnthraxisBR\SwooleFW\CloudServices\Azure\AzureFunction\AzureFunction;
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
-use AnthraxisBR\SwooleFW\CloudServices\Endpoints\Endpoints;
-use AnthraxisBR\SwooleFW\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
+use AnthraxisBR\FastWork\CloudServices\AWS\ApiGateway\ApiGateway;
+use AnthraxisBR\FastWork\CloudServices\AWS\Lambda\Lambda;
+use AnthraxisBR\FastWork\CloudServices\Azure\AzureFunction\AzureFunction;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\Endpoints\Endpoints;
+use AnthraxisBR\FastWork\CloudServices\GCP\GoogleCloudFunction\GoogleCloudFunction;
 
 
 /**
  * That class is base for cloud services classes
  * Class CloudService
- * @package AnthraxisBR\SwooleFW\CloudServices
+ * @package AnthraxisBR\FastWork\CloudServices
  */
 class CloudService
 {

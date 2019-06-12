@@ -1,11 +1,11 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\ApiGateway;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\ApiGateway;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\ClientsConfigTrait;
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\AWS\ClientsConfigTrait;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
 
 class ApiGatewayClient
 {

@@ -1,15 +1,15 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Server;
+namespace AnthraxisBR\FastWork\Server;
 
 
-use AnthraxisBR\SwooleFW\Application;
-use AnthraxisBR\SwooleFW\Http\Request;
-use AnthraxisBR\SwooleFW\Server\ConfigObjects\WorkersConfig;
-use GabrielMourao\SwooleFW\Http\Response;
+use AnthraxisBR\FastWork\Application;
+use AnthraxisBR\FastWork\Http\Request;
+use AnthraxisBR\FastWork\Server\ConfigObjects\WorkersConfig;
+use GabrielMourao\FastWork\Http\Response;
 
-class SwooleServer extends \swoole_http_server
+class SwooleServer extends \Swoole\Http\Server implements FwServerInterface
 {
 
     public $host;
@@ -60,7 +60,7 @@ class SwooleServer extends \swoole_http_server
             $response = $this->app->appendConfig(
                 $this,
                 new Request($request),
-                new \AnthraxisBR\SwooleFW\Http\Response($response)
+                new \AnthraxisBR\FastWork\Http\Response($response)
             )->run();
 
             $response->get('SwooleServer')->swoole()->end($response->get('SwooleServer')->getResponse());
@@ -173,7 +173,7 @@ class SwooleServer extends \swoole_http_server
         $this->implements_config($configs);
     }
 
-    private function setAllWorkersConfigs()
+    public function setAllWorkersConfigs()
     {
         $workerConfig = new WorkersConfig();
 
@@ -201,7 +201,7 @@ class SwooleServer extends \swoole_http_server
         $this->setWorkersConfig($workers_config);
     }
 
-    private function hasWorkerEnabled()
+    public function hasWorkerEnabled()
     {
         return isset($this->config['worker']);
     }

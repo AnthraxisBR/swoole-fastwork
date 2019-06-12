@@ -1,16 +1,16 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP;
+namespace AnthraxisBR\FastWork\CloudServices\GCP;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\GCP\IAM\Credentials;
+use AnthraxisBR\FastWork\CloudServices\GCP\IAM\Credentials;
 use GuzzleHttp\Client;
 
 use kamermans\OAuth2\GrantType\ClientCredentials;
 use kamermans\OAuth2\OAuth2Subscriber;
 
-class FwGoogleClient extends \AnthraxisBR\SwooleFW\Http\Client
+class FwGoogleClient extends \AnthraxisBR\FastWork\Http\Client
 {
 
     /**
@@ -43,7 +43,6 @@ class FwGoogleClient extends \AnthraxisBR\SwooleFW\Http\Client
         $http_res  = $httpclient->recv();
 
         var_dump($http_res);
-        exit();
 
         $this->credentials = new Credentials();
 

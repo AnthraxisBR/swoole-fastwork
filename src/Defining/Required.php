@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Defining;
+namespace AnthraxisBR\FastWork\Defining;
 
 
 class Required

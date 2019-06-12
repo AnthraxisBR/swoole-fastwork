@@ -3,7 +3,7 @@
 
 namespace tests\src\routes;
 
-use AnthraxisBR\SwooleFW\database\Migrations;
+use AnthraxisBR\FastWork\database\Migrations;
 use database\entity\Users;
 use tests\TestCase;
 

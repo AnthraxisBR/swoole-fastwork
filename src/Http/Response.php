@@ -1,8 +1,10 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\Http;
+namespace AnthraxisBR\FastWork\Http;
 
 use GuzzleHttp\Psr7\Response as ResponseBase;
+use GuzzleHttp\Psr7\Stream;
+use Psr\Http\Message\ResponseInterface;
 use Swoole\Http\Response as SwooleResponse;
 
 class Response extends ResponseBase
@@ -22,6 +24,11 @@ class Response extends ResponseBase
     {
         $this->swoole_response = $response;
         parent::__construct($status, $headers, $body, $version, $reason);
+    }
+
+    public function end(Stream $response)
+    {
+        echo $response->getContents();
     }
 
     public function setStatusCode($statusCode = 200)

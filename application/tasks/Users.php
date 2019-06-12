@@ -3,7 +3,7 @@
 namespace App\tasks;
 
 
-use AnthraxisBR\SwooleFW\tasks\TasksReceiver;
+use AnthraxisBR\FastWork\tasks\TasksReceiver;
 
 use database\entity\Users as UsersEntity;
 

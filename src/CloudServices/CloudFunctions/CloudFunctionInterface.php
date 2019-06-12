@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\CloudFunctions;
+namespace AnthraxisBR\FastWork\CloudServices\CloudFunctions;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
 
 interface CloudFunctionInterface
 {

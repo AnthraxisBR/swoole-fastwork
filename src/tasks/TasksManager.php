@@ -1,12 +1,12 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\tasks;
+namespace AnthraxisBR\FastWork\tasks;
 
 
 
-use AnthraxisBR\SwooleFW\CloudServices\CloudService;
-use AnthraxisBR\SwooleFW\Routing\Router;
-use AnthraxisBR\SwooleFW\traits\Injection;
+use AnthraxisBR\FastWork\CloudServices\CloudService;
+use AnthraxisBR\FastWork\Routing\Router;
+use AnthraxisBR\FastWork\traits\Injection;
 
 class TasksManager
 {

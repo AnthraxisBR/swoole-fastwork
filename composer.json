@@ -18,26 +18,19 @@
         "nelexa/zip": "dev-master",
         "nette/php-generator": "^3.2@dev",
         "kamermans/guzzle-oauth2-subscriber": "dev-master",
-        "jsmitty12/phpwhois": "^5.5"
+        "jsmitty12/phpwhois": "^5.5",
+        "php-http/curl-client": "^2.0",
+        "php-http/message": "^1.7",
+        "php-http/discovery": "^1.6",
+        "guzzlehttp/psr7": "^1.5",
+        "symfony/http-foundation": "^4.3"
     },
     "require-dev" : {
         "tightenco/collect": "^5.8.19",
-        "swlib/swpdo-two": "dev-master#1.0.1",
-        "swlib/saber": "dev-master",
-        "swlib/http": "dev-master",
-        "swlib/util": "dev-master",
         "doctrine/orm": "^2.6.1",
         "eaglewu/swoole-ide-helper": "dev-master"
     },
     "repositories" : [
-        {
-            "type": "vcs",
-            "url": "/home/gabriel/PhpstormProjects/swpdo"
-        },
-        {
-            "type": "vcs",
-            "url": "/home/gabriel/PhpstormProjects/orm"
-        },
         {
             "type": "git",
             "url": "https://github.com/AnthraxisBR/saber"
@@ -51,13 +44,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "AnthraxisBR\\SwooleFW\\": "src/",
+            "AnthraxisBR\\FastWork\\": "src/",
             "App\\": "application/",
             "database\\" : "database/",
             "tests\\" : "tests/"
         },
         "psr-0": {
-            "AnthraxisBR\\SwooleFW\\": "src/",
+            "AnthraxisBR\\FastWork\\": "src/",
             "App\\": "application/",
             "database\\" : "database/",
             "tests\\" : "tests/"

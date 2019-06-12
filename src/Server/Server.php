@@ -1,13 +1,13 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\Server;
+namespace AnthraxisBR\FastWork\Server;
 
-use AnthraxisBR\SwooleFW\Application;
-use AnthraxisBR\SwooleFW\Server\ServerYamlReader;
+use AnthraxisBR\FastWork\Application;
+use AnthraxisBR\FastWork\Server\ServerYamlReader;
 
 /**
  * Class Server
- * @package AnthraxisBR\SwooleFW\server
+ * @package AnthraxisBR\FastWork\server
  */
 class Server
 {
@@ -40,6 +40,7 @@ class Server
             /* @var $config SwooleServer */
             $application->configure(array_merge($this->getConfig(),$this->extra_config()));
             $application->start();
+
         }
     }
 

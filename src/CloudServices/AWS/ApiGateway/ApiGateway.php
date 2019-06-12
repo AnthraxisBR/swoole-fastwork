@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\ApiGateway;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\ApiGateway;
 
 
-use AnthraxisBR\SwooleFW\CloudServices\Endpoints\FwEndpointsInterface;
+use AnthraxisBR\FastWork\CloudServices\Endpoints\FwEndpointsInterface;
 
 class ApiGateway extends ApiGatewayClient implements FwEndpointsInterface
 {

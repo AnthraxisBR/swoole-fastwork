@@ -1,6 +1,6 @@
 <?php
 
-namespace AnthraxisBR\SwooleFW\database;
+namespace AnthraxisBR\FastWork\database;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\Common\Persistence\Mapping\Driver\PHPDriver;
@@ -74,13 +74,18 @@ class Connect
         $this->config = Setup::createAnnotationMetadataConfiguration($this->paths, $this->dev_mode);
 
         $this->config->setMetadataDriverImpl($driver);
+
+
         $this->entity_manager = EntityManager::create([
             'driver'   => $this->driver,
             'user'     => $this->user,
             'host'     => $this->host,
             'port'     => $this->port,
             'password' => $this->password,
-            'dbname'   => $this->dbname
+            'dbname'   => $this->dbname,
+            'config'   => [
+                1000 => true
+            ]
         ], $this->config);
 
 

@@ -1,11 +1,11 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\AWS\Lambda;
+namespace AnthraxisBR\FastWork\CloudServices\AWS\Lambda;
 
-use AnthraxisBR\SwooleFW\CloudServices\AWS\ClientsConfigTrait;
-use AnthraxisBR\SwooleFW\CloudServices\CloudFunctions\CloudFunctions;
-use AnthraxisBR\SwooleFW\CloudServices\CloudServices;
+use AnthraxisBR\FastWork\CloudServices\AWS\ClientsConfigTrait;
+use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
+use AnthraxisBR\FastWork\CloudServices\CloudServices;
 use Aws\Lambda\LambdaClient as LambdaClientAws;
 
 class LambdaClient

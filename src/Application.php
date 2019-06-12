@@ -1,5 +1,5 @@
 <?php
-namespace AnthraxisBR\SwooleFW;
+namespace AnthraxisBR\FastWork;
 
 /**
  * TODO:: otimizar a conexão com o banco e verificar cache
@@ -9,10 +9,10 @@ namespace AnthraxisBR\SwooleFW;
  * TODO:: Implementar PHPUNit
  * TODO::
  */
-use AnthraxisBR\SwooleFW\builder\Builder;
-use AnthraxisBR\SwooleFW\http\Request;
-use AnthraxisBR\SwooleFW\Server\ServersCollections;
-use AnthraxisBR\SwooleFW\tasks\Tasks;
+use AnthraxisBR\FastWork\builder\Builder;
+use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Server\ServersCollections;
+use AnthraxisBR\FastWork\tasks\Tasks;
 
 class Application
 {
@@ -44,12 +44,12 @@ class Application
      * @param $response
      * @return $this
      */
-    public function appendConfig($server, Request $request, $response)
+    public function appendConfig($server, $request, $response)
     {
         /**
          * Set request Protocol
          */
-        $this->setProtocol($protocol = $request->swoole_request->server['server_protocol']);
+        //$this->setProtocol($protocol = $request->swoole_request->server['server_protocol']);
 
         /**
          * Set server instances on attribute 'SERVER', it will be used to run the server

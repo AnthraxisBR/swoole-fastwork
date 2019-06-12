@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\Server\ConfigObjects;
+namespace AnthraxisBR\FastWork\Server\ConfigObjects;
 
 
 class ServerConfig

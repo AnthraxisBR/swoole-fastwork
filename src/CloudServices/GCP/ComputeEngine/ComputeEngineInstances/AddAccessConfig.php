@@ -1,12 +1,12 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\GCP\ComputeEngine\ComputeEngineInstances;
+namespace AnthraxisBR\FastWork\CloudServices\GCP\ComputeEngine\ComputeEngineInstances;
 
 /**
  * @see https://cloud.google.com/compute/docs/reference/rest/v1/instances/addAccessConfig
  * Class AddAccessConfig
- * @package AnthraxisBR\SwooleFW\CloudServices\GCP\ComputeEngine\ComputeEngineInstances
+ * @package AnthraxisBR\FastWork\CloudServices\GCP\ComputeEngine\ComputeEngineInstances
  */
 class AddAccessConfig
 {

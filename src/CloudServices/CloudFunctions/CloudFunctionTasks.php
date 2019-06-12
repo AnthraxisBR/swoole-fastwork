@@ -1,11 +1,11 @@
 <?php
 
 
-namespace AnthraxisBR\SwooleFW\CloudServices\CloudFunctions;
+namespace AnthraxisBR\FastWork\CloudServices\CloudFunctions;
 
 
-use AnthraxisBR\SwooleFW\System\Zip;
-use AnthraxisBR\SwooleFW\tasks\TasksReceiver;
+use AnthraxisBR\FastWork\System\Zip;
+use AnthraxisBR\FastWork\tasks\TasksReceiver;
 use Cz\Git\GitRepository;
 use PhpZip\ZipFile;
 

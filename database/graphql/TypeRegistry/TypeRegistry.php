@@ -4,7 +4,7 @@
 namespace database\graphql\TypeRegistry;
 
 
-use AnthraxisBR\SwooleFW\graphql\TypeRegistryBase;
+use AnthraxisBR\FastWork\graphql\TypeRegistryBase;
 use database\graphql\Users\Fields\SearchUsers;
 
 class TypeRegistry extends TypeRegistryBase
