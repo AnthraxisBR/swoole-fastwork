@@ -48,6 +48,8 @@ class  Actions
     {
         $this->providers['fixed'] = [];
         if(!is_null($provider)){
+//            $this->mountProvider($provider);
+
             $this->providers['fixed'][$provider->name] = $provider;
             $this->providers['fixed'][$provider->name]->routes = $provider->routes;
         }

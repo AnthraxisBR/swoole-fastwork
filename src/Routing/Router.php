@@ -397,11 +397,15 @@ class Router
                 }
             }
         }
+
+
         /**
          * Applying fixed providers, can be mandatory
          */
         foreach ($this->fixedProviders() as $provider){
+            trigger_error('asdasdsadsad',E_USER_NOTICE);
 
+            trigger_error(memory_get_usage(true),3);
             $this->application->appendFixedProvided(
                 $provider->getInstance(
                     $route = $this,
@@ -454,8 +458,7 @@ class Router
      */
     private function setProviders()
     {
-        $providers = new Providers($this);
-        $this->providers = $providers->getProviders();
+        $this->providers = (new Providers($this))->getProviders();
     }
 
     /**

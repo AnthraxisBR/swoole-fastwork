@@ -2,11 +2,11 @@
 namespace AnthraxisBR\FastWork;
 
 /**
- * TODO:: otimizar a conexão com o banco e verificar cache
- * TODO:: Organizar o código direito e comentar
- * TODO:: Melhorar comunicaço com docrtrine
- * TODO:: Verificar melhor a herança das classes
- * TODO:: Implementar PHPUNit
+ * TODO:: Optmize ODoctrine integration
+ * TODO:: Comment and clean code
+ * TODO:: Prevent class duplication (action providers are instancing multiple times)
+ * TODO:: Implments interfaces
+ * TODO:: Unit tests
  * TODO::
  */
 use AnthraxisBR\FastWork\builder\Builder;
