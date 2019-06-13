@@ -30,7 +30,7 @@ class Authentication
     public function __construct(Router $router, array $routes)
     {
         $this->name = 'auth';
-/*
+/*]]
         $this->application = $router->application;
 
         $this->action_name = get_class($router->application);
@@ -45,21 +45,21 @@ class Authentication
 
     public function boot()
     {
-        /*if(count($this->request->getHeader('Authorization')) > 1){
+        if(count($this->request->getHeader('Authorization')) > 1){
 
-        }*/
+        }
     }
 
     public function build($request)
     {
-        return;
         $this->parseRequest($request);
+        var_dump(in_array($this->action_name, $this->routes));
         if(in_array($this->action_name, $this->routes)){
             $this->boot();
         }
     }
 
-    public function parseRequest(Request $request)
+    public function parseRequest($request)
     {
         $this->request = $request;
     }

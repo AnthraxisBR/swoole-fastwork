@@ -39,9 +39,19 @@ class Providers
     }
 
 
+    public function getFixedsProviders(): array
+    {
+        return $this->getProviders()['fixed_providers'];
+    }
+
     public function getProviders()
     {
         return $this->providers;
+    }
+
+    public function mountProvider($provider) : void
+    {
+        $this->providers['fixed'][$provider->name] = $provider;
     }
     
     private function setProviders()
