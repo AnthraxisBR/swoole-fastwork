@@ -1,23 +1,15 @@
 **Swoole Fast Work**
 
-(Incompleta)
+(Incomplete)
 
 Wiki: 
 
 https://github.com/AnthraxisBR/swoole-fastwork/wiki
 
 
-**Integrações**
+**Summary**
 
-https://github.com/Azure/azure-storage-php
-
-https://cloud.google.com/php/getting-started/tutorial-app?hl=pt-br
-
-https://aws.amazon.com/pt/sdk-for-php/
-
-**Resumo**
-
-O FastWork, is a High-level framework, whos will allow you to construct full cloud services integrations, tasks/queues, databases, and a lot of kinds of APIs in a easy way.
+O FastWork, is a High-level framework, that will allow you to construct full cloud services integrations, tasks/queues, databases, and a lot of kinds of APIs in a easy way.
 
 
  1. ORM Doctrine
@@ -47,11 +39,11 @@ https://github.com/swoole/swoole-src/wiki/Installing
 
 **DB**
 
-Instale o docker, e docker-compose:
+Install docker and docker-compose:
 
     `$ sudo apt install docker.io docker-compose`
 
-Depois: 
+After: 
 
    `$ docker-compose up -d`
 
