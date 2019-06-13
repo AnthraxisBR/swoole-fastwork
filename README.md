@@ -36,10 +36,16 @@ A lista de ferramentas embutidas são:
 
 **Iniciando**
 
+**Apache || NGINX**
+
+index.php in folder /public.
+
+**Swoole**
 Instale o swoole:
 
-
 https://github.com/swoole/swoole-src/wiki/Installing
+
+**DB**
 
 Instale o docker, e docker-compose:
 
