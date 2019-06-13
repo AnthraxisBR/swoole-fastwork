@@ -4,8 +4,8 @@
 namespace AnthraxisBR\FastWork\builder;
 
 
-use AnthraxisBR\FastWork\http\Request;
-use AnthraxisBR\FastWork\http\Response;
+use AnthraxisBR\FastWork\Http\Request;
+use AnthraxisBR\FastWork\Http\Response;
 use AnthraxisBR\FastWork\Routing\Router;
 use AnthraxisBR\FastWork\Routing\Wrapper;
 

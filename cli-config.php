@@ -3,7 +3,7 @@ include "vendor/autoload.php";
 
 $conn = new \AnthraxisBR\FastWork\database\Connect();
 
-//$conn->changePath();
+$conn->changePath();
 
 $em = $conn->connect();
 $em = $conn->getEntityManager();

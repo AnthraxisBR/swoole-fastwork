@@ -88,7 +88,6 @@ class TasksManager
                 ]
             ]);
         }catch (\Exception $e){
-
             return json_encode([
                 'message' => 'Não foi possível iniciar a tarefa'
             ]);

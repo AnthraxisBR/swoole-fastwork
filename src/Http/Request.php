@@ -3,6 +3,7 @@
 namespace AnthraxisBR\FastWork\Http;
 use AnthraxisBR\FastWork\traits\Injection;
 use GuzzleHttp\Psr7\Request as RequestBase;
+use Psr\Http\Message\RequestInterface;
 use Swoole\Http\Request as SwooleRequest;
 
 class Request extends RequestBase
@@ -10,6 +11,7 @@ class Request extends RequestBase
 
     use Injection;
 
+    public $name;
     /**
      * @var string
      */
@@ -25,7 +27,7 @@ class Request extends RequestBase
      * @param string $version
      */
     public function __construct(
-        SwooleRequest $request = null,
+        $request = null,
         $method = '',
         $uri = '',
         array $headers = [],
@@ -34,18 +36,24 @@ class Request extends RequestBase
     )
     {
         if(!is_null($request)) {
-            $this->swoole_request = $request;
 
-            if (in_array($request->server['request_method'], ['POST', 'PUT', 'PATCH'])) {
-                $this->setData($request->rawContent());
+            if(is_array($request->server)) {
+                $this->swoole_request = $request;
+                if (in_array($request->server['request_method'], ['POST', 'PUT', 'PATCH'])) {
+                    $this->setData($request->rawContent());
+                }
+            }else{
+                $this->base_request = $request;
+                if (in_array($request->server->get('REQUEST_METHOD'), ['POST', 'PUT', 'PATCH'])){
+                    $this->setData($request->getContent());
+                }
             }
-
             parent::__construct(
-                $request->server['request_method'],
-                $request->server['request_uri'],
-                $request->header,
-                $request->post,
-                explode('/', $request->server['server_protocol'][1])
+                $request->server->get('REQUEST_METHOD'),
+                $request->server->get('REQUEST_URI'),
+                (array) $request->headers->all(),
+                $this->getBody(),
+                explode('/', $request->get('SERVER_PROTOCOL')[1])
             );
         }
 
@@ -58,10 +66,15 @@ class Request extends RequestBase
         );
     }
 
+    public function isSwoole()
+    {
+        return isset($this->swoole_request);
+    }
+
 
     public function getSwooleRequest()
     {
-        return $this->swoole_request;
+        return isset($this->swoole_request) ? $this->swoole_request : null;
     }
 
     /**
@@ -77,7 +90,8 @@ class Request extends RequestBase
      */
     public function getHeaders() : array
     {
-        return (array) $this->getSwooleRequest()->header;
+        return $this->base_request->headers->all();
+        //return (array) is_object($this->getSwooleRequest()) ? $this->getSwooleRequest()->header : $this->base_request->headers->all();
     }
 
     /**
@@ -147,6 +161,22 @@ class Request extends RequestBase
     public static function setInjectionReference(string $injection_reference): void
     {
         self::$injection_reference = $injection_reference;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
     }
 
 

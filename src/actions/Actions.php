@@ -19,8 +19,9 @@ class  Actions
 
     public function __construct()
     {
-
     }
+
+
     public function taskWaitMulti($data)
     {
         return $this->getServer()->taskWaitMulti($data);

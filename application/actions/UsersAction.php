@@ -6,7 +6,7 @@ use database\entity\Users as UsersEntity;
 use database\graphql\Users\Users as UsersGraphQL;
 use AnthraxisBR\FastWork\actions\Actions;
 use AnthraxisBR\FastWork\graphql\GraphQL;
-use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Http\Request;
 use go;
 use co;
 use Swoole\Runtime;
@@ -21,7 +21,7 @@ class UsersAction extends Actions
 
     public function index(UsersEntity $UsersEntity)
     {
-        return $UsersEntity->all();
+        echo json_encode($UsersEntity->all());
 
     }
 
@@ -69,10 +69,9 @@ class UsersAction extends Actions
     public function store(UsersEntity $UsersEntity, Request $request)
     {
 
-        $start = microtime(true);
+        //$start = microtime(true);
 
-        $rs = $UsersEntity->create($request->getData());
-        echo "Time: " . (microtime(true) - $start);
-        return $rs;
+        return $UsersEntity->create($request->getData());
+        //err("Time: " . (microtime(true) - $start),3);
     }
 }

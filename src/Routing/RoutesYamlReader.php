@@ -98,7 +98,7 @@ class RoutesYamlReader
         }
 
         if(!isset($arr[$index])){
-            var_dump($mount);
+            //var_dump($mount);
             return $this->getRouteArray($routes, $mount);
         }
 

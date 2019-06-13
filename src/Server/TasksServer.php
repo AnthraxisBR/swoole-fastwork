@@ -5,8 +5,8 @@ namespace AnthraxisBR\FastWork\Server;
 
 
 use AnthraxisBR\FastWork\Application;
-use AnthraxisBR\FastWork\http\Request;
-use AnthraxisBR\FastWork\http\Response;
+use AnthraxisBR\FastWork\Http\Request;
+use AnthraxisBR\FastWork\Http\Response;
 
 class TasksServer extends \swoole_server
 {

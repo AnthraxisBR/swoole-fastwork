@@ -7,7 +7,7 @@ namespace AnthraxisBR\FastWork\CloudServices;
 use AnthraxisBR\FastWork\CloudServices\AWS\S3\Bucket;
 use AnthraxisBR\FastWork\CloudServices\CloudFunctions\CloudFunctions;
 use AnthraxisBR\FastWork\CloudServices\ObjectStorage\ObjectStorage;
-use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Http\Request;
 use AnthraxisBR\FastWork\traits\Injection;
 
 /**

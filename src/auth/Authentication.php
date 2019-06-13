@@ -2,7 +2,7 @@
 
 namespace AnthraxisBR\FastWork\auth;
 
-use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Http\Request;
 use AnthraxisBR\FastWork\Routing\Router;
 use AnthraxisBR\FastWork\traits\Injection;
 

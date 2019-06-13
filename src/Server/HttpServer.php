@@ -5,6 +5,7 @@ namespace AnthraxisBR\FastWork\Server;
 
 
 use AnthraxisBR\FastWork\Application;
+use AnthraxisBR\FastWork\Exceptions\MultiTaskNotAllowed;
 use Psr\Http\Message\ResponseInterface;
 
 class HttpServer implements FwServerInterface
@@ -18,6 +19,13 @@ class HttpServer implements FwServerInterface
         $this->onRequest();
     }
 
+    public function __call($name, $arguments)
+    {
+        if($name == 'taskWaitMulti' and getenv('SERVER') == 'HTTP'){
+            throw new MultiTaskNotAllowed('Method  ' . $name . ' not allowed with Apache or NGINX Server');
+        }
+    }
+
     public function start()
     {
     }
@@ -29,7 +37,7 @@ class HttpServer implements FwServerInterface
 
     public function onRequest()
     {
-
+        putenv('SERVER=HTTP');
         $response = $this->app->appendConfig(
             $this, new \Symfony\Component\HttpFoundation\Request(
             $_GET,
@@ -42,7 +50,8 @@ class HttpServer implements FwServerInterface
             new \AnthraxisBR\FastWork\Http\Response()
         )->run();
 
-        return $response->get('HttpServer')->end($response->get('HttpServer')->getResponse());
+        header('Content-Type: application/json');
+        return $response->get('HttpServer')->end($response->get('HttpServer'));//->get('HttpServer')->getResponse());
     }
 
 
