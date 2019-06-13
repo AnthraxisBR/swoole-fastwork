@@ -14,7 +14,7 @@ class RequestProvider extends BaseProvider
 
     public function __construct()
     {
-        $this->object_reference = 'AnthraxisBR\FastWork\http\Request';
+        $this->object_reference = 'AnthraxisBR\FastWork\Http\Request';
         $this->name = 'request';
     }
 

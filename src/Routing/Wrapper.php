@@ -5,8 +5,8 @@ namespace AnthraxisBR\FastWork\Routing;
 
 use AnthraxisBR\FastWork\builder\Builder;
 use AnthraxisBR\FastWork\Exceptions\MethodNotAllowed;
-use AnthraxisBR\FastWork\http\Request;
-use AnthraxisBR\FastWork\http\Response;
+use AnthraxisBR\FastWork\Http\Request;
+use AnthraxisBR\FastWork\Http\Response;
 
 class Wrapper
 {
@@ -63,15 +63,17 @@ class Wrapper
         try {
             $this->route = Builder::route($this);
             $this->response->setBody($this->route->getResponse());
-
         }catch (\Exception $e){
+            error_log($e->getMessage());
             $this->response->setBody($e->getMessage());
         }
         if(isset($this->response->swoole_response)){
             $this->response->swoole_response->header('Content-Type', 'application/json');
         }else{
+            $this->response->withHeader('Content-Type', 'application/json');
             $this->response->withAddedHeader('Content-Type', 'application/json');
         }
+
         return $this->response;
 
     }

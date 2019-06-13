@@ -4,7 +4,7 @@ namespace App\actions;
 
 use AnthraxisBR\FastWork\CloudServices\CloudServices;
 use AnthraxisBR\FastWork\actions\Actions;
-use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Http\Request;
 use AnthraxisBR\FastWork\tasks\TasksManager;
 
 class TasksAction extends Actions

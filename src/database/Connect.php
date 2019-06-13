@@ -75,7 +75,6 @@ class Connect
 
         $this->config->setMetadataDriverImpl($driver);
 
-
         $this->entity_manager = EntityManager::create([
             'driver'   => $this->driver,
             'user'     => $this->user,
@@ -83,9 +82,9 @@ class Connect
             'port'     => $this->port,
             'password' => $this->password,
             'dbname'   => $this->dbname,
-            'config'   => [
+            /*'config'   => [
                 1000 => true
-            ]
+            ]*/
         ], $this->config);
 
 

@@ -8,7 +8,7 @@ use AnthraxisBR\FastWork\Application;
 use AnthraxisBR\FastWork\database\Entitites;
 use AnthraxisBR\FastWork\Exceptions\MethodNotAllowed;
 use AnthraxisBR\FastWork\graphql\GraphQL;
-use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Http\Request;
 use AnthraxisBR\FastWork\providers\Providers;
 use AnthraxisBR\FastWork\graphql\GraphQLYamlReader;
 use AnthraxisBR\FastWork\traits\UrlTreatmentTrait;
@@ -137,6 +137,7 @@ class Router
      */
     public function build() : void
     {
+
         if($this->request instanceof \Symfony\Component\HttpFoundation\Request){
             $this->method = $this->request->getMethod();
             $this->uri = $this->request->getUri();
@@ -154,6 +155,7 @@ class Router
         $this->setRunningRoute();
 
         $this->applyHttpMethodRules();
+
 
         $this->route = (object) $this->route;
 
@@ -200,6 +202,7 @@ class Router
         try {
             $this->route['function'] = $this->route['methods'][$this->method];
         } catch (\ErrorException $e) {
+
             throw new MethodNotAllowed([], $this->method);
         }
     }
@@ -229,9 +232,8 @@ class Router
         $this->buildInvokableFunction();
 
         $this->application = new $this->classname();
-
         $this->runProviders();
-
+//        var_dump($this->application);
         /**
          * Call action
          */
@@ -253,7 +255,8 @@ class Router
             $this->response = call_user_func_array([$this->application,$this->function],$args);
         } catch (\Exception $e)
         {
-            var_dump($e->getMessage());
+
+          //  var_dump($e->getMessage());
             $this->errorResponse($e);
         }
     }
@@ -329,12 +332,16 @@ class Router
         $this->url_params = [];
         $runned = [];
         $ref = '';
-        foreach ($this->parameters as $param){
 
+
+        foreach ($this->parameters as $key => $param){
             /**
              * Use a reference provided inside all provided classes
              */
-            if(!is_null($param->getClass())){
+            /** @var $param \ReflectionParameter */
+            //var_dump($this->parameters[$key]->name);
+
+            if(!is_null($param->name)){
                 $ref = $param->getClass()->name::getInjectReference();
             }else{
                 $this->url_params[] = $param;
@@ -343,6 +350,7 @@ class Router
             /**
              * Some providers cannot be used without an entity instance
              */
+
             if(in_array($ref,$runned)){
                 continue;
             }
@@ -367,7 +375,9 @@ class Router
                         )
                     );
                 }
+                //var_dump($this->application->providers['entity']);
             }else{
+
                 if(isset($this->getRequest()->swoole_request)){
 
                     $this->application->appendProvided(
@@ -377,11 +387,13 @@ class Router
                         )
                     );
                 }else{
+
                     $this->application->appendProvided(
                         $this->providers['action_providers'][$ref]->getInstance(
                             $route = $this
                         )
                     );
+
                 }
             }
         }
@@ -425,6 +437,7 @@ class Router
         $this->invokable_function = '\App\actions\\' . $this->route->methods[$this->method];
 
         $this->parameters = $this->getParametersFromInvokableClassFunction($this->invokable_function);
+
     }
 
     /**
@@ -451,7 +464,7 @@ class Router
      */
     public function hasGraphQLQueryBody()
     {
-        return isset($this->getRequest()->getData()->query);
+        return isset($this->getRequest()->getContent()->query);
     }
 
     /**

@@ -4,7 +4,7 @@ namespace AnthraxisBR\FastWork\tasks;
 
 
 use AnthraxisBR\FastWork\database\Entities;
-use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Http\Request;
 use ReflectionMethod;
 
 class Tasks

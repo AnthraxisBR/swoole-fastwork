@@ -23,12 +23,15 @@ class Response extends ResponseBase
     )
     {
         $this->swoole_response = $response;
+        $headers['Content-Type'] = 'application/json';
+
         parent::__construct($status, $headers, $body, $version, $reason);
     }
 
-    public function end(Stream $response)
+    public function end(Response $response)
     {
-        echo $response->getContents();
+        header('Content-Type', 'application/json');
+        echo json_encode(json_decode($response->getBody()));
     }
 
     public function setStatusCode($statusCode = 200)

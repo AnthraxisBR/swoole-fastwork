@@ -10,7 +10,7 @@ namespace AnthraxisBR\FastWork;
  * TODO::
  */
 use AnthraxisBR\FastWork\builder\Builder;
-use AnthraxisBR\FastWork\http\Request;
+use AnthraxisBR\FastWork\Http\Request;
 use AnthraxisBR\FastWork\Server\ServersCollections;
 use AnthraxisBR\FastWork\tasks\Tasks;
 
@@ -90,6 +90,7 @@ class Application
      */
     public function run()
     {
+
         return $this->servers->map(function($server){
             return $server->process();
         });
