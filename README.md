@@ -17,31 +17,31 @@ https://aws.amazon.com/pt/sdk-for-php/
 
 **Resumo**
 
-O FastWork, é uma aglomerado de ferramentas integradas, com possível unificadas em objetos, que opera com Swoole server.
+O FastWork, is a High-level framework, whos will allow you to construct full cloud services integrations, tasks/queues, databases, and a lot of kinds of APIs in a easy way.
 
-A lista de ferramentas embutidas são:
- 
+
  1. ORM Doctrine
- 2. Roteamento
+ 2. Router
  3. GraphQL
- 4. JSONRPC (ainda não)
- 5. SOAP (ainda não)
- 5. SDK Prória de integração com Google Cloud
- 6. SDK Extendida de integração com AWS
- 7. SDK Extendida de integração com Azure
+ 4. JSONRPC (under development)
+ 5. SOAP (under development)
+ 5. Integration SDK for Google Cloud
+ 6. Extended SDK for AWS 
+ 7. Extended SDK for Azure
  8. Service Providers
- 9. Filas (Queues/Tasks)
- 10. Unificador de CloudServices (Classes que representam serviços em qualquer uma das provedoras AWS, GCP e Azure) (Em andamento, ainda integrando as SDKs, mas o 'Cloud Function' functiona)
+ 9. Queues/Tasks
+ 10. PAAS Unifier (Multi Cloud Platform Unifier to AWS, GCP and AWS organizaed from clas objects)
   
 
-**Iniciando**
+**Initializing**
 
 **Apache || NGINX**
 
 index.php in folder /public.
 
 **Swoole**
-Instale o swoole:
+
+Install swoole:
 
 https://github.com/swoole/swoole-src/wiki/Installing
 
@@ -57,96 +57,99 @@ Depois:
 
    `$ ./run.sh`
 
-**Banco de dados**
+**Routing**
 
-No arquivo `docker-compose.yml` está um imagem do banco mysql, e está pré-configurado.
+You need to put define routes in file: (TODO: Acept more than one router file)
 
-Para alterar a configuração de conexão com o banco de dados, acesse o arquivo:
-
-   `config\database.yaml`
+  `routes\routes.php`
   
-Qualquer configuração aceita pelo **ORM Doctrine** será aceita.
-Veja: 
-https://www.doctrine-project.org/projects/doctrine-dbal/en/2.9/reference/configuration.html
+    $routes = Route::implements(
+        $prefix = 'api',
+        $routes =
+        [
+            (new Multiple(['POST','GET']))
+                ->name('\users')
+                ->actionPost('Users@store')
+                ->actionGet('Users@index')
+                ->graphqlEnabled(true)
+                )
+        ]
+   );
+ 
+The class informed in 'action' method, has to be declared on folder:
 
-**Roteamento**
+    `application/actions`
+    
+Following the rule:
 
-Para declarar um rota, é necessário apenas inserir no arquivo:
-
-  `config\routes.yaml`
-  
-Verifique o exemplo, até o momento é aceito apenas um subnivel.
-
-A classe extensão de Action referente a rota declara do arquivo de configuração, e função devem ser declaradas.
-Deverá ser criada dentro de:
-
-  `application\actions`
-  
+    `{Class}Action extends Actions`
+      
 **Providers**
 
-O projeto prove o injeção de serviçõs na requisição, que permite alterar, inserir, apagar, ou qualquer coisa, em cima da requisiçãom, antes, durante, ou depois da execução do do código da chamada em sí.
+You can inhect providers inside the main 'Action' class, to do it, the providers need to be declared on file:
 
-Os providers são divididos a principio em 2 categorias:
+    `config/providers.yaml`
 
-fixed_providers
+Exists two types of providers:
 
-action_providers
+fixed_providers => Will be called every request
 
-Action providers, são os providers que podem ser injetos diretamente no método da sua action, veja os métodos da classe:
-
-  `application\actions\Users.php`
-  
-Se for um parametro da função indicada na rota, o serviço será injetado.
+action_providers => Will be called only if the service is a parameters of a action method.
 
 **GraphQL**
 
-Para declarar que uma rota terá acesso ao recurso, é necessário informar em na configuração no arquigo:
-  
-  `config\routes.yaml` 
-  
-Mas também, será necessário criar o 'equivalente' no arquivo:
+To declare a route as 'GraphQL' vsible, you need to inform in they declaration in file routes.php, call method `->graphqlEnabled(true)` on the route will has GraphQL Fields.
+
+To routes whos has method to enable GraphQL called, you can declare a GraphQL route in file:
 
   `config\graphql-routes.yaml`
 
-Nesse arquivo é necessário uma rota, e o objeto que relacionado.
+Exemple:
 
-O Objeto graphql deverá ser criado dentro da uma pasta com nome do Objeto em:
+    routes:
+      \users:
+        function: graphql
+        object: Users
+        fields: ['SearchUsers']
 
-  `database\graphql\{NomeDoObjeto}\{NomeDoObjeto}.php`  
 
-Veja o exemplo de Users existente na pasta.
+GraphQL Object, has to be created folowing:
 
-O objeto precisa ser criado em uma pasta especifica, pois dentro  iremos criar um outr pasta, para os possíveis Fields.
+  `database\graphql\{GraphQLObjectName}\{GraphQLObjectName}.php`  
 
-Dentro da pasta:
+
+Create folder for fields inside GraphQL Object folder:
 
 
   `database\graphql\{NomeDoObjeto}\{NomeDoObjeto}\Fields`
   
- Iremos colocar os 'Fields', copie o exemplo de Users\Fields.
+ 
+ Create yout FwFiels inside Fields folder.
 
-
-Lembrando que, para os Fields serem encontrados, é necessário declarar na routa do arquivo de configurações de rotas graphql.
+See the example files. 
 
 **Queues \ Tasks**
 
-O uso de tasks é bem simples, e não precisa de nada além do proprio swoole até o momento do projeto. 
 
-Você precisa apenas, criar uma classe dentro da pasta herdada de TaskReceiver:
+To use queues and tasks, you wil need only to declare de class signature in folder:
 
-  `application\tasks`
-  
-Copie do exemplo.
+ `applcation/tasks`
+ 
+Extendind from TaskReveicer class.
 
-E o nome da classe + @ + nome da função, serão a assinatura da task, chamada de 'signature'.
+The task signature will follow:
 
-Para iniciar a task, é apenas necessário fazer um rota de api que aponte a alguma Action.
+ClassName + '@' + FunctionName
 
-No exemplo pode ver que existe uma classe Tasks dentro da pasta `applications\actions`
+Example for initiate a task:
 
-Para iniciar a classe informe com argumento da função a heranção do TaskManager, e chame a função startTask, assim como no exemplo.
 
-A função startTask vai aceitar até 3 argumentos, sempre arrays sem objetos não serializaveis. 
+    public function create(TasksManager $TasksManager, Request $request)
+    {
+        $TasksManager->signature('Users@insertUser');
+        return $TasksManager->startTask($request->getData(),$request->getHeaders(),$request->getServerJson());
+    }
+
 
 **TODO**
 
