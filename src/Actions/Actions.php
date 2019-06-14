@@ -2,8 +2,6 @@
 
 namespace AnthraxisBR\FastWork\Actions;
 
-use AnthraxisBR\FastWork\Database\Entitites;
-use AnthraxisBR\FastWork\providers\BaseProvider;
 use AnthraxisBR\FastWork\Tasks\TasksManager;
 
 class  Actions

@@ -25,7 +25,6 @@ class Migrations
 
         foreach ($reflectedProperties as $prop){
             $name = $prop->getName();
-            var_dump($entity->{$prop->name});
             $comment = $prop->getDocComment();
             if(!in_array($name, $this->reserved)){
                 $properties[] = [
@@ -38,8 +37,5 @@ class Migrations
         $exp = explode('\\',$name);
         $name = $exp[count($exp) - 1];
         return $this->query_builder->createTable($name, $properties);
-
-
-        var_dump($properties);
     }
 }

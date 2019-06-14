@@ -5,7 +5,7 @@ namespace AnthraxisBR\FastWork\Routing;
 
 use AnthraxisBR\FastWork\Actions\Actions;
 use AnthraxisBR\FastWork\Application;
-use AnthraxisBR\FastWork\Database\Entitites;
+use AnthraxisBR\FastWork\Database\Entities;
 use AnthraxisBR\FastWork\Exceptions\MethodNotAllowed;
 use AnthraxisBR\FastWork\GraphQL\GraphQL;
 use AnthraxisBR\FastWork\Http\Request;
@@ -233,7 +233,6 @@ class Router
 
         $this->application = new $this->classname();
         $this->runProviders();
-//        var_dump($this->application);
         /**
          * Call action
          */
@@ -255,8 +254,6 @@ class Router
             $this->response = call_user_func_array([$this->application,$this->function],$args);
         } catch (\Exception $e)
         {
-
-          //  var_dump($e->getMessage());
             $this->errorResponse($e);
         }
     }
@@ -339,10 +336,13 @@ class Router
              * Use a reference provided inside all provided classes
              */
             /** @var $param \ReflectionParameter */
-            //var_dump($this->parameters[$key]->name);
 
             if(!is_null($param->name)){
-                $ref = $param->getClass()->name::getInjectReference();
+                if(is_object($param->getClass())){
+                    $ref = $param->getClass()->name::getInjectReference();
+                }else{
+                    $this->url_params[] = $param;
+                }
             }else{
                 $this->url_params[] = $param;
             }
@@ -375,7 +375,6 @@ class Router
                         )
                     );
                 }
-                //var_dump($this->application->providers['entity']);
             }else{
 
                 if(isset($this->getRequest()->swoole_request)){
@@ -403,9 +402,9 @@ class Router
          * Applying fixed providers, can be mandatory
          */
         foreach ($this->fixedProviders() as $provider){
-            trigger_error('asdasdsadsad',E_USER_NOTICE);
+            //trigger_error('asdasdsadsad',E_USER_NOTICE);
 
-            trigger_error(memory_get_usage(true),3);
+            //trigger_error(memory_get_usage(true),3);
             $this->application->appendFixedProvided(
                 $provider->getInstance(
                     $route = $this,

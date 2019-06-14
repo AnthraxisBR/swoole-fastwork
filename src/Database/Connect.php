@@ -105,12 +105,12 @@ class Connect
 
     public function changePath(): void
     {
-        $this->paths = [getenv('root_folder') . 'application/Entities'];
+        $this->paths = [getenv('root_folder') . 'Application/Entities'];
     }
 
     private function setPaths(): void
     {
-        $this->paths = [getenv('root_folder') . 'database/entity'];
+        $this->paths = [getenv('root_folder') . 'Utils/Entities'];
     }
 
     private function setEnv() : void

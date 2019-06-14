@@ -44,7 +44,6 @@ class BaseProvider extends AbstractProviderBase
 
         if($fixed === true) {
             $class = $this->getObjectReference();
-            echo var_dump($class);
             $inst = new $class($router,$this->routes);
             $inst->name = $this->name;
             return $inst;

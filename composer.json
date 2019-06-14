@@ -47,13 +47,13 @@
         "psr-4": {
             "AnthraxisBR\\FastWork\\": "src/",
             "App\\": "application/",
-            "Utils\\" : "database/",
+            "Utils\\" : "Utils/",
             "tests\\" : "tests/"
         },
         "psr-0": {
             "AnthraxisBR\\FastWork\\": "src/",
             "App\\": "application/",
-            "Utils\\" : "database/",
+            "Utils\\" : "Utils/",
             "tests\\" : "tests/"
         }
     }
