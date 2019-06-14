@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AnthraxisBR\FastWork\database;
+namespace AnthraxisBR\FastWork\Database;
 
 
 class Migrations

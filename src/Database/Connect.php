@@ -1,6 +1,6 @@
 <?php
 
-namespace AnthraxisBR\FastWork\database;
+namespace AnthraxisBR\FastWork\Database;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\Common\Persistence\Mapping\Driver\PHPDriver;

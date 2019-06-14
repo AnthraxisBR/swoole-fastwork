@@ -88,10 +88,10 @@ class FastWork
             ActionGenerator::make($arr['action']);
         }
         if(isset($arr['model'])){
-            (new ModelGenerator($arr['model']))->make();
+            ModelGenerator::make($arr['model']);
         }
         if(isset($arr['graphql'])){
-            (new GraphQLGenerator($arr['graphql']))->make();
+            GraphQLGenerator::make($arr['graphql']);
         }
         if(isset($arr['task'])){
             TaskActionGenerator::make($arr['task']);

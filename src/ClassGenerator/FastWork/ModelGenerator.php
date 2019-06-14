@@ -2,8 +2,8 @@
 
 namespace AnthraxisBR\FastWork\ClassGenerator\FastWork;
 
-use AnthraxisBR\FastWork\Actions\Actions;
 use AnthraxisBR\FastWork\ClassGenerator\ClassGenerator;
+use AnthraxisBR\FastWork\Database\Entities;
 use Nette\PhpGenerator\PhpNamespace;
 
 class ModelGenerator extends ClassGenerator
@@ -19,7 +19,7 @@ class ModelGenerator extends ClassGenerator
 
         $class = $namespace->addClass($classname );
 
-        $class->addExtend(Actions::class);
+        $class->addExtend(Entities::class);
 
         $full_path = getenv('root_folder') . 'Utils/Entities';
 
