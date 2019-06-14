@@ -1,10 +1,10 @@
 <?php
 
-namespace AnthraxisBR\FastWork\actions;
+namespace AnthraxisBR\FastWork\Actions;
 
-use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\Database\Entitites;
 use AnthraxisBR\FastWork\providers\BaseProvider;
-use AnthraxisBR\FastWork\tasks\TasksManager;
+use AnthraxisBR\FastWork\Tasks\TasksManager;
 
 class  Actions
 {

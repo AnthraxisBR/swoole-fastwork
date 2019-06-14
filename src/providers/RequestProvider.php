@@ -3,7 +3,7 @@
 namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\Database\Entitites;
 use AnthraxisBR\FastWork\providers\BaseProvider;
 
 class RequestProvider extends BaseProvider implements ServiceProviderInterface

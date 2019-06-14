@@ -3,8 +3,8 @@
 
 namespace tests\src\routes;
 
-use AnthraxisBR\FastWork\database\Migrations;
-use database\entity\Users;
+use AnthraxisBR\FastWork\Database\Migrations;
+use Utils\Entities\Users;
 use tests\TestCase;
 
 class MigrationsTest extends TestCase

@@ -3,7 +3,7 @@
 namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\FastWork\database\Entities;
+use AnthraxisBR\FastWork\Database\Entities;
 use AnthraxisBR\FastWork\providers\BaseProvider;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
@@ -18,7 +18,7 @@ class EntitiesProvider extends BaseProvider implements ServiceProviderInterface
 
     public function __construct()
     {
-        $this->setObjectReference('AnthraxisBR\FastWork\database\Entities');
+        $this->setObjectReference('AnthraxisBR\FastWork\Database\Entities');
         $this->setName('entity');
     }
 

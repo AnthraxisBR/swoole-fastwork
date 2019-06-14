@@ -2,7 +2,7 @@
 
 namespace tests\src\routes;
 
-use App\actions\UsersAction;
+use App\Actions\UsersAction;
 use tests\TestCase;
 
 class UsersTest extends TestCase

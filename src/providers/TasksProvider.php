@@ -3,7 +3,7 @@
 namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\Database\Entitites;
 use AnthraxisBR\FastWork\providers\BaseProvider;
 use AnthraxisBR\FastWork\traits\Injection;
 
@@ -16,7 +16,7 @@ class TasksProvider extends BaseProvider implements ServiceProviderInterface
 
     public function __construct()
     {
-        $this->object_reference = 'AnthraxisBR\FastWork\tasks\TasksManager';
+        $this->object_reference = 'AnthraxisBR\FastWork\Tasks\TasksManager';
         $this->name = 'tasks';
     }
 

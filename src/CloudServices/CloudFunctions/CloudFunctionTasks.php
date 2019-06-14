@@ -5,7 +5,7 @@ namespace AnthraxisBR\FastWork\CloudServices\CloudFunctions;
 
 
 use AnthraxisBR\FastWork\System\Zip;
-use AnthraxisBR\FastWork\tasks\TasksReceiver;
+use AnthraxisBR\FastWork\Tasks\TasksReceiver;
 use Cz\Git\GitRepository;
 use PhpZip\ZipFile;
 

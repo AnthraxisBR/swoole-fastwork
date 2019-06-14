@@ -3,7 +3,7 @@
 namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\Database\Entitites;
 use AnthraxisBR\FastWork\providers\BaseProvider;
 use AnthraxisBR\FastWork\traits\Injection;
 
@@ -16,7 +16,7 @@ class GraphQLProvider extends BaseProvider implements ServiceProviderInterface
 
     public function __construct()
     {
-        $this->object_reference = 'AnthraxisBR\FastWork\graphql\GraphQL';
+        $this->object_reference = 'AnthraxisBR\FastWork\GraphQL\GraphQL';
         $this->name = 'graphql';
     }
 

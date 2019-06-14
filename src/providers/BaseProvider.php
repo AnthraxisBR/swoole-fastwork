@@ -4,11 +4,11 @@
 namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\FastWork\database\Entities;
-use AnthraxisBR\FastWork\graphql\GraphQL;
+use AnthraxisBR\FastWork\Database\Entities;
+use AnthraxisBR\FastWork\GraphQL\GraphQL;
 use AnthraxisBR\FastWork\Http\Request;
 use AnthraxisBR\FastWork\Routing\Router;
-use AnthraxisBR\FastWork\tasks\TasksManager;
+use AnthraxisBR\FastWork\Tasks\TasksManager;
 
 class BaseProvider extends AbstractProviderBase
 {

@@ -3,7 +3,7 @@
 namespace AnthraxisBR\FastWork\providers;
 
 
-use AnthraxisBR\FastWork\database\Entities;
+use AnthraxisBR\FastWork\Database\Entities;
 use AnthraxisBR\FastWork\providers\BaseProvider;
 
 class AuthProvider extends BaseProvider implements ServiceProviderInterface

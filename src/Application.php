@@ -12,7 +12,7 @@ namespace AnthraxisBR\FastWork;
 use AnthraxisBR\FastWork\builder\Builder;
 use AnthraxisBR\FastWork\Http\Request;
 use AnthraxisBR\FastWork\Server\ServersCollections;
-use AnthraxisBR\FastWork\tasks\Tasks;
+use AnthraxisBR\FastWork\Tasks\Tasks;
 
 class Application
 {

@@ -94,7 +94,7 @@ To declare a route as 'GraphQL' vsible, you need to inform in they declaration i
 
 To routes whos has method to enable GraphQL called, you can declare a GraphQL route in file:
 
-  `config\graphql-routes.yaml`
+  `config\GraphQL-routes.yaml`
 
 Exemple:
 
@@ -107,13 +107,13 @@ Exemple:
 
 GraphQL Object, has to be created folowing:
 
-  `database\graphql\{GraphQLObjectName}\{GraphQLObjectName}.php`  
+  `Utils\GraphQL\{GraphQLObjectName}\{GraphQLObjectName}.php`  
 
 
 Create folder for fields inside GraphQL Object folder:
 
 
-  `database\graphql\{NomeDoObjeto}\{NomeDoObjeto}\Fields`
+  `Utils\GraphQL\{NomeDoObjeto}\{NomeDoObjeto}\Fields`
   
  
  Create yout FwFiels inside Fields folder.

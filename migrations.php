@@ -1,7 +1,7 @@
 <?php
 return [
   'name' => "My Swoole-FastWork Migrations",
-  'migrations_namespace' => 'database\migrations',
+  'migrations_namespace' => 'Utils\migrations',
   'table_name' => 'sw_fw_migration_versions',
   'column_name' => 'version',
   'column_length' => 14,

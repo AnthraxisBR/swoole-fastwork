@@ -3,14 +3,14 @@
 namespace AnthraxisBR\FastWork\Routing;
 
 
-use AnthraxisBR\FastWork\actions\Actions;
+use AnthraxisBR\FastWork\Actions\Actions;
 use AnthraxisBR\FastWork\Application;
-use AnthraxisBR\FastWork\database\Entitites;
+use AnthraxisBR\FastWork\Database\Entitites;
 use AnthraxisBR\FastWork\Exceptions\MethodNotAllowed;
-use AnthraxisBR\FastWork\graphql\GraphQL;
+use AnthraxisBR\FastWork\GraphQL\GraphQL;
 use AnthraxisBR\FastWork\Http\Request;
 use AnthraxisBR\FastWork\providers\Providers;
-use AnthraxisBR\FastWork\graphql\GraphQLYamlReader;
+use AnthraxisBR\FastWork\GraphQL\GraphQLYamlReader;
 use AnthraxisBR\FastWork\traits\UrlTreatmentTrait;
 use Illuminate\Support\Str;
 use ReflectionFunction;
@@ -438,7 +438,7 @@ class Router
      */
     private function buildInvokableFunction() : void
     {
-        $this->invokable_function = '\App\actions\\' . $this->route->methods[$this->method];
+        $this->invokable_function = '\App\Actions\\' . $this->route->methods[$this->method];
 
         $this->parameters = $this->getParametersFromInvokableClassFunction($this->invokable_function);
 

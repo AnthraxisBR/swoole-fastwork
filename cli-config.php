@@ -1,7 +1,7 @@
 <?php
 include "vendor/autoload.php";
 
-$conn = new \AnthraxisBR\FastWork\database\Connect();
+$conn = new \AnthraxisBR\FastWork\Database\Connect();
 
 $conn->changePath();
 
