@@ -1,14 +1,14 @@
 server:
-  #http:
-  #  host: 127.0.0.1
-  #  port: 80
+  http:
+    host: 127.0.0.1
+    port: 80
 
   swoole:
     host: 127.0.0.1
     port: 8101
     config:
-      ssl_cert_file: '/etc/ssl/certs/swoole-selfsigned.crt'
-      ssl_key_file: '/etc/ssl/private/swoole-selfsigned.key'
+  #    ssl_cert_file: '/etc/ssl/certs/swoole-selfsigned.crt'
+  #    ssl_key_file: '/etc/ssl/private/swoole-selfsigned.key'
   #    ssl_ciphers: null
   #    ssl_method: null,
   #    open_http2_protocol: false

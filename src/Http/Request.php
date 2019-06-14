@@ -36,12 +36,22 @@ class Request extends RequestBase
     )
     {
         if(!is_null($request)) {
-
-            if(is_array($request->server)) {
+            if($request instanceof \Swoole\Http\Request) {
                 $this->swoole_request = $request;
                 if (in_array($request->server['request_method'], ['POST', 'PUT', 'PATCH'])) {
                     $this->setData($request->rawContent());
                 }
+            }elseif($request instanceof Request) {
+                $this->swoole_request = $request;
+
+                parent::__construct(
+                    $method,
+                    $uri,
+                    $headers,
+                    $body,
+                    $version
+                );
+                return;
             }else{
                 $this->base_request = $request;
                 if (in_array($request->server->get('REQUEST_METHOD'), ['POST', 'PUT', 'PATCH'])){
@@ -84,7 +94,10 @@ class Request extends RequestBase
      */
     public function getPostBody() : object
     {
-        return (object) json_decode($this->getSwooleRequest()->rawContent());
+        if(!is_null($this->getSwooleRequest())){
+            return (object) json_decode($this->getSwooleRequest()->rawContent());
+        }
+        return (object) json_decode($this->getBody());
     }
 
     /**

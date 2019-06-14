@@ -51,7 +51,11 @@ class BaseProvider extends AbstractProviderBase
         try {
             if (!is_null($class)) {
                 if (is_a($class, Request::class, true)) {
-                    $inst = new $class($router->request);
+                    if(isset($router->getRequest()->swoole_request) and $router->getRequest()->swoole_request !== null){
+                        $inst = new $class($router->getRequest()->swoole_request);
+                    }else{
+                        $inst = new $class($router->request);
+                    }
                 } else {
                     if (is_a($class, GraphQL::class, true)) {
                         $inst = new $class($entity, $swoole_request->rawContent());

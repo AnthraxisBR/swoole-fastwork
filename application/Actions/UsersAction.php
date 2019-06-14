@@ -70,7 +70,7 @@ class UsersAction extends Actions
 
         //$start = microtime(true);
 
-        return $UsersEntity->create($request->getData());
+        return $UsersEntity->create($request->getPostBody());
         //err("Time: " . (microtime(true) - $start),3);
     }
 }
