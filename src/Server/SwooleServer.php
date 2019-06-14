@@ -63,6 +63,7 @@ class SwooleServer extends \swoole_http_server implements FwServerInterface
                 new \AnthraxisBR\FastWork\Http\Response($response)
             )->run();
 
+
             $response->get('SwooleServer')->swoole()->end($response->get('SwooleServer')->getResponse());
         });
     }
@@ -86,9 +87,9 @@ class SwooleServer extends \swoole_http_server implements FwServerInterface
 
             $this->server_config['ssl_cert_file'] = $configs['ssl_cert_file'];
             $this->server_config['ssl_key_file'] = $configs['ssl_key_file'];
-            $this->server_config['poll_thread_num'] = $configs['poll_thread_num'];
-            $this->server_config['max_request'] = $configs['max_request'];
-            $this->server_config['max_conn'] = $configs['max_conn'];
+            $this->server_config['poll_thread_num'] = isset($configs['poll_thread_num']) ? $configs['poll_thread_num'] : 4;
+            $this->server_config['max_request'] = isset($configs['max_request']) ? $configs['max_request'] : 10;
+            $this->server_config['max_conn'] = isset($configs['max_conn']) ? $configs['max_conn'] : 10000;
         }
 
 

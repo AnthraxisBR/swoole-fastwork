@@ -21,8 +21,7 @@ class UsersAction extends Actions
 
     public function index(UsersEntity $UsersEntity)
     {
-        echo json_encode($UsersEntity->all());
-
+        return $UsersEntity->all();
     }
 
     public function insertUserCoroutine(Request $request)

@@ -47,14 +47,16 @@ class Request extends RequestBase
                 if (in_array($request->server->get('REQUEST_METHOD'), ['POST', 'PUT', 'PATCH'])){
                     $this->setData($request->getContent());
                 }
+
+                parent::__construct(
+                    $request->server->get('REQUEST_METHOD'),
+                    $request->server->get('REQUEST_URI'),
+                    (array) $request->headers->all(),
+                    $this->getBody(),
+                    explode('/', $request->get('SERVER_PROTOCOL')[1])
+                );
+                return;
             }
-            parent::__construct(
-                $request->server->get('REQUEST_METHOD'),
-                $request->server->get('REQUEST_URI'),
-                (array) $request->headers->all(),
-                $this->getBody(),
-                explode('/', $request->get('SERVER_PROTOCOL')[1])
-            );
         }
 
         parent::__construct(

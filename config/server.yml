@@ -5,7 +5,7 @@ server:
 
   swoole:
     host: 127.0.0.1
-    port: 8103
+    port: 8101
     config:
       ssl_cert_file: '/etc/ssl/certs/swoole-selfsigned.crt'
       ssl_key_file: '/etc/ssl/private/swoole-selfsigned.key'

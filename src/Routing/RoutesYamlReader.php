@@ -179,8 +179,6 @@ class RoutesYamlReader
              */
         }
 
-        var_dump($this->route);
-        exit();
 
         return [
             'uri' => $this->route['uri'],

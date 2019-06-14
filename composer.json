@@ -1,5 +1,5 @@
 {
-    "name": "gabrielmourao/swoole-fw",
+    "name": "anthraxisbr/fastwork",
     "require": {
         "vlucas/phpdotenv": "^3.3@dev",
         "guzzlehttp/guzzle": "^6.3@dev",
@@ -28,7 +28,7 @@
     },
     "require-dev" : {
         "tightenco/collect": "^5.8.19",
-        "doctrine/orm": "^2.6.1",cd ../
+        "doctrine/orm": "^2.6.1"
     },
     "repositories" : [
         {
