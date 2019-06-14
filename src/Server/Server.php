@@ -50,6 +50,7 @@ class Server
      */
     public function prepare(Application $app): void
     {
+        var_dump('asd');
         $this->setApplication(ServerYamlReader::getConfig($app));
         $this->setConfig(ServerYamlReader::getConfigs($app));
     }

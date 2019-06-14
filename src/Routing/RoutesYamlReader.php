@@ -71,6 +71,7 @@ class RoutesYamlReader
         exit();
         $this->yaml_file = Yaml::parseFile($config);*/
         $this->routes = $routes;
+
         $this->setEnv();
     }
 
@@ -177,6 +178,9 @@ class RoutesYamlReader
              * TODO: exceções
              */
         }
+
+        var_dump($this->route);
+        exit();
 
         return [
             'uri' => $this->route['uri'],

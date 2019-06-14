@@ -9,7 +9,7 @@ use AnthraxisBR\FastWork\Http\Request;
 use AnthraxisBR\FastWork\Server\ConfigObjects\WorkersConfig;
 use GabrielMourao\FastWork\Http\Response;
 
-class SwooleServer extends \Swoole\Http\Server implements FwServerInterface
+class SwooleServer extends \swoole_http_server implements FwServerInterface
 {
 
     public $host;

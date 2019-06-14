@@ -481,6 +481,7 @@ class Router
         $this->classname = $exp[0] . 'Action';
 
         if(is_null($this->function)){
+            var_dump($exp);
             $this->function = $exp[1];
         }
 

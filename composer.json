@@ -28,8 +28,7 @@
     },
     "require-dev" : {
         "tightenco/collect": "^5.8.19",
-        "doctrine/orm": "^2.6.1",
-        "eaglewu/swoole-ide-helper": "dev-master"
+        "doctrine/orm": "^2.6.1",cd ../
     },
     "repositories" : [
         {
