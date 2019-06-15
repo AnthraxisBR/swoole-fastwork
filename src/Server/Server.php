@@ -3,7 +3,7 @@
 namespace AnthraxisBR\FastWork\Server;
 
 use AnthraxisBR\FastWork\Application;
-use AnthraxisBR\FastWork\Server\ServerYamlReader;
+use AnthraxisBR\FastWork\Server\ServerHandler;
 
 /**
  * Class Server
@@ -16,6 +16,8 @@ class Server
      * @var array
      */
     public $config = [];
+
+    public $application;
 
     /**
      * Server constructor.
@@ -40,7 +42,6 @@ class Server
             /* @var $config SwooleServer */
             $application->configure(array_merge($this->getConfig(),$this->extra_config()));
             $application->start();
-
         }
     }
 
@@ -50,14 +51,22 @@ class Server
      */
     public function prepare(Application $app): void
     {
-        $this->setApplication(ServerYamlReader::getConfig($app));
-        $this->setConfig(ServerYamlReader::getConfigs($app));
+        /** an Aplication is a Server Type instance */
+        $this->setApplication(ServerHandler::getConfig($app));
+        $this->setConfig(ServerHandler::getConfigs());
     }
 
+    /**
+     * @param $application
+     */
     public function setApplication($application)
     {
         $this->application = $application;
     }
+
+    /**
+     * @return mixed
+     */
     public function getApplication()
     {
         return $this->application;
@@ -70,7 +79,7 @@ class Server
      */
     public function extra_config() : array
     {
-        return (array) ServerYamlReader::getExtraConfig();
+        return (array) ServerHandler::getExtraConfig();
     }
 
     /**
