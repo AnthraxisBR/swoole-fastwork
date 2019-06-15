@@ -15,14 +15,12 @@ O FastWork, is a High-level framework, that will allow you to construct full clo
  1. ORM Doctrine
  2. Router
  3. GraphQL
- 4. JSONRPC (under development)
- 5. SOAP (under development)
- 5. Integration SDK for Google Cloud
- 6. Extended SDK for AWS 
- 7. Extended SDK for Azure
- 8. Service Providers
- 9. Queues/Tasks
- 10. PAAS Unifier (Multi Cloud Platform Unifier to AWS, GCP and AWS organizaed from clas objects)
+ 4. Integration SDK for Google Cloud
+ 5. Extended SDK for AWS 
+ 6. Extended SDK for Azure
+ 7. Service Providers
+ 8. Queues/Tasks
+ 9. PAAS Unifier (Multi Cloud Platform Unifier to AWS, GCP and AWS organizaed from clas objects)
   
 
 **Initializing**
