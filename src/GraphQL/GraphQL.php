@@ -77,7 +77,10 @@ class GraphQL
         if(isset($this->output['data'])){
             $this->output['data'][key($this->output['data'])] = json_decode($this->output['data'][key($this->output['data'])]);
         }
-        $this->field = key($this->output['data']);
+
+        if(isset($this->output['data'])){
+            $this->field = key($this->output['data']);
+        }
 
     }
 

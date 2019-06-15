@@ -31,7 +31,14 @@ class Response extends ResponseBase
     public function end(Response $response)
     {
         header('Content-Type', 'application/json');
-        echo json_encode(json_decode($response->getBody()));
+
+        $dec = json_decode($response->getBody());
+
+        if(isset($dec->output)){
+            echo json_encode($dec->output);
+        }else{
+            echo json_encode($dec);
+        }
     }
 
     public function setStatusCode($statusCode = 200)
@@ -48,7 +55,12 @@ class Response extends ResponseBase
             if(isset($body->output->data->{$body->field}->errors) and count($body->output->data->{$body->field}->errors) > 0){
                 return json_encode($body->output->data->{$body->field});
             }else{
-                return json_encode($body->output->data);
+                if(isset($body->output->data)){
+                    return json_encode($body->output->data);
+                }else{
+
+                    return json_encode($body->output->errors);
+                }
             }
         }
         return $this->getBody();

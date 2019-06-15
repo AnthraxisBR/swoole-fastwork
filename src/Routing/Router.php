@@ -185,8 +185,16 @@ class Router
      */
     private function implementsGraphqlroute() : void
     {
+        error_log($this->method,4);
+
+        error_log($this->hasGraphQLQueryBody(),4);
         if($this->hasGraphQLQueryBody()) {
-            $this->query = $this->wrapper->getPostBody()->query;
+
+            if(method_exists($this->getRequest(),'getContent')){
+                $this->query  = json_decode($this->getRequest()->getContent())->query;
+            }else{
+                $this->query  = $this->getRequest()->getPostBody()->query;
+            }
             $GraphQLRoutesYaml = new GraphQLYamlReader();
             $this->route = array_merge($this->route, $GraphQLRoutesYaml->getRoute($this->route['uri']));
             $this->function = $this->route['graphql']['function'];
@@ -473,7 +481,7 @@ class Router
     public function hasGraphQLQueryBody()
     {
         if(method_exists($this->getRequest(),'getContent')){
-            return isset($this->getRequest()->getContent()->query);
+            return isset(json_decode($this->getRequest()->getContent())->query);
         }
         return isset($this->getRequest()->getPostBody()->query);
     }

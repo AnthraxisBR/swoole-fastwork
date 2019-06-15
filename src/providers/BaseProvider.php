@@ -7,6 +7,7 @@ namespace AnthraxisBR\FastWork\providers;
 use AnthraxisBR\FastWork\Database\Entities;
 use AnthraxisBR\FastWork\GraphQL\GraphQL;
 use AnthraxisBR\FastWork\Http\Request;
+use AnthraxisBR\FastWork\Reflection\ReflectionClass;
 use AnthraxisBR\FastWork\Routing\Router;
 use AnthraxisBR\FastWork\Tasks\TasksManager;
 
@@ -31,12 +32,17 @@ class BaseProvider extends AbstractProviderBase
             if(!is_null($item->getClass())) {
                 $name = $item->getClass()->name;
                 try {
-                    $reflector = new \ReflectionClass($name);
-                    if ($reflector->isSubclassOf($this->getObjectReference()) || is_a($name, $this->getObjectReference(), true)) {
+
+                    $reflector = new ReflectionClass($name);
+
+                    $reflector->setBase($this);
+
+                    if ($reflector->checkFullObjectReference()) {
                         $class = $item->getClass()->name;
                         break;
                     }
                 }catch (\ReflectionException $e){
+                    error_log($e->getMessage(), 4);
                     var_dump($e->getMessage());
                 }
             }
@@ -58,7 +64,11 @@ class BaseProvider extends AbstractProviderBase
                     }
                 } else {
                     if (is_a($class, GraphQL::class, true)) {
-                        $inst = new $class($entity, $swoole_request->rawContent());
+                        if($swoole_request instanceof \Swoole\Http\Request){
+                            $inst = new $class($entity, $swoole_request->rawContent());
+                        }else{
+                            $inst = new $class($router->application->providers['entity'], $router->request->getContent());
+                        }
                     } else {
                         if (is_a($class, Entities::class, true)) {
                             $inst = new $class();

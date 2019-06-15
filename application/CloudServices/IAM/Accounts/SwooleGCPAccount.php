@@ -9,10 +9,10 @@ use AnthraxisBR\FastWork\CloudServices\IAM\AccountService;
 /**
  * Representing AWS account using an class object
  *
- * Class SwooleAwsAccount
+ * Class SwooleGCPAccount
  * @package App\CloudServices\IAM
  */
-class SwooleAzureAccount extends AccountService
+class SwooleGCPAccount extends AccountService
 {
 
     public $AccountName = 'AAA';
