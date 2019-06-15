@@ -4,7 +4,7 @@
 namespace AnthraxisBR\FastWork\Server\ConfigObjects;
 
 
-use AnthraxisBR\FastWork\Server\ServerYamlReader;
+use AnthraxisBR\FastWork\Server\ServerHandler;
 
 class WorkersConfig
 {
@@ -21,7 +21,7 @@ class WorkersConfig
 
     public function __construct()
     {
-        $workers = ServerYamlReader::getExtraConfig();
+        $workers = ServerHandler::getExtraConfig();
 
         $workers = $workers['worker'];
 
