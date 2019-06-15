@@ -17,13 +17,9 @@ class AsyncAction extends Actions
     public function asyncCall(TasksManager $tasksManager, Users $users, Request $request)
     {
 
-        $data = $users->willCreate($tasksManager, $request);
+        $promisse = $users->willCreate($tasksManager, $request);
 
-        $this->taskWaitMulti($data);
-
- /*       return (new Promisse( function(AsyncResponse $response){
-                return $response->resp(Teste::sum(1,2));
-        }))->exec();*/
+        $this->taskWaitMulti($promisse);
 
     }
 }

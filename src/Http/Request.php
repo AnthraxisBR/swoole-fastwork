@@ -78,12 +78,17 @@ class Request extends RequestBase
         );
     }
 
+    /**
+     * @return bool
+     */
     public function isSwoole()
     {
         return isset($this->swoole_request);
     }
 
-
+    /**
+     * @return Request|SwooleRequest|null
+     */
     public function getSwooleRequest()
     {
         return isset($this->swoole_request) ? $this->swoole_request : null;
@@ -142,21 +147,33 @@ class Request extends RequestBase
         return (string) $this->getSwooleRequest()->server['request_uri'];
     }
 
+    /**
+     * @return mixed
+     */
     public function getServerJson()
     {
         return $this->swoole_request->server;
     }
 
+    /**
+     * @param $data
+     */
     public function setData($data)
     {
         $this->data = json_decode($data);
     }
 
+    /**
+     * @return false|string
+     */
     public function getJsonData()
     {
         return json_encode($this->data);
     }
 
+    /**
+     * @return mixed
+     */
     public function getData()
     {
         return $this->data;
