@@ -5,7 +5,7 @@ action_providers:
   request: 'AnthraxisBR\FastWork\providers\RequestProvider'
   tasks: 'AnthraxisBR\FastWork\providers\TasksProvider'
   cloud_services: 'AnthraxisBR\FastWork\providers\CloudServicesProvider'
-fixed_providers:
-    auth:
-      provider: AnthraxisBR\FastWork\providers\AuthProvider
-      routes: [Users]
+#fixed_providers:
+    #auth:
+    #  provider: AnthraxisBR\FastWork\providers\AuthProvider
+    #  routes: [Users]

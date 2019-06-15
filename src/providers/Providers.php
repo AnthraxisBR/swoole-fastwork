@@ -73,6 +73,7 @@ class Providers
                 if(isset($this->providers['fixed_providers'])){
                     $this->providers['fixed_providers'] = [];
                 }
+
                 foreach ($configs as $provider_name => $config) {
                     if(!isset($this->providers[$provider_name])){
                         $config = '\\' . $configs[$provider_name]['provider'];

@@ -38,6 +38,11 @@ class Route {
         $this->methods[$this::method] = '';
     }
 
+    public function putMethod($key, $name)
+    {
+        $this->methods[$key] = $name;
+    }
+
     public function name(string $name) : Route
     {
         $this->name = $name;
@@ -47,12 +52,14 @@ class Route {
 
     public function action(string $action) : Route
     {
+        if(get_class($this) !== 'AnthraxisBR\FastWork\Routing\Resource') {
 
-        if(isset($this->methods[$this::method])){
-            $this->methods[$this::method] = $action;
+            if (isset($this->methods[$this::method])) {
+                $this->methods[$this::method] = $action;
+            }
+
+            $this->action = $action;
         }
-
-        $this->action = $action;
         return $this;
     }
 

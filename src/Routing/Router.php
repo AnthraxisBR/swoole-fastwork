@@ -185,8 +185,16 @@ class Router
      */
     private function implementsGraphqlroute() : void
     {
+        error_log($this->method,4);
+
+        error_log($this->hasGraphQLQueryBody(),4);
         if($this->hasGraphQLQueryBody()) {
-            $this->query = $this->wrapper->getPostBody()->query;
+
+            if(method_exists($this->getRequest(),'getContent')){
+                $this->query  = json_decode($this->getRequest()->getContent())->query;
+            }else{
+                $this->query  = $this->getRequest()->getPostBody()->query;
+            }
             $GraphQLRoutesYaml = new GraphQLYamlReader();
             $this->route = array_merge($this->route, $GraphQLRoutesYaml->getRoute($this->route['uri']));
             $this->function = $this->route['graphql']['function'];
@@ -281,27 +289,29 @@ class Router
             if(isset($exp_1[$i]) and isset($exp_2[$i])){
 
                 if($exp_1[$i] == $exp_2[$i]){
-
+                    //$i += 1;
                 }else{
-                    if($exp_1[$i - 1] == $exp_2[$i - 1]){
-                        $i -= 1;
-                    }
-                    $type = $this->url_params[$i]->getType()->getName();
+                    if(isset($this->url_params[$i])) {
+                        if($exp_1[$i - 1] == $exp_2[$i - 1]){
+                            $i -= 1;
+                        }
+                        $type = $this->url_params[$i]->getType()->getName();
 
-                    if(ctype_digit($exp_1[$i + 1])){
-                        $exp_1[$i + 1] = (int) $exp_1[$i + 1];
-                    }
+                        if (ctype_digit($exp_1[$i + 1])) {
+                            $exp_1[$i + 1] = (int)$exp_1[$i + 1];
+                        }
 
-                    $type_arg = gettype($exp_1[$i + 1]);
-                    if($type_arg == 'integer'){
-                        $type_arg = 'int';
-                    }
-                    if($type_arg == $type){
-                        $this->url_params[$i] = $exp_1[$i + 1];
-                    }
+                        $type_arg = gettype($exp_1[$i + 1]);
+                        if ($type_arg == 'integer') {
+                            $type_arg = 'int';
+                        }
+                        if ($type_arg == $type) {
+                            $this->url_params[$i] = $exp_1[$i + 1];
+                        }
 
-                    if($exp_1[$i] == $exp_2[$i]){
-                        $i += 1;
+                        if ($exp_1[$i] == $exp_2[$i]) {
+                            $i += 1;
+                        }
                     }
                 }
             }else{
@@ -415,15 +425,20 @@ class Router
             );
         }
 
-        $fixed_providers = $this->application->providers['fixed'];
+        if(isset($this->application->providers['fixed'])){
 
-        unset($this->application->providers['fixed']);
+            $fixed_providers = $this->application->providers['fixed'];
+
+            unset($this->application->providers['fixed']);
+        }
 
         $this->providers = $this->application->providers;
 
         unset($this->application->providers);
 
-        $this->application->providers = $fixed_providers;
+        if(isset($fixed_providers)){
+            $this->application->providers = $fixed_providers;
+        }
 
     }
 
@@ -437,9 +452,8 @@ class Router
      */
     private function buildInvokableFunction() : void
     {
-        $this->invokable_function = '\App\Actions\\' . $this->route->methods[$this->method];
 
-        $this->parameters = $this->getParametersFromInvokableClassFunction($this->invokable_function);
+        $this->parameters = $this->getParametersFromInvokableClassFunction();
 
     }
 
@@ -449,7 +463,7 @@ class Router
      */
     public function fixedProviders() : array
     {
-        return $this->providers['fixed_providers'];
+        return isset($this->providers['fixed_providers']) ? $this->providers['fixed_providers'] : [] ;
     }
 
     /**
@@ -467,7 +481,7 @@ class Router
     public function hasGraphQLQueryBody()
     {
         if(method_exists($this->getRequest(),'getContent')){
-            return isset($this->getRequest()->getContent()->query);
+            return isset(json_decode($this->getRequest()->getContent())->query);
         }
         return isset($this->getRequest()->getPostBody()->query);
     }
@@ -477,14 +491,24 @@ class Router
      * @return \ReflectionParameter[]
      * @throws \ReflectionException
      */
-    protected function getParametersFromInvokableClassFunction($invokable_function)
+    protected function getParametersFromInvokableClassFunction()
     {
+        $invokable_function = $this->route->methods[$this->method];
+
         $exp = explode('@',$invokable_function);
 
-        $this->classname = $exp[0] . 'Action';
 
-        if(is_null($this->function)){
-            $this->function = $exp[1];
+        if(!strpos($invokable_function,'Resource@')) {
+            $this->classname = '\App\Actions\\' . $exp[0] . 'Action';
+
+        }else{
+            $this->classname = '\App\Resources\\' . ucfirst($exp[0]);
+        }
+        if (is_null($this->function)) {
+            if(isset($exp[1])){
+
+                $this->function = $exp[1];
+            }
         }
 
         $ReflectionMethod = new ReflectionMethod($this->classname, $this->function);

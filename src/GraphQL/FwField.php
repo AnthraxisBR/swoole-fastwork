@@ -95,6 +95,7 @@ class FwField extends FieldDefinition
         try{
             return $this->resolve($args);
         }catch ( ItemNotFoundException $e){
+            var_dump($e->getMessage());
             if(isset($this->responses[get_class($e)])){
                 $sp = [$this->responses[get_class($e)]];
                 $sp = array_merge($sp, array_values($args));
@@ -192,11 +193,15 @@ class FwField extends FieldDefinition
         return $args;
     }
 
-    public function getType(string $type = null) : Type
+    public function getType(string $type = null)
     {
 
         if(is_null($type)){
-            return Type::{$this->type}();
+            if(is_string($this->type)){
+                return Type::{$this->type}();
+            }else{
+                return $this->type;
+            }
         }
         return Type::{$type}();
     }

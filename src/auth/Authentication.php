@@ -53,7 +53,6 @@ class Authentication
     public function build($request)
     {
         $this->parseRequest($request);
-        var_dump(in_array($this->action_name, $this->routes));
         if(in_array($this->action_name, $this->routes)){
             $this->boot();
         }
