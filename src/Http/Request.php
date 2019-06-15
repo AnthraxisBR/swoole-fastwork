@@ -92,12 +92,12 @@ class Request extends RequestBase
     /**
      * @return object
      */
-    public function getPostBody() : object
+    public function getPostBody()
     {
         if(!is_null($this->getSwooleRequest())){
-            return (object) json_decode($this->getSwooleRequest()->rawContent());
+            return json_decode($this->getSwooleRequest()->rawContent());
         }
-        return (object) json_decode($this->getBody());
+        return  json_decode($this->getBody());
     }
 
     /**

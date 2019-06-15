@@ -65,11 +65,22 @@ class RoutesYamlReader
      */
     public function __construct()
     {
-        $config = getenv('root_folder') . 'routes/routes.php';
-        include($config);
-        /*var_dump($routes);
-        exit();
-        $this->yaml_file = Yaml::parseFile($config);*/
+
+        $routePath = getenv('root_folder') . 'routes';
+        $dh  = opendir($routePath);
+
+        while (false !== ($filename = readdir($dh))) {
+            if(strpos($filename,'.php')){
+                include($routePath . '/' . $filename);
+                $routes = $routes;
+
+                $files[key($routes)] = $routes[key($routes)];
+            }
+        }
+
+
+        $routes = array_merge($files);
+
         $this->routes = $routes;
 
         $this->setEnv();
@@ -226,7 +237,11 @@ class RoutesYamlReader
     private function getRouteFromPrefix() : array
     {
         $this->prefix = str_replace(':','',$this->prefix);
-        return (array) $this->routes[$this->prefix];
+        if(isset($this->routes[$this->prefix])){
+
+            return (array) $this->routes[$this->prefix];
+        }
+        return (array)  [ ];
     }
 
     /**

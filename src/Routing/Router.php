@@ -281,27 +281,29 @@ class Router
             if(isset($exp_1[$i]) and isset($exp_2[$i])){
 
                 if($exp_1[$i] == $exp_2[$i]){
-
+                    //$i += 1;
                 }else{
-                    if($exp_1[$i - 1] == $exp_2[$i - 1]){
-                        $i -= 1;
-                    }
-                    $type = $this->url_params[$i]->getType()->getName();
+                    if(isset($this->url_params[$i])) {
+                        if($exp_1[$i - 1] == $exp_2[$i - 1]){
+                            $i -= 1;
+                        }
+                        $type = $this->url_params[$i]->getType()->getName();
 
-                    if(ctype_digit($exp_1[$i + 1])){
-                        $exp_1[$i + 1] = (int) $exp_1[$i + 1];
-                    }
+                        if (ctype_digit($exp_1[$i + 1])) {
+                            $exp_1[$i + 1] = (int)$exp_1[$i + 1];
+                        }
 
-                    $type_arg = gettype($exp_1[$i + 1]);
-                    if($type_arg == 'integer'){
-                        $type_arg = 'int';
-                    }
-                    if($type_arg == $type){
-                        $this->url_params[$i] = $exp_1[$i + 1];
-                    }
+                        $type_arg = gettype($exp_1[$i + 1]);
+                        if ($type_arg == 'integer') {
+                            $type_arg = 'int';
+                        }
+                        if ($type_arg == $type) {
+                            $this->url_params[$i] = $exp_1[$i + 1];
+                        }
 
-                    if($exp_1[$i] == $exp_2[$i]){
-                        $i += 1;
+                        if ($exp_1[$i] == $exp_2[$i]) {
+                            $i += 1;
+                        }
                     }
                 }
             }else{
@@ -415,15 +417,20 @@ class Router
             );
         }
 
-        $fixed_providers = $this->application->providers['fixed'];
+        if(isset($this->application->providers['fixed'])){
 
-        unset($this->application->providers['fixed']);
+            $fixed_providers = $this->application->providers['fixed'];
+
+            unset($this->application->providers['fixed']);
+        }
 
         $this->providers = $this->application->providers;
 
         unset($this->application->providers);
 
-        $this->application->providers = $fixed_providers;
+        if(isset($fixed_providers)){
+            $this->application->providers = $fixed_providers;
+        }
 
     }
 
@@ -437,9 +444,8 @@ class Router
      */
     private function buildInvokableFunction() : void
     {
-        $this->invokable_function = '\App\Actions\\' . $this->route->methods[$this->method];
 
-        $this->parameters = $this->getParametersFromInvokableClassFunction($this->invokable_function);
+        $this->parameters = $this->getParametersFromInvokableClassFunction();
 
     }
 
@@ -449,7 +455,7 @@ class Router
      */
     public function fixedProviders() : array
     {
-        return $this->providers['fixed_providers'];
+        return isset($this->providers['fixed_providers']) ? $this->providers['fixed_providers'] : [] ;
     }
 
     /**
@@ -477,14 +483,24 @@ class Router
      * @return \ReflectionParameter[]
      * @throws \ReflectionException
      */
-    protected function getParametersFromInvokableClassFunction($invokable_function)
+    protected function getParametersFromInvokableClassFunction()
     {
+        $invokable_function = $this->route->methods[$this->method];
+
         $exp = explode('@',$invokable_function);
 
-        $this->classname = $exp[0] . 'Action';
 
-        if(is_null($this->function)){
-            $this->function = $exp[1];
+        if(!strpos($invokable_function,'Resource@')) {
+            $this->classname = '\App\Actions\\' . $exp[0] . 'Action';
+
+        }else{
+            $this->classname = '\App\Resources\\' . ucfirst($exp[0]);
+        }
+        if (is_null($this->function)) {
+            if(isset($exp[1])){
+
+                $this->function = $exp[1];
+            }
         }
 
         $ReflectionMethod = new ReflectionMethod($this->classname, $this->function);

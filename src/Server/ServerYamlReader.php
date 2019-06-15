@@ -53,7 +53,6 @@ class ServerYamlReader
         }
 
         self::$yaml_file = Yaml::parseFile($config);
-
         $result = self::parseConfig($app);
 
         return $result;
@@ -66,9 +65,16 @@ class ServerYamlReader
     public static function parseConfig(Application $app) : array
     {
 
+        if($_SERVER['SCRIPT_NAME'] == 'start.php'){
+            unset(self::$yaml_file['server']['http']);
+        }else {
+            unset(self::$yaml_file['server']['swoole']);
+        }
+
         foreach (self::$yaml_file['server'] as $server => $item) {
             $str_class = '\AnthraxisBR\FastWork\Server\\' . ucfirst($server) . 'Server';
             self::$instances[] = new $str_class($app, $item);
+
         }
 
         return self::$instances;
