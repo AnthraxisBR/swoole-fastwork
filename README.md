@@ -1,3 +1,5 @@
+Por um momento não vale a pena prosseguir nesse projeto com PHP puro, estou desenvolvendo um complemento para linguagem para que seja mais fácil atingir o objetivo. 
+
 **Swoole Fast Work**
 
 (Incomplete)
