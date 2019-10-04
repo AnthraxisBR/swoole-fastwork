@@ -1,5 +1,7 @@
+
+
 (**THIS PROJECT ARE STOPPED FOR WHILE, IT WORKS ONLY PARTIALLY**)
-Por enquanto não vale a pena prosseguir nesse projeto com PHP puro + Swoole, estou desenvolvendo um complemento para linguagem para que seja mais fácil atingir o objetivo. 
+Por enquanto não vale a pena prosseguir nesse projeto com PHP puro + Swoole, estou desenvolvendo um complemento para linguagem para que seja mais fácil atingir o objetivo, até o presente momento (04/10/2019), não obtive sucesso com a extensão para o PHP que estou tentando criar. 
 
 **Swoole Fast Work**
 
