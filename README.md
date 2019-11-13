@@ -1,9 +1,9 @@
 
-Atualização 13/11/2019: Este projeto de framework está sendo remodelado e reescrito de forma mais polida e organizada, e divido em diversos projetos menores desacoplados.
+****Atualização 13/11/2019: Este projeto de framework está sendo remodelado e reescrito de forma mais polida e organizada, e divido em diversos projetos menores desacoplados.****
 
--> FastWorkEcosystem
--> FastWorkPatterns
--> FastWork
+1. FastWorkEcosystem
+2. FastWorkPatterns
+3. FastWork
 
 
 **Swoole Fast Work**
