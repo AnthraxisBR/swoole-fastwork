@@ -23,7 +23,7 @@
         "php-http/message": "^1.7",
         "php-http/discovery": "^1.6",
         "guzzlehttp/psr7": "^1.5",
-        "symfony/http-foundation": "^5.0",
+        "symfony/http-foundation": "^5.0.7",
         "doctrine/migrations": "2.0.x-dev"
     },
     "require-dev" : {
